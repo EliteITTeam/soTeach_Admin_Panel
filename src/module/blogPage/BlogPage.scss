@@ -1,0 +1,16 @@
+@import "../../scss/variable";
+
+.aboutus-text {
+  & > p {
+    font-size: 1.5rem;
+    color: $primary;
+  }
+}
+
+// Blog
+.blog {
+  & > p {
+    font-size: 1.5rem;
+    color: $primary;
+  }
+}

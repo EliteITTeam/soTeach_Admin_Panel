@@ -1,0 +1,96 @@
+@import "../../scss/variable";
+@import "../../scss/mixins";
+
+.modal {
+  position: fixed;
+  background-color: white;
+  border-radius: 1rem;
+  z-index: 100;
+  overflow: hidden;
+  width: 450px;
+  margin: auto;
+  padding: 3rem 2rem;
+  top: 10%;
+  @include respond(tab-port) {
+    width: 70%;
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.modal_container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &-cross {
+    text-align: right;
+    & > * {
+      font-size: 2.6rem;
+      // color: $heading-primary;
+      cursor: pointer;
+    }
+  }
+}
+
+// For Modal Accept For Myservices delete service
+
+.modal-accept {
+  text-align: center;
+  & > h3 {
+    font-size: 2rem;
+    margin: 2.5rem 0rem;
+  }
+  & > p {
+    font-size: 1.5rem;
+  }
+  &-button {
+    margin: 2rem 0rem;
+    padding-top: 1rem;
+    & > * {
+      border-radius: 2rem;
+      padding: 0.5rem;
+      width: 90px;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+      &:first-child {
+        margin-right: 1.5rem;
+        border: 1.5px solid $primary;
+        background-color: $primary;
+        color: white;
+        &:hover {
+          background-color: white;
+          color: $primary;
+        }
+      }
+      &:last-child {
+        border: 1.5px solid $primary;
+        background-color: white;
+        color: $primary;
+        &:hover {
+          background-color: $primary;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+// Password Reset Modal
+
+.passwordreset-modal {
+  margin-left: 1rem;
+  & > h2 {
+    font-size: 2rem;
+    color: $primary;
+  }
+}

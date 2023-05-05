@@ -1,0 +1,141 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Nunito:wght@200;300;400;500;600;700;800;900;1000&family=Oswald:wght@200;300;400;500;600;700&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Condensed:wght@400;700&family=Roboto:wght@100;300;400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&family=Yesteryear&display=swap");
+
+@import "./scss/variable";
+@import "./scss/mixins";
+
+body {
+  font-family: "Montserrat";
+}
+a {
+  text-decoration: none;
+  color: $primary;
+}
+
+.d-flex {
+  display: flex;
+}
+.align-item-center {
+  display: flex;
+  align-items: center;
+}
+.align-item-right {
+  display: flex;
+  justify-content: flex-end;
+}
+.space-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.space-around {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.space-evenly {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.center {
+  text-align: center;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+.m-1 {
+  margin: 1rem 0rem;
+}
+
+.m-2 {
+  margin: 2rem 0rem;
+}
+
+.m-3 {
+  margin: 3rem 0rem;
+}
+
+.m-4 {
+  margin: 4rem 0rem;
+}
+
+.m-5 {
+  margin: 5rem 0rem;
+}
+.m-6 {
+  margin: 6rem 0rem;
+}
+
+.ml-1 {
+  margin-left: 1rem;
+}
+
+// Paddings
+
+.p-1 {
+  padding: 0.5rem 0rem;
+}
+.px-3 {
+  padding: 0rem 3rem;
+}
+
+// .question {
+//   & > * {
+//     color: #838282;
+//   }
+// }
+
+// tr,
+// th,
+// td {
+//   border: 1px solid $gray;
+// }
+
+// table {
+//   border-collapse: collapse;
+// }
+
+// tr:nth-child(even) {
+//   background-color: #dddddd91;
+// }
+
+// .searchbar {
+//   margin-right: 4rem;
+//   display: flex;
+//   align-items: center;
+//   & > input {
+//     margin-right: -25px;
+//     padding: 0.7rem 1.5rem;
+//     border-radius: 2rem;
+//     width: 240px;
+//     border: 1px solid black;
+//     &:focus {
+//       outline: none;
+//     }
+//   }
+//   &-icon {
+//     & > * {
+//       font-size: 1.6rem;
+//       cursor: pointer;
+//     }
+//   }
+// }
+
+// .add_review_button {
+//   & > * {
+//     background-color: $primary;
+//     font-size: 1.6rem;
+//     padding: 0.7rem 3.6rem;
+//     border-radius: 2rem;
+//     font-weight: 500;
+//   }
+// }

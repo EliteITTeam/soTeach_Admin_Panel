@@ -1,0 +1,274 @@
+@import "../../scss/variable";
+@import "../../scss/mixins";
+
+.chat {
+  &-container {
+    display: flex;
+    &-user {
+      width: 40%;
+      border-right: 2px solid $primary;
+      overflow-y: hidden;
+      overflow-y: scroll;
+      height: 93vh;
+
+      @include respond(tab-port) {
+        position: absolute;
+        background-color: rgba(49, 46, 46, 0.973);
+        z-index: 1000000;
+        width: 77%;
+      }
+      &::-webkit-scrollbar {
+        width: 8px;
+      }
+      &::-webkit-scrollbar-track {
+        // background-color: $gray;
+        background-color: gray;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: black;
+      }
+
+      &-search {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        padding-right: 2rem;
+        padding-left: 1.5rem;
+        background-color: $light-gray;
+        border-bottom: 1px solid gray;
+        @include respond(phone) {
+          margin-top: 2rem;
+        }
+        & > input {
+          padding: 0.6rem 2rem;
+          // background-color: $primary;
+          border: none;
+          // color: $heading-primary;
+          border-radius: 20px;
+          width: 90%;
+          &:focus {
+            outline: none;
+          }
+        }
+        &-icon {
+          // color: $heading-primary;
+          margin-left: -25px;
+          font-size: 15px;
+          cursor: pointer;
+        }
+      }
+    }
+
+    &-feed {
+      width: 100%;
+      &-profile {
+        background-color: rgb(34, 33, 33);
+        height: 7%;
+        display: flex;
+        align-items: center;
+
+        // Menu Icon Style
+
+        &-menuicon {
+          display: none;
+          @include respond(tab-port) {
+            display: block;
+          }
+          & > * {
+            margin-left: 2.5rem;
+            color: white;
+            font-size: 2.5rem;
+            border: 1px solid white;
+            padding: 0.3rem;
+            border-radius: 50%;
+            cursor: pointer;
+          }
+
+          &-cross {
+            display: none;
+            @include respond(tab-port) {
+              display: block;
+            }
+            & > * {
+              margin-right: 1rem;
+              color: white;
+              font-size: 2.5rem;
+              border: 1px solid white;
+              padding: 0.3rem;
+              border-radius: 50%;
+              cursor: pointer;
+            }
+          }
+        }
+        &-flex {
+          & > img {
+            margin-left: 2rem;
+            height: 4.5rem;
+            width: 4.5rem;
+            border-radius: 50%;
+          }
+          & > h3 {
+            color: white;
+            margin-left: 3rem;
+            font-size: 1.5rem;
+            font-weight: 400;
+          }
+        }
+      }
+      &-box {
+        overflow-y: hidden;
+        overflow-y: scroll;
+        height: 79vh;
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
+      }
+
+      &-input {
+        height: 8%;
+        display: flex;
+        align-items: center;
+        background: #4e4e4e;
+        & > form {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          & > input {
+            border-radius: 5px;
+            border: none;
+            padding: 1rem 1.5rem;
+            width: 100%;
+            margin-right: 1rem;
+
+            color: #4e4e4e;
+            font-size: 1.2rem;
+            font-weight: 300;
+
+            &:focus {
+              outline: none;
+            }
+          }
+          &:last-child {
+            font-size: 3rem;
+            color: white;
+            margin: 0rem 1rem;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Sub components
+.usermessage {
+  cursor: pointer;
+  &-container {
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 2rem 3rem;
+    &-flex {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    &-image {
+      margin-right: 1.5rem;
+      & > img {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+      }
+    }
+    &-name {
+      & > h3 {
+        // color: $heading-primary;
+
+        font-weight: 500;
+        font-size: 1.2rem;
+        @include respond(tab-port) {
+          color: white;
+        }
+      }
+      & > p {
+        // color: $heading-primary;
+        @include respond(tab-port) {
+          color: white;
+        }
+      }
+    }
+    &-messages {
+      // background-color: $heading-primary;
+      padding: 0.3rem 1rem;
+      border-radius: 1rem;
+      & > p {
+        color: white;
+        font-size: 1.4rem;
+      }
+    }
+  }
+}
+
+// Clip Style
+
+.clip-for-file-upload {
+  margin-left: 1.2rem;
+  & > * {
+    font-size: 2.5rem;
+    color: white;
+  }
+}
+
+// Message Style
+
+.message {
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  &-container {
+    color: white;
+    margin-right: 2.5rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    width: 40%;
+    padding: 11px 14px;
+    border-radius: 18px;
+    @include respond(tab-port) {
+      width: 50%;
+    }
+  }
+}
+
+// send-message
+
+.send-message {
+  justify-content: flex-end;
+  & > div {
+    background-color: $primary;
+  }
+}
+
+.recieve-message {
+  & > div {
+    margin-left: 1.5rem;
+    background: #4e4e4e;
+  }
+}
+
+// send btnn style
+
+.message-send-btn {
+  font-size: 3rem;
+  color: white;
+  margin: 0rem 1rem;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  text-align: center;
+}

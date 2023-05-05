@@ -1,0 +1,44 @@
+@import "../../scss/variable";
+@import "../../scss/mixins";
+
+.signin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  &-container {
+    width: 296px;
+    &-logo {
+      text-align: center;
+
+      margin-bottom: 3.2rem;
+    }
+    &-form {
+      &-forgot {
+        margin-top: 30px;
+        text-align: center;
+        & > * {
+          color: white;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.signin-btn {
+  margin-top: 2.7rem;
+  & > * {
+    background-color: $primary;
+    padding: 0.7rem 6.5rem;
+    border-radius: 1rem;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    &:hover {
+      background-color: $btn-hover;
+    }
+  }
+}

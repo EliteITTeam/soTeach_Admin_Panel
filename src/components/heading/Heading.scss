@@ -1,0 +1,34 @@
+@import "../../scss/variable";
+
+.heading {
+  & > h1 {
+    color: $primary;
+    margin: 1rem 0rem;
+  }
+}
+.primary {
+  & > h1 {
+    font-weight: 700;
+    font-size: 2rem;
+  }
+}
+.secondry {
+  & > h1 {
+    font-weight: 600;
+    font-size: 2rem;
+  }
+}
+
+.light {
+  & > h1 {
+    font-weight: 400;
+    font-size: 2rem;
+  }
+}
+
+.normal {
+  & > h1 {
+    font-size: 1.7rem;
+    font-weight: 600;
+  }
+}

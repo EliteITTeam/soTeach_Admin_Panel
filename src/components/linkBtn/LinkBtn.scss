@@ -1,0 +1,20 @@
+@import "../../scss/variable";
+
+.linkbtn {
+  & > * {
+    background-color: $primary;
+    color: white;
+    padding: 1rem 3rem;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s ease-in-out;
+    font-size: 1.6rem;
+    font-weight: 400;
+    border-radius: 1rem;
+    border: 1px solid $primary;
+    &:hover {
+      background-color: white;
+      color: $primary;
+    }
+  }
+}

@@ -1,0 +1,171 @@
+@import "../../scss/variable";
+@import "../../scss/mixins";
+
+.assessment-item {
+  margin-top: 10rem;
+  //   & > * {
+  //   }
+}
+
+.assessment-btn {
+  & > button {
+    background-color: $primary;
+    color: white;
+    border: 1px solid $primary;
+    font-size: 1.5rem;
+    border-radius: 1.2rem;
+    padding: 0.6rem 3.5rem;
+    transition: 0.3s ease-in-out;
+    &:hover {
+      background-color: white;
+      color: $primary;
+      cursor: pointer;
+    }
+  }
+}
+
+.assessmentcard {
+  margin: 3rem;
+  &-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    width: 600px;
+    margin: auto;
+    box-shadow: 0px 2.496px 13.728px rgba(0, 0, 0, 0.14);
+    border-radius: 1.3rem;
+    & > div {
+      display: flex;
+      align-items: center;
+      & > h1 {
+        font-size: 5rem;
+        font-weight: 500;
+        color: #2d582f95;
+        margin-right: 2rem;
+      }
+      & > h3 {
+        font-size: 2rem;
+        font-weight: 600;
+        color: $primary;
+      }
+    }
+    & > * {
+      &:last-child {
+        font-size: 3rem;
+        color: $primary;
+      }
+    }
+  }
+}
+
+// Assessment Detail Card
+
+.assessment-detail-card {
+  box-shadow: 0px 4px 22px rgba(0, 0, 0, 0.14);
+  border-radius: 2.1rem;
+  width: 400px;
+  &-container {
+    padding: 2rem 3rem;
+
+    & > img {
+      margin-bottom: 1.7rem;
+    }
+    & > h3 {
+      font-size: 3rem;
+      color: #2d582f;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+    & > p {
+      font-size: 1.6rem;
+      color: #acacac;
+    }
+    &-arrow {
+      & > * {
+        font-size: 2.8rem;
+      }
+    }
+  }
+}
+
+// Enter Quiz
+.enter-quiz-heading {
+  margin-top: 5rem;
+  & > h1 {
+    font-size: 3rem;
+    color: #0f2010;
+    opacity: 0.5;
+  }
+}
+
+// Units
+
+.level-item {
+  box-shadow: 0px 3.61968px 19.9083px rgba(0, 0, 0, 0.14);
+  border-radius: 19.0033px;
+  // &-container {
+  // }
+}
+
+.level-item {
+  &-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2.8rem 3rem;
+
+    &-content {
+      & > h2 {
+        font-size: 2.3rem;
+        font-weight: 600;
+      }
+    }
+    &-arrow {
+      & > * {
+        font-size: 2.7rem;
+      }
+    }
+  }
+}
+
+// View Quiz Page
+
+.view-quiz-list {
+  // background-color: red;
+  & > * {
+    margin-bottom: 4rem;
+  }
+}
+
+.quizcard {
+  background-color: #0f20101c;
+  border-radius: 2rem;
+  border: 1px solid $primary;
+  &-container {
+    padding: 4rem 5rem;
+    & > h1 {
+      font-size: 2rem;
+      margin-bottom: 3rem;
+      color: $primary;
+      & > span {
+        margin-right: 1rem;
+        color: rgb(110, 109, 109);
+      }
+    }
+    & > p {
+      & > span {
+        margin-right: 2rem;
+        color: rgb(110, 109, 109);
+      }
+      margin-bottom: 2rem;
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.uploadvideo {
+  padding: 12rem 0rem;
+  border: 1px dotted $primary;
+  border-radius: 2rem;
+}

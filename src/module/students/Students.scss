@@ -1,0 +1,361 @@
+@import "../../scss/variable";
+@import "../../scss/mixins";
+
+// Heading Row
+.table-like-headings {
+  border-bottom: 1px solid black;
+  &-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    // margin-left: 20rem;
+    // margin-right: 10rem;
+    padding: 1.8rem 2.4rem;
+    margin-left: 12rem;
+    & > div {
+      width: 200px;
+      margin-right: 2rem;
+      & > h6 {
+        font-size: 1.3rem;
+        color: $primary;
+      }
+    }
+  }
+}
+
+.studentslist {
+  @include respond(tab-port) {
+    width: 100%;
+    overflow-x: hidden;
+    overflow-x: scroll;
+  }
+
+  &-container {
+    @include respond(tab-port) {
+      width: 1100px;
+    }
+  }
+}
+
+.student-detail {
+  padding: 18rem 0rem;
+  &-btn {
+    text-align: right;
+    margin-bottom: 2rem;
+    margin-right: 2rem;
+    & > * {
+      border: none;
+      background-color: $primary;
+      color: white;
+      padding: 0.6rem 1.3rem;
+      border-radius: 1.2rem;
+      font-size: 1.2rem;
+      font-weight: 400;
+      border: 1px solid $primary;
+      transition: 0.3s ease-in-out;
+      cursor: pointer;
+      &:not(:last-child) {
+        margin-right: 1rem;
+      }
+      &:hover {
+        background-color: white;
+        color: $primary;
+      }
+    }
+  }
+  &-container {
+    background-color: $light-gray;
+    border-radius: 3rem;
+
+    &-profile {
+      display: flex;
+      flex-direction: column;
+      width: 17rem;
+      margin-left: 4rem;
+      @include respond(tab-port) {
+        width: 10rem;
+      }
+      & > img {
+        height: 17rem;
+        width: 17rem;
+        border-radius: 50%;
+        margin-top: -9rem;
+        background-color: white;
+        @include respond(tab-port) {
+          width: 10rem;
+          height: 10rem;
+          margin-top: -5rem;
+        }
+      }
+      & > h3 {
+        text-align: center;
+        margin-top: 3rem;
+        font-size: 1.9rem;
+        font-weight: 600;
+        color: $primary;
+      }
+    }
+
+    &-content {
+      margin-top: 3rem;
+      // padding: 6rem 3rem;
+      display: flex;
+      padding-bottom: 10rem;
+      padding-left: 3rem;
+      padding-right: 3rem;
+      padding-top: 6rem;
+      @include respond(tab-port) {
+        flex-direction: column;
+      }
+      &-left {
+        width: 55%;
+        @include respond(tab-port) {
+          width: 100%;
+        }
+        & > * {
+          &:not(:last-child) {
+            margin-bottom: 3.5rem;
+          }
+        }
+        &-item {
+          display: flex;
+          align-items: center;
+
+          & > h5 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            width: 15rem;
+            color: $primary;
+          }
+          & > p {
+            font-size: 1.2rem;
+          }
+        }
+      }
+
+      // Right side subjects style {
+
+      &-right {
+        @include respond(tab-port) {
+          margin-top: 4rem;
+        }
+        &-top {
+          display: flex;
+          & > h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: $primary;
+            margin-right: 5rem;
+            width: 70px;
+            @include respond(tab-port) {
+              margin-right: 7rem;
+            }
+          }
+          &-subjects {
+            & > * {
+              &:not(:last-child) {
+                margin-bottom: 1rem;
+              }
+            }
+            & > p {
+              font-size: 1.3rem;
+              font-weight: 500;
+            }
+          }
+        }
+        &-bottom {
+          margin-top: 4rem;
+          display: flex;
+          align-items: center;
+
+          @include respond(tab-port) {
+            flex-direction: column;
+            justify-content: center;
+            border-top: 2px solid $primary;
+            padding: 1rem;
+          }
+          & > h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: $primary;
+            margin-right: 5rem;
+            width: 70px;
+            @include respond(tab-port) {
+              font-size: 2.3rem;
+              margin-right: 6rem;
+              text-align: center;
+              width: 0px;
+              margin-bottom: 2rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.student-level-box {
+  background: #ffffff;
+  border: 0.524824px solid #e2e2e2;
+  border-radius: 3.67377px;
+  padding: 1rem 0.7rem;
+  display: flex;
+  align-items: center;
+  width: 28rem;
+  &-container {
+    margin-left: 1rem;
+    & > h5 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    & > p {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+.upgrade-btn {
+  margin-left: 2rem;
+  @include respond(tab-port) {
+    margin-top: 3rem;
+  }
+  & > * {
+    border: none;
+    background-color: $primary;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 1.2rem;
+    font-size: 1.2rem;
+    font-weight: 400;
+    border: 1px solid $primary;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+    &:hover {
+      background-color: white;
+      color: $primary;
+    }
+  }
+}
+
+//////////////////////////
+// Resutls Page
+
+.result-tab-btn {
+  & > * {
+    &:not(:last-child) {
+      margin-right: 0.6rem;
+    }
+  }
+}
+
+.unitscard {
+  &-container {
+    padding: 2.5rem 3.4rem;
+    box-shadow: 0px 3.61968px 19.9083px rgba(0, 0, 0, 0.14);
+    border-radius: 1.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    & > h1 {
+      font-size: 2.3rem;
+      font-weight: 600;
+    }
+    &-content {
+      display: flex;
+      align-items: center;
+      // background-color: red;
+      &-main {
+        margin-right: 2rem;
+        & > p {
+          font-size: 1.7rem;
+          color: $primary;
+        }
+        & > img {
+          height: 2.6rem;
+          width: 2.6rem;
+          border-radius: 50%;
+        }
+      }
+      &-icon {
+        & > * {
+          font-size: 2.4rem;
+        }
+      }
+    }
+  }
+}
+
+// Quiz Page Style
+
+.question {
+  display: flex;
+  align-items: center;
+  margin-top: 3rem;
+  &-q {
+    margin-right: 2rem;
+    & > h1 {
+      font-size: 2.3rem;
+      color: #0f2010;
+      opacity: 0.5;
+    }
+  }
+}
+
+.option-list {
+  margin-top: 2rem;
+  margin-left: 5.5rem;
+  & > * {
+    &:not(:last-child) {
+      margin-bottom: 5rem;
+    }
+  }
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  & > p {
+    font-size: 1.5rem;
+    margin-left: 2rem;
+  }
+}
+
+//  Upgrade level cardd
+
+.upgradelevel-item {
+  border: 0.811861px solid #e2e2e2;
+  border-radius: 5.68303px;
+  &-container {
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    &-image {
+      & > img {
+        height: 6rem;
+        width: 4.5rem;
+        margin-right: 2rem;
+      }
+    }
+    &-content {
+      & > h4 {
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+      & > p {
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
+// modal-upgradelevel {
+.modal-upgradelevel {
+  & > h3 {
+    font-size: 1.7rem;
+    color: $primary;
+  }
+}

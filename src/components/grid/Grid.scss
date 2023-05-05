@@ -1,0 +1,51 @@
+@import "../../scss/mixins";
+
+.grid {
+  display: grid;
+}
+.grid-2 {
+  grid-template-columns: auto auto;
+  grid-gap: 25px;
+  @include respond(tab-port) {
+    grid-template-columns: auto;
+  }
+}
+
+.grid-3 {
+  grid-template-columns: auto auto auto;
+  grid-gap: 25px;
+  @include respond(tab-land) {
+    grid-template-columns: auto auto;
+  }
+  @include respond(tab-port) {
+    grid-template-columns: auto;
+  }
+}
+.grid-4 {
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 25px;
+  @include respond(tab-land) {
+    grid-template-columns: auto auto;
+  }
+  @include respond(tab-port) {
+    grid-template-columns: auto;
+  }
+}
+
+.grid-5 {
+  grid-template-columns: auto auto auto auto auto;
+  grid-gap: 25px;
+  @include respond(tab-land) {
+    grid-template-columns: auto auto;
+  }
+  @include respond(tab-port) {
+    grid-template-columns: auto;
+  }
+}
+.grid-3-simple {
+  grid-template-columns: auto auto auto;
+  grid-gap: 25px;
+  @include respond(tab-port) {
+    grid-template-columns: auto;
+  }
+}

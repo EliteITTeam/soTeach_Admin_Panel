@@ -1,0 +1,41 @@
+@import "../../scss/variable";
+.button {
+  background-color: $primary;
+  color: black;
+  padding: 0.8rem 1.8rem;
+  cursor: pointer;
+  border: 1px solid $primary;
+  transition: 0.3s ease-in-out;
+  font-size: 1.2rem;
+  font-weight: 500;
+  border-radius: 8px;
+  color: white;
+
+  &:hover {
+    background-color: white;
+    color: $primary;
+  }
+}
+.rounded {
+  border-radius: 1rem;
+}
+
+.btn-lighter {
+  font-weight: 300;
+}
+
+button:disabled,
+button:focus:disabled,
+button:hover:disabled,
+button:active:disabled {
+  background: #ccc;
+  border-color: #ccc;
+  color: #666666;
+  cursor: not-allowed;
+}
+
+.btn-secondry {
+  background-color: white;
+  color: $primary;
+  border-radius: 8px;
+}

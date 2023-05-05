@@ -1,0 +1,22 @@
+export { default as SignIn } from "./signIn/SignIn";
+// Layout Pages
+export { default as InboxPage } from "./inboxPage/InboxPage";
+export { default as BlogPage } from "./blogPage/BlogPage";
+export { default as Dashboard } from "./dashboard/Dashboard";
+export { default as Verification } from "./verificaiton/Verification";
+export { default as VerificationDetail } from "./verificaiton/VerificationDetail";
+export { default as Blog } from "./blogPage/BlogPage";
+export { default as Students } from "./students/Students";
+export { default as StudentDetail } from "./students/StudentDetail";
+export { default as Lesson } from "./students/Lesson";
+export { default as Exercise } from "./students/Exercise";
+export { default as Quiz } from "./students/Quiz";
+export { default as Results } from "./students/Results";
+export { default as Assessments } from "./assessments/Assessments";
+export { default as AssessmentsDetail } from "./assessments/AssessmentsDetail";
+export { default as AddQuiz } from "./assessments/AddQuiz";
+export { default as Levels } from "./assessments/Levels";
+export { default as Units } from "./assessments/Units";
+export { default as ViewQuiz } from "./assessments/ViewQuiz";
+export { default as AddLesson } from "./assessments/AddLesson";
+export { default as PasswordReset } from "./passwordReset/PasswordReset";

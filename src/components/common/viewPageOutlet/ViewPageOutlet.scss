@@ -1,0 +1,47 @@
+@import "../../../scss/variable";
+@import "../../../scss/mixins";
+
+.viewpage {
+  &-hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-position: top;
+
+    height: 700px;
+    @include respond(tab-port) {
+      height: 400px;
+    }
+    &-content {
+      & > h1 {
+        color: $primary;
+        font-weight: 800;
+        font-size: 4rem;
+      }
+      & > p {
+        color: white;
+        margin-top: 2rem;
+        font-size: 1.9rem;
+      }
+    }
+  }
+}
+
+.venderviewall {
+  background-image: linear-gradient(
+      to right bottom,
+      rgba(13, 19, 23, 0.953),
+      rgba(13, 19, 23, 0.938)
+    ),
+    url("../../../assests/viewPage/vender.png");
+}
+
+.occasionviewall {
+  background-image: linear-gradient(
+      to right bottom,
+      rgba(13, 19, 23, 0.211),
+      rgba(13, 19, 23, 0.135)
+    ),
+    url("../../../assests/viewPage/occasion.png");
+}

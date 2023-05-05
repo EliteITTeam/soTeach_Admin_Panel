@@ -1,0 +1,78 @@
+@import "../../../scss/variable";
+@import "../../../scss/mixins";
+
+.sidebar {
+  // background-color: $sidebar-background;
+  background-color: $primary;
+  position: relative;
+  @include respond(tab-port) {
+    position: absolute;
+    height: 100vh;
+    z-index: 100000000;
+  }
+  &-container {
+    &-name {
+      padding: 1.7rem 1rem;
+      color: white;
+      &-icon {
+        font-size: 2rem;
+        margin-right: 1rem;
+        cursor: pointer;
+        color: white;
+      }
+      &-user {
+        font-weight: 500;
+        font-size: 1.9rem;
+      }
+    }
+    &-menu {
+      &-list {
+        &-link {
+          margin: 5px 0px;
+          padding-top: 2.8rem;
+          padding-bottom: 2.8rem;
+          padding-left: 1rem;
+          &-icon {
+            color: white;
+            margin-right: 2.3rem;
+            font-size: 2.8rem;
+          }
+          &-name {
+            color: rgba(255, 255, 255, 0.603);
+            font-size: 1.5rem;
+            font-weight: 300;
+            &::before {
+              color: $primary;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.logout-btn-sidebar {
+  margin-left: 1.5rem;
+  background-color: $primary;
+  color: #fa5757;
+  border: none;
+  width: 85%;
+  padding: 0.8rem 0rem;
+  border: 0.78125px solid #d9d9d9;
+  border-radius: 5.46875px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  position: absolute;
+  bottom: 3rem;
+  transition: 0.3s ease-in-out;
+}
+
+.logout-btn-sidebar:hover {
+  background-color: #fa5757;
+  color: white;
+}
+#active {
+  background: #0e190f;
+  & > * {
+    color: #feebca;
+  }
+}

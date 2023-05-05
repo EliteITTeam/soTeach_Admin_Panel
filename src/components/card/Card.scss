@@ -1,0 +1,47 @@
+@import "../../scss/variable";
+.card {
+  &-container {
+
+    &-image {
+      & > img {
+        height: 26rem;
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+    &-data {
+      background-color: $light-gray;
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+      padding: 1.5rem 2rem;
+      margin-top: -8px;
+      &-location {
+        font-size: 1.2rem;
+        padding: 0.5rem 0rem;
+
+        & > p {
+          margin-left: 1rem;
+        }
+      }
+      &-name {
+        & > h3 {
+          font-size: 1.5rem;
+          font-weight: 500;
+          padding: 0.2rem 0rem;
+        }
+      }
+      & > p {
+        font-size: 1.2rem;
+      }
+      &-views {
+        font-size: 1.2rem;
+        padding: 0.5rem 0rem;
+        & > p {
+          margin-left: 1rem;
+        }
+      }
+    }
+  }
+}

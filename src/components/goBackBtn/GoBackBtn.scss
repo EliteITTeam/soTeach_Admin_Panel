@@ -1,0 +1,18 @@
+@import "../../scss/variable";
+.back-btn {
+  margin: 4rem  0rem;
+  & > * {
+    color: $heading-primary;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    font-weight: 500;
+    &:hover {
+      color: black;
+    }
+  }
+  & > button {
+    background: none;
+    border: none;
+  }
+}

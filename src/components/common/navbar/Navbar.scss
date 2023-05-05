@@ -1,0 +1,25 @@
+@import "../../../scss/variable";
+@import "../../../scss/mixins";
+
+.navbar {
+  border-bottom: 1px solid #dbdbdb;
+
+  &-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 2rem;
+    & > h2 {
+      font-size: 2.3rem;
+      font-weight: 600;
+      color: $primary;
+    }
+    &-backicon {
+      & > * {
+        font-size: 2.5rem;
+        color: $primary;
+        cursor: pointer;
+      }
+    }
+  }
+}

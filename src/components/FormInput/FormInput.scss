@@ -1,0 +1,68 @@
+@import "../../scss/variable";
+.forminput-container {
+  & > input {
+    padding: 1.6rem 0rem;
+    border: 1px solid $border-color;
+    padding-left: 1rem;
+    &::-webkit-input-placeholder {
+      /* Edge */
+      color: rgba(128, 128, 128, 0.574);
+      font-size: 1.3rem;
+    }
+    // &::placeholder {
+    //   font-size: 1.3rem;
+    //   font-weight: 400;
+    // }
+  }
+}
+
+.form {
+  &-label {
+    font-size: 1.2rem;
+    display: block;
+    margin: 2rem 0.3rem;
+  }
+  &-input {
+    width: 95%;
+    color: black;
+    // border-radius: 1.3rem;
+    border-radius: 5.25px;
+    border: none;
+    // background-color: $light-gray;
+    &:focus {
+      outline: none;
+    }
+  }
+  &-error {
+    margin-left: 15px;
+    color: red;
+    font-size: 10px;
+    font-weight: 400;
+  }
+}
+
+.is-invalid {
+  border: 1px solid rgba(255, 0, 0, 0.65);
+}
+.form-text {
+  border: 1px solid rgba(128, 128, 128, 0.385);
+  border-radius: 1rem;
+  padding: 1rem 1rem;
+  width: 94%;
+  &::-webkit-input-placeholder {
+    /* Edge */
+    color: rgba(128, 128, 128, 0.574);
+    font-size: 2rem;
+  }
+  &:focus {
+    outline: none;
+  }
+  &::placeholder {
+    font-family: "Montserrat";
+    font-size: 1.3rem;
+  }
+}
+
+.bg-white {
+  background-color: white;
+}

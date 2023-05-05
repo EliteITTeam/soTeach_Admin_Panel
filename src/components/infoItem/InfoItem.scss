@@ -1,0 +1,14 @@
+@import "../../scss/variable";
+
+.infoitem {
+  & > h6 {
+    color: $heading-primary;
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  & > p {
+    color: $gray;
+    font-size: 1.4rem;
+    margin: .3rem 0rem;
+  }
+}

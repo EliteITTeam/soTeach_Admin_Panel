@@ -1,0 +1,54 @@
+@import "../../scss/variable";
+
+.selector {
+  margin-right: 1rem;
+  &-container {
+    position: relative;
+    width: 100%;
+    &-top {
+      padding: 0.8rem 1.5rem;
+      border: 1px solid $gray;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 5px;
+      cursor: pointer;
+      & > h6 {
+        font-size: 1.4rem;
+        font-weight: 600;
+      }
+      &-icon {
+        & > * {
+          font-size: 2rem;
+        }
+      }
+    }
+
+    // Seletor
+
+    &-selector {
+      margin-top: 1rem;
+      position: absolute;
+      width: 100%;
+      background-color: $light-gray;
+      border: 1px solid $gray;
+      border-radius: 5px;
+      height: 250px;
+      overflow-y: hidden;
+      overflow-y: scroll;
+      &-content {
+        padding: 1rem 1.7rem;
+      }
+      &-item {
+        margin: 0.5rem 0rem;
+        padding: 0.5rem 1rem;
+        transition: 0.3s ease-in-out;
+        cursor: pointer;
+        font-size: 1.2rem;
+        &:hover {
+          background-color: white;
+        }
+      }
+    }
+  }
+}

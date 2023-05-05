@@ -1,0 +1,59 @@
+@import "../../scss/mixins";
+
+.container {
+  &-main {
+    @include respond(tab-land) {
+      width: 100%;
+    }
+
+    @include respond(big-desktop) {
+      width: 1150px;
+      margin: auto;
+    }
+  }
+  &-container {
+    width: 100%;
+  }
+  &-lg {
+    width: 90%;
+    margin: auto;
+  }
+  &-md {
+    width: 80%;
+    margin: auto;
+    @include respond(tab-port) {
+      width: 95%;
+    }
+  }
+  &-sm {
+    width: 70%;
+    margin: auto;
+    @include respond(tab-port) {
+      width: 90%;
+    }
+  }
+  &-hm {
+    width: 60%;
+    margin: auto;
+    @include respond(tab-port) {
+      width: 90%;
+    }
+  }
+  &-half {
+    width: 50%;
+    margin: auto;
+    @include respond(tab-port) {
+      width: 90%;
+    }
+  }
+  &-extra-small {
+    width: 40%;
+    margin: auto;
+    @include respond(tab-land) {
+      width: 70%;
+    }
+    @include respond(tab-port) {
+      width: 85%;
+    }
+  }
+}
