@@ -3,6 +3,7 @@ import "./SideMenuBar.scss";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { VscMenu } from "react-icons/vsc";
+import { profile } from "./../../../assests";
 
 const SideMenuBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +29,14 @@ const SideMenuBar = (props) => {
                 <VscMenu onClick={toggle} style={{ cursor: "pointer" }} />
               </div>
               <div className="sidebar-container-name-user align-item-center">
-                {isOpen ? <h6>Alex</h6> : ""}
+                {isOpen ? (
+                  <div className="profile-for-sidebar">
+                    <img src={profile} alt="" />
+                    <h6>Alex</h6>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
             <div className="sidebar-container-menu">

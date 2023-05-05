@@ -76,3 +76,20 @@
     color: #feebca;
   }
 }
+
+.profile-for-sidebar {
+  display: flex;
+  align-items: center;
+  & > img {
+    height: 4rem;
+    width: 4rem;
+
+    margin-right: 2rem;
+    margin-left: 1rem;
+    border-radius: 50%;
+  }
+  & > h6 {
+    font-size: 1.8rem;
+    font-weight: 400;
+  }
+}
