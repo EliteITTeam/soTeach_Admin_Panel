@@ -293,6 +293,16 @@ const Dashboard = () => {
               ></Pie>
             </div>
           </Grid>
+          <Grid item xs={12} sm={12} md={4} lg={4}>
+            <div
+              style={{ marginTop: "3rem" }}
+              className={styles.secondMainGridContainer_lastBox}
+            >
+              <h1>Schedule Events</h1>
+              <br />
+              <input type="datetime-local" />
+            </div>
+          </Grid>
         </Grid>
       </div>
     </>

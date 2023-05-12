@@ -14,17 +14,22 @@
         }
     }
     &_secondBox{
-        margin-left: 10rem;
+        margin-left: 4rem;
         @include respond(tab-port) {
             margin: 3rem;
           }
     }
     &_thirdBox{
         height: 95%;
-        margin-left: 5rem;
+        margin-left: 15rem;
         @include respond(tab-port) {
             height: 100%;
             margin:3rem
+          }
+    }
+    &_lastBox{
+        @include respond(tab-port) {
+            margin-left: 13rem;
           }
     }
 }
