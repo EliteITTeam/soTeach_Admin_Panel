@@ -1,0 +1,117 @@
+@import "../../scss/mixins";
+.mainGridContainer{
+    margin: 1rem;
+}
+.secondMainGridContainer{
+    margin-top: 5rem;
+    &_firstBox{
+        margin-top: 15rem;
+        @include respond(tab-port) {
+            margin-top: none;
+          }
+        input{
+            margin-top: 5rem;
+        }
+    }
+    &_secondBox{
+        margin-left: 10rem;
+        @include respond(tab-port) {
+            margin: 3rem;
+          }
+    }
+    &_thirdBox{
+        height: 95%;
+        margin-left: 5rem;
+        @include respond(tab-port) {
+            height: 100%;
+            margin:3rem
+          }
+    }
+}
+.leftStatic{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    &_box{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width:25rem;
+        height:8rem;
+        background-color: white;
+        padding:1rem;
+        border: 1px solid #E2E2E2;
+        border-radius: 0.5rem;
+        &_p{
+            margin-left: 1rem;
+            &_p1{
+                color: #0F2010;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 1.2rem;
+            }
+            &_p2{
+                color: #0F2010;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 0.8rem;
+            }
+        }
+    }
+}
+.leftStatic1{
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    &_box{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width:25rem;
+        height:8rem;
+        background-color: white;
+        padding:1rem;
+        border: 1px solid #E2E2E2;
+        border-radius: 0.5rem;
+        &_p{
+            margin-left: 1rem;
+            &_p1{
+                color: #0F2010;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 1.2rem;
+            }
+            &_p2{
+                color: #0F2010;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 0.8rem;
+            }
+        }
+    }
+}
+.rightStatic_box{
+    p{
+        color: #0F2010;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 1.3rem;
+    }
+}
+.barGraph{
+    margin-top: 40%;
+    margin-left: 5rem;
+    @include respond(tab-port) {
+        margin:3rem;
+      }
+}
+.doughuntGraph{
+    height: 60%;
+    margin-top: 30%;
+    margin-left: 5rem;
+    @include respond(tab-port) {
+        height: 100%;
+        margin: 3rem;
+      }
+}
