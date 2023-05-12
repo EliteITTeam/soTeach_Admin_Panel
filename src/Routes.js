@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  HashRouter,
+  Route,
+  Routes,
+} from "react-router-dom";
 import { PanelLayout } from "./layout";
 import {
   SignIn,
@@ -27,7 +32,7 @@ import {
 const Routess = () => {
   return (
     <>
-      <Router>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<SignIn />} />
           <Route path="" element={<PanelLayout />}>
@@ -63,7 +68,7 @@ const Routess = () => {
             <Route path="/password-reset" element={<PasswordReset />} />
           </Route>
         </Routes>
-      </Router>
+      </HashRouter>
     </>
   );
 };
