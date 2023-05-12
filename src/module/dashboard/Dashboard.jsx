@@ -301,6 +301,28 @@ const Dashboard = () => {
               <h1>Schedule Events</h1>
               <br />
               <input type="datetime-local" />
+              <br />
+              <input
+                type="text"
+                placeholder="Add description"
+                style={{
+                  marginTop: "2rem",
+                  padding: "1rem 3.3rem",
+                  outline: "none",
+                }}
+              />
+              <br />
+              <button
+                style={{
+                  marginTop: "2rem",
+                  padding: "0.5rem 8.5rem",
+                  backgroundColor: "#A5DCA8",
+                  outline: "none",
+                  border: "none",
+                }}
+              >
+                Submit
+              </button>
             </div>
           </Grid>
         </Grid>
