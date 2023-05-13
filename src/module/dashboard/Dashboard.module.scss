@@ -21,7 +21,7 @@
     }
     &_thirdBox{
         height: 95%;
-        margin-left: 15rem;
+        margin-left: 10rem;
         @include respond(tab-port) {
             height: 100%;
             margin:3rem
@@ -29,7 +29,7 @@
     }
     &_lastBox{
         @include respond(tab-port) {
-            margin-left: 13rem;
+            margin-left: 6rem;
           }
     }
 }
