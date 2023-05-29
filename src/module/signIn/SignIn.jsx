@@ -1,16 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./SignIn.scss";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { FormInput, Button } from "../../components";
+import { FormInput } from "../../components";
 import { logo } from "../../assests";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Login, clearErrors, clearMessages } from "./../../store/actions";
+
 const SignIn = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { message, errors, loading } = useSelector(
+    (state) => state.authReducer
+  );
   const validate = Yup.object({
-    email: Yup.string().email("Email is invalid").required("Email is required"),
+    userName: Yup.string().required("Username is required"),
     password: Yup.string().required("Password is required"),
   });
 
+  useEffect(() => {
+    if (errors.length > 0) {
+      toast.error(errors);
+      dispatch(clearErrors());
+    }
+    if (message != "") {
+      toast.success(message);
+      dispatch(clearMessages());
+      setTimeout(() => navigate("/dashboard"), 2000);
+    }
+  }, [errors, message]);
   return (
     <>
       <div className="signin">
@@ -21,18 +41,18 @@ const SignIn = () => {
           <div>
             <Formik
               initialValues={{
-                email: "",
+                userName: "",
                 password: "",
               }}
               validationSchema={validate}
               onSubmit={(values) => {
-                console.log(values);
+                dispatch(Login(values));
               }}
             >
               {(formik) => (
                 <div className="signin-container-form">
                   <Form>
-                    <FormInput place="Email" name="email" type="email" />
+                    <FormInput place="Email" name="userName" type="text" />
                     <FormInput
                       place="Password"
                       name="password"
@@ -40,8 +60,8 @@ const SignIn = () => {
                     />
                     <center>
                       <div className="signin-btn">
-                        {/* <button>Log In</button> */}
-                        <Link to="/dashboard">Log In</Link>
+                        <button>{loading ? "Please wait..." : "Log In"}</button>
+                        {/* <Link to="/dashboard">Log In</Link> */}
                       </div>
                     </center>
                   </Form>

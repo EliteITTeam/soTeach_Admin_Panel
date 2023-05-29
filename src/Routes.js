@@ -6,6 +6,7 @@ import {
   Routes,
 } from "react-router-dom";
 import { PanelLayout } from "./layout";
+import { Toaster } from "react-hot-toast";
 import {
   SignIn,
   Dashboard,
@@ -33,6 +34,13 @@ const Routess = () => {
   return (
     <>
       <HashRouter>
+        <Toaster
+          toastOptions={{
+            style: {
+              fontSize: "18px",
+            },
+          }}
+        />
         <Routes>
           <Route path="/" element={<SignIn />} />
           <Route path="" element={<PanelLayout />}>

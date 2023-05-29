@@ -1,15 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./SideMenuBar.scss";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { VscMenu } from "react-icons/vsc";
 import { profile } from "./../../../assests";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut, clearErrors, clearMessages } from "./../../../store/actions";
 
 const SideMenuBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [active, setactive] = useState(window.location.pathname);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { logOutMessage, logOutErrors, logOutLoading } = useSelector(
+    (state) => state.authReducer
+  );
   const toggle = () => setIsOpen(!isOpen);
 
+  useEffect(() => {
+    if (logOutErrors.length > 0) {
+      toast.error(logOutErrors);
+      dispatch(clearErrors());
+    }
+    if (logOutMessage != "") {
+      toast.success(logOutMessage);
+      dispatch(clearMessages());
+      setTimeout(() => navigate("/"), 2000);
+    }
+  }, [logOutErrors, logOutMessage]);
   return (
     <>
       <div className="sidebar">
@@ -64,7 +84,12 @@ const SideMenuBar = (props) => {
                 })}
               </div>
               {isOpen ? (
-                <button className="logout-btn-sidebar">Logout</button>
+                <button
+                  className="logout-btn-sidebar"
+                  onClick={() => dispatch(logOut())}
+                >
+                  {logOutLoading ? "Please wait..." : "Logout"}
+                </button>
               ) : (
                 ""
               )}
