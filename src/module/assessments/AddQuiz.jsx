@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-
-import {
-  FormText,
-  FormInput,
-  Container,
-  LinkBtn,
-  Button,
-} from "../../components";
+import { FormText, FormInput, Container, Button } from "../../components";
 import { Navbar } from "../../components/common";
+import { useParams, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { CreateQuiz, clearErrors, clearMessages } from "./../../store/actions";
 
 const AddQuiz = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { message, errors, loading } = useSelector(
+    (state) => state.assessmentReducer
+  );
+  const { id } = useParams();
   const validation = Yup.object({
     question: Yup.string()
       .min(2, "Must be 2 character")
@@ -36,6 +39,27 @@ const AddQuiz = () => {
       .max(70, "Must be 50 characters or less"),
   });
 
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      toast.error(errors);
+      dispatch(clearErrors());
+    }
+    if (message != "") {
+      toast.success(message);
+      dispatch(clearMessages());
+      setTimeout(() => navigate(`/assessments/detail/viewquiz/${id}`), 2000);
+    }
+  }, [errors, message]);
+
+  // useEffect(() => {
+  //   dispatch(GetAllSubject());
+  // }, []);
   return (
     <>
       <Navbar heading="Entry Quiz" backbtn={true} />
@@ -55,7 +79,14 @@ const AddQuiz = () => {
             validateOnMount
             validationSchema={validation}
             onSubmit={(values, { resetForm }) => {
-              console.log(values);
+              const { question, option1, option2, option3, option4 } = values;
+              const result = {
+                question,
+                options: [option1, option2, option3, option4],
+                correctOption: Number(selectedOption),
+                subject: id,
+              };
+              dispatch(CreateQuiz(result));
               resetForm({ values: "" });
             }}
           >
@@ -68,19 +99,41 @@ const AddQuiz = () => {
                   cols="100"
                   rows="10"
                 />
-                <FormInput place="Option 1" name="option1" type="number" />
+                <input
+                  type="radio"
+                  value="0"
+                  checked={selectedOption === "0"}
+                  onChange={handleOptionChange}
+                  style={{ marginTop: "1rem" }}
+                />
+                <FormInput place="Option 1" name="option1" type="text" />
+                <input
+                  type="radio"
+                  value="1"
+                  checked={selectedOption === "1"}
+                  onChange={handleOptionChange}
+                  style={{ marginTop: "1rem" }}
+                />
                 <FormInput place="Option 2" name="option2" type="text" />
+                <input
+                  type="radio"
+                  value="2"
+                  checked={selectedOption === "2"}
+                  onChange={handleOptionChange}
+                  style={{ marginTop: "1rem" }}
+                />
                 <FormInput place="Option 3" name="option3" type="text" />
+                <input
+                  type="radio"
+                  value="3"
+                  checked={selectedOption === "3"}
+                  onChange={handleOptionChange}
+                  style={{ marginTop: "1rem" }}
+                />
                 <FormInput place="Option 4" name="option4" type="text" />
                 <Button className="btn-lighter rounded center m-2">
-                  Add a Question
+                  {loading ? "Please wait..." : "Add a Question"}
                 </Button>
-                {/* <LinkBtn
-                  to="/assessments/detail/levels"
-                  className="btn-lighter rounded center m-5"
-                >
-                  Add a Question
-                </LinkBtn> */}
               </Form>
             )}
           </Formik>

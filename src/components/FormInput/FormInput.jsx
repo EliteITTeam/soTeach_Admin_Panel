@@ -6,6 +6,7 @@ const FormInput = ({ label, place, className, ...props }) => {
   return (
     <>
       <div className="forminput-container">
+        {/* <input type="radio" style={{ marginTop: "1rem" }} /> */}
         <label htmlFor={field.name} className="form-label">
           {label}
         </label>

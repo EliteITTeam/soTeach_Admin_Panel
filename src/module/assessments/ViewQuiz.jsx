@@ -1,8 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, LinkBtn } from "../../components";
 import { Navbar } from "../../components/common";
+import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { GetAllQuiz, clearErrors, clearMessages } from "./../../store/actions";
+import { Puff } from "react-loader-spinner";
 
 const ViewQuiz = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { records, message, errors, loading } = useSelector(
+    (state) => state.assessmentReducer
+  );
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      toast.error(errors);
+      dispatch(clearErrors());
+    }
+    if (message != "") {
+      toast.success(message);
+      dispatch(clearMessages());
+    }
+  }, [errors, message]);
+
+  useEffect(() => {
+    dispatch(GetAllQuiz(id));
+  }, []);
+
   return (
     <>
       <Navbar heading="Quiz Question" backbtn={true} />
@@ -10,7 +36,7 @@ const ViewQuiz = () => {
       <Container className="md">
         <LinkBtn
           className="align-item-right mt-3"
-          to="/assessments/detail/addquiz"
+          to={`/assessments/detail/addquiz/${id}`}
         >
           Enter Quiz
         </LinkBtn>
@@ -18,46 +44,33 @@ const ViewQuiz = () => {
       <div className="m2">
         <Container className="extra-small">
           <div className="view-quiz-list m-6">
-            <QuizCard
-              questionNo="1"
-              question="Which of the following is a verb?"
-              option1="Apple"
-              option2="Run"
-              option3="The"
-              option4="Table"
-            />
-            <QuizCard
-              questionNo="1"
-              question="Which of the following is a verb?"
-              option1="Apple"
-              option2="Run"
-              option3="The"
-              option4="Table"
-            />{" "}
-            <QuizCard
-              questionNo="1"
-              question="Which of the following is a verb?"
-              option1="Apple"
-              option2="Run"
-              option3="The"
-              option4="Table"
-            />{" "}
-            <QuizCard
-              questionNo="1"
-              question="Which of the following is a verb?"
-              option1="Apple"
-              option2="Run"
-              option3="The"
-              option4="Table"
-            />{" "}
-            <QuizCard
-              questionNo="1"
-              question="Which of the following is a verb?"
-              option1="Apple"
-              option2="Run"
-              option3="The"
-              option4="Table"
-            />
+            {loading ? (
+              <Puff
+                height="60"
+                width="60"
+                radius="6"
+                color="black"
+                ariaLabel="loading"
+                wrapperStyle
+                wrapperClass
+              />
+            ) : records.length > 0 ? (
+              records.map((data, ind) => {
+                return (
+                  <QuizCard
+                    key={ind}
+                    questionNo={ind + 1}
+                    question={data.question && data.question}
+                    option1={data.options && data.options[0]}
+                    option2={data.options && data.options[1]}
+                    option3={data.options && data.options[2]}
+                    option4={data.options && data.options[3]}
+                  />
+                );
+              })
+            ) : (
+              <h1>No quiz found</h1>
+            )}
           </div>
         </Container>
       </div>

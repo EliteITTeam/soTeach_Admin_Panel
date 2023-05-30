@@ -1,0 +1,55 @@
+@import "../../scss/mixins";
+.page_404 {
+  padding: 40px 0;
+  background: #fff;
+  font-family: "Arvo", serif;
+}
+
+.page_404 img {
+  width: 100%;
+}
+
+.four_zero_four_bg {
+  width: 70%;
+  background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+  height: 400px;
+  background-position: center;
+}
+
+.four_zero_four_bg h3 {
+  font-size: 80px;
+  @include respond(phone) {
+    font-size: 4rem;
+  }
+}
+
+.link_404 {
+  color: #fff !important;
+  padding: 15px 25px;
+  background: #002289;
+  margin: 20px 0;
+  border-radius: 8px;
+  display: inline-block;
+  font-size: 1.2rem;
+}
+.contant_box_404 {
+  margin-top: -50px;
+  & > h3 {
+    font-size: 4rem;
+  }
+  & > p {
+    font-size: 2rem;
+  }
+}
+
+.heading-for-access-im {
+  @include respond(phone) {
+    margin-top: 8rem;
+  }
+  & > h1 {
+    font-size: 8rem;
+    @include respond(phone) {
+      font-size: 4rem;
+    }
+  }
+}

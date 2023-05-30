@@ -1,6 +1,7 @@
 import React from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   notePaid,
   bignner,
@@ -13,6 +14,7 @@ import { Container, Grid } from "../../components";
 import { Navbar } from "../../components/common";
 
 const AssessmentsDetail = () => {
+  const { id } = useParams();
   return (
     <>
       <Navbar heading="Assessments" backbtn={true} />
@@ -22,9 +24,9 @@ const AssessmentsDetail = () => {
             <Grid className="grid-3">
               <AssessmentDetailCard
                 icon={notePaid}
-                heading="Entry Quiz"
+                heading="Enter Quiz"
                 text="Basic Level"
-                to="/assessments/detail/viewquiz"
+                to={`/assessments/detail/viewquiz/${id}`}
               />
               <div></div>
               <div></div>
