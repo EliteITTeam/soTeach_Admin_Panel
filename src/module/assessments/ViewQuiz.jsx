@@ -3,14 +3,16 @@ import { Container, LinkBtn } from "../../components";
 import { Navbar } from "../../components/common";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { GetAllQuiz, clearErrors, clearMessages } from "./../../store/actions";
 import { Puff } from "react-loader-spinner";
 
 const ViewQuiz = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { records, message, errors, loading } = useSelector(
+  const { records, message, errors, loading, sessionExpireError } = useSelector(
     (state) => state.assessmentReducer
   );
 
@@ -19,11 +21,16 @@ const ViewQuiz = () => {
       toast.error(errors);
       dispatch(clearErrors());
     }
+    if (sessionExpireError != "") {
+      toast.error(sessionExpireError);
+      dispatch(clearErrors());
+      setTimeout(() => navigate("/"), 2000);
+    }
     if (message != "") {
       toast.success(message);
       dispatch(clearMessages());
     }
-  }, [errors, message]);
+  }, [errors, message, sessionExpireError]);
 
   useEffect(() => {
     dispatch(GetAllQuiz(id));

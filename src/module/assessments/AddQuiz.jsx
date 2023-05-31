@@ -12,7 +12,7 @@ import { CreateQuiz, clearErrors, clearMessages } from "./../../store/actions";
 const AddQuiz = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { message, errors, loading } = useSelector(
+  const { message, errors, loading, sessionExpireError } = useSelector(
     (state) => state.assessmentReducer
   );
   const { id } = useParams();
@@ -50,19 +50,21 @@ const AddQuiz = () => {
       toast.error(errors);
       dispatch(clearErrors());
     }
+    if (sessionExpireError != "") {
+      toast.error(sessionExpireError);
+      dispatch(clearErrors());
+      setTimeout(() => navigate("/"), 2000);
+    }
     if (message != "") {
       toast.success(message);
       dispatch(clearMessages());
       setTimeout(() => navigate(`/assessments/detail/viewquiz/${id}`), 2000);
     }
-  }, [errors, message]);
+  }, [errors, message, sessionExpireError]);
 
-  // useEffect(() => {
-  //   dispatch(GetAllSubject());
-  // }, []);
   return (
     <>
-      <Navbar heading="Entry Quiz" backbtn={true} />
+      <Navbar heading="Enter Quiz" backbtn={true} />
       <div className="enter-quiz">
         <Container className="extra-small">
           <div className="enter-quiz-heading">
