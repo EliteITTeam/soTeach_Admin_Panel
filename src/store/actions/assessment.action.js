@@ -24,10 +24,17 @@ export const GetAllSubject = () => {
         },
       });
     } catch (error) {
-      dispatch({
-        type: assessmentConstant.GET_SUBJECT_FAILURE,
-        payload: { err: error.response.data.message },
-      });
+      if (error.response.data.message === "Please authenticate") {
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: assessmentConstant.GET_QUIZ_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
     }
   };
 };
@@ -48,10 +55,17 @@ export const CreateSubject = (body) => {
         payload: `Subject has been created`,
       });
     } catch (error) {
-      dispatch({
-        type: assessmentConstant.CREATE_SUBJECT_FAILURE,
-        payload: { err: error.response.data.message },
-      });
+      if (error.response.data.message === "Please authenticate") {
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE_FAILURE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: assessmentConstant.GET_QUIZ_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
     }
   };
 };
@@ -75,10 +89,17 @@ export const GetAllQuiz = (subjectId) => {
         payload: data,
       });
     } catch (error) {
-      dispatch({
-        type: assessmentConstant.GET_QUIZ_FAILURE,
-        payload: { err: error.response.data.message },
-      });
+      if (error.response.data.message === "Please authenticate") {
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE_FAILURE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: assessmentConstant.GET_QUIZ_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
     }
   };
 };
@@ -99,10 +120,17 @@ export const CreateQuiz = (body) => {
         payload: `Quiz has been created`,
       });
     } catch (error) {
-      dispatch({
-        type: assessmentConstant.CREATE_QUIZ_FAILURE,
-        payload: { err: error.response.data.message },
-      });
+      if (error.response.data.message === "Please authenticate") {
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE_FAILURE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: assessmentConstant.GET_QUIZ_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
     }
   };
 };

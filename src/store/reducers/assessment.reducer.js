@@ -3,6 +3,7 @@ import { authConstant, assessmentConstant } from "../constants";
 const initialState = {
   records: [],
   errors: [],
+  sessionExpireError: "",
   loading: false,
   message: "",
   page: 1,
@@ -40,6 +41,12 @@ const assessmentReducer = (state = initialState, action) => {
         loading: false,
         records: action.payload,
       };
+    case assessmentConstant.SESSION_EXPIRE:
+      return {
+        ...state,
+        loading: false,
+        sessionExpireError: action.payload.err,
+      };
     case assessmentConstant.CREATE_SUBJECT_FAILURE:
     case assessmentConstant.GET_SUBJECT_FAILURE:
     case assessmentConstant.CREATE_QUIZ_FAILURE:
@@ -60,6 +67,7 @@ const assessmentReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         errors: [],
+        sessionExpireError: "",
       };
     default:
       return state;

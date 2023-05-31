@@ -4,7 +4,7 @@ import { Container, FormInput, Modal, Button } from "../../components";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Navbar } from "../../components/common";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,8 +17,9 @@ import {
 import { Puff } from "react-loader-spinner";
 
 const Assessments = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { records, message, errors, loading } = useSelector(
+  const { records, message, errors, sessionExpireError, loading } = useSelector(
     (state) => state.assessmentReducer
   );
 
@@ -32,11 +33,16 @@ const Assessments = () => {
       toast.error(errors);
       dispatch(clearErrors());
     }
+    if (sessionExpireError != "") {
+      toast.error(sessionExpireError);
+      dispatch(clearErrors());
+      setTimeout(() => navigate("/"), 2000);
+    }
     if (message != "") {
       toast.success(message);
       dispatch(clearMessages());
     }
-  }, [errors, message]);
+  }, [errors, message, sessionExpireError]);
 
   useEffect(() => {
     dispatch(GetAllSubject());
