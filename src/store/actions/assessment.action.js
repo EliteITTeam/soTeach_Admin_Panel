@@ -24,7 +24,8 @@ export const GetAllSubject = () => {
         },
       });
     } catch (error) {
-      if (error.response.data.message === "Please authenticate") {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
         dispatch({
           type: assessmentConstant.SESSION_EXPIRE,
           payload: { err: "Session has been expired" },
@@ -55,9 +56,10 @@ export const CreateSubject = (body) => {
         payload: `Subject has been created`,
       });
     } catch (error) {
-      if (error.response.data.message === "Please authenticate") {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
         dispatch({
-          type: assessmentConstant.SESSION_EXPIRE_FAILURE,
+          type: assessmentConstant.SESSION_EXPIRE,
           payload: { err: "Session has been expired" },
         });
       } else {
@@ -89,9 +91,10 @@ export const GetAllQuiz = (subjectId) => {
         payload: data,
       });
     } catch (error) {
-      if (error.response.data.message === "Please authenticate") {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
         dispatch({
-          type: assessmentConstant.SESSION_EXPIRE_FAILURE,
+          type: assessmentConstant.SESSION_EXPIRE,
           payload: { err: "Session has been expired" },
         });
       } else {
@@ -120,9 +123,10 @@ export const CreateQuiz = (body) => {
         payload: `Quiz has been created`,
       });
     } catch (error) {
-      if (error.response.data.message === "Please authenticate") {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
         dispatch({
-          type: assessmentConstant.SESSION_EXPIRE_FAILURE,
+          type: assessmentConstant.SESSION_EXPIRE,
           payload: { err: "Session has been expired" },
         });
       } else {
