@@ -56,19 +56,22 @@ const Routess = () => {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/verification" element={<Verification />} />
               <Route
-                path="/verification/:id"
+                path="/verification/:id?"
                 element={<VerificationDetail />}
               />
               <Route path="/students" element={<Students />} />
-              <Route path="/students/:id" element={<StudentDetail />} />
-              <Route path="/students/:id/results" element={<Results />} />
-              <Route path="/students/:id/results/lesson" element={<Lesson />} />
+              <Route path="/students/:id?" element={<StudentDetail />} />
+              <Route path="/students/:id?/results" element={<Results />} />
               <Route
-                path="/students/:id/results/lesson/exercise"
+                path="/students/:id?/results/lesson"
+                element={<Lesson />}
+              />
+              <Route
+                path="/students/:id?/results/lesson/exercise"
                 element={<Exercise />}
               />
               <Route
-                path="/students/:id/results/lesson/exercise/quiz"
+                path="/students/:id?/results/lesson/exercise/quiz"
                 element={<Quiz />}
               />
 
@@ -85,10 +88,16 @@ const Routess = () => {
                 path="/assessments/detail/addquiz/:id?"
                 element={<AddQuiz />}
               />
-              <Route path="/assessments/detail/levels" element={<Levels />} />
-              <Route path="/assessments/detail/units" element={<Units />} />
               <Route
-                path="/assessments/detail/addlesson"
+                path="/assessments/detail/levels/:id?/:heading?"
+                element={<Levels />}
+              />
+              <Route
+                path="/assessments/detail/units/:id?"
+                element={<Units />}
+              />
+              <Route
+                path="/assessments/detail/addlesson/:id?"
                 element={<AddLesson />}
               />
 
