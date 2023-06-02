@@ -138,3 +138,81 @@ export const CreateQuiz = (body) => {
     }
   };
 };
+
+export const GetUnit = (body) => {
+  return async (dispatch) => {
+    dispatch({ type: assessmentConstant.GET_UNIT_REQUEST });
+    try {
+      const token = localStorage.getItem("adminToken");
+      const result = await axios.get(
+        `${process.env.REACT_APP_ROOT}/api/unit/?subject=${body.subject}&levelName=${body.levelName}`,
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      const { data } = result;
+      dispatch({
+        type: assessmentConstant.GET_UNIT_SUCCESS,
+        payload: {
+          results: data.results,
+          page: data.page,
+          totalPages: data.totalPages,
+        },
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: assessmentConstant.GET_UNIT_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};
+
+export const GetLesson = (body) => {
+  return async (dispatch) => {
+    dispatch({ type: assessmentConstant.GET_LESSON_REQUEST });
+    try {
+      const token = localStorage.getItem("adminToken");
+      const result = await axios.get(
+        `${process.env.REACT_APP_ROOT}/api/lesson/?unit=${body}`,
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      const { data } = result;
+      dispatch({
+        type: assessmentConstant.GET_LESSON_SUCCESS,
+        payload: {
+          results: data.results,
+          page: data.page,
+          totalPages: data.totalPages,
+        },
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: assessmentConstant.GET_LESSON_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};

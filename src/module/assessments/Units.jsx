@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { HiArrowRight } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Container, FormInput, FormText, Button, Grid } from "../../components";
 import { Navbar } from "../../components/common";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { GetLesson, clearErrors } from "./../../store/actions";
+import { Puff } from "react-loader-spinner";
 
 const Units = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { records, errors, sessionExpireError, loading } = useSelector(
+    (state) => state.assessmentReducer
+  );
   const validation = Yup.object({
     question: Yup.string()
       .min(2, "Must be 2 character")
@@ -26,10 +36,25 @@ const Units = () => {
       .max(70, "Must be 50 characters or less"),
     option4: Yup.string()
       .required("Required")
-    .min(4, "Must be 4 character")
+      .min(4, "Must be 4 character")
       .max(70, "Must be 50 characters or less"),
   });
 
+  useEffect(() => {
+    if (errors.length > 0) {
+      toast.error(errors);
+      dispatch(clearErrors());
+    }
+    if (sessionExpireError != "") {
+      toast.error(sessionExpireError);
+      dispatch(clearErrors());
+      setTimeout(() => navigate("/"), 2000);
+    }
+  }, [errors, sessionExpireError]);
+
+  useEffect(() => {
+    dispatch(GetLesson(id));
+  }, []);
   return (
     <>
       <Navbar backbtn={true} heading="Unit 1" />
@@ -74,17 +99,29 @@ const Units = () => {
         <div className="m-5">
           <Container className="lg">
             <Grid className="grid-5">
-              <LessonCard name="Lesson 1" />
-              <LessonCard name="Lesson 1" />
-              <LessonCard name="Lesson 1" />
-              <LessonCard name="Lesson 1" />
-              <LessonCard name="Lesson 1" />
-              <LessonCard name="Lesson 1" />
-              <LessonCard name="Lesson 1" />
-              <LessonCard name="Lesson 1" />
-              <LessonCard name="Lesson 1" />
-              <LessonCard name="Lesson 1" />
-              <LessonCard name="Lesson 1" />
+              {loading ? (
+                <Puff
+                  height="60"
+                  width="60"
+                  radius="6"
+                  color="black"
+                  ariaLabel="loading"
+                  wrapperStyle
+                  wrapperClass
+                />
+              ) : records.length > 0 ? (
+                records.map((data, ind) => {
+                  return (
+                    <LessonCard
+                      name={data.lessonName}
+                      key={ind}
+                      lessionId={data.id}
+                    />
+                  );
+                })
+              ) : (
+                <h1>No record found</h1>
+              )}
             </Grid>
           </Container>
         </div>
@@ -98,7 +135,7 @@ export default Units;
 const LessonCard = (props) => {
   return (
     <>
-      <Link to="/assessments/detail/addlesson">
+      <Link to={`/assessments/detail/addlesson/${props.lessionId}`}>
         <div className="unitscard">
           <div className="unitscard-container">
             <h1>{props.name}</h1>

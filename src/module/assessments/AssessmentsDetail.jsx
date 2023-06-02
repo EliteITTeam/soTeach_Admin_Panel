@@ -34,31 +34,31 @@ const AssessmentsDetail = () => {
             <div className="m-3">
               <Grid className="grid-3">
                 <AssessmentDetailCard
-                  to="/assessments/detail/levels"
+                  to={`/assessments/detail/levels/${id}/BEGINNER`}
                   icon={bignner}
                   heading="Beginner"
                   text="Basic Level"
                 />
                 <AssessmentDetailCard
-                  to="/assessments/detail/levels"
+                  to={`/assessments/detail/levels/${id}/LOWER_INTERMEDIATE`}
                   icon={lower}
                   heading="Lower Intermediate"
                   text="Basic Level"
                 />
                 <AssessmentDetailCard
-                  to="/assessments/detail/levels"
+                  to={`/assessments/detail/levels/${id}/INTERMEDIATE`}
                   icon={intermediate}
                   heading="Intermediate"
                   text="Basic Level"
                 />
                 <AssessmentDetailCard
-                  to="/assessments/detail/levels"
+                  to={`/assessments/detail/levels/${id}/UPPER_INTERMEDIATE`}
                   icon={upper}
                   heading="Upper Intermediate"
                   text="Basic Level"
                 />
                 <AssessmentDetailCard
-                  to="/assessments/detail/levels"
+                  to={`/assessments/detail/levels/${id}/ADVANCED`}
                   icon={expert}
                   heading="Advanced"
                   text="Basic Level"
