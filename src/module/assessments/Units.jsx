@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { HiArrowRight } from "react-icons/hi";
@@ -7,37 +7,27 @@ import { Container, FormInput, FormText, Button, Grid } from "../../components";
 import { Navbar } from "../../components/common";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { GetLesson, clearErrors } from "./../../store/actions";
+import {
+  GetLesson,
+  UpdateUnit,
+  clearErrors,
+  clearMessages,
+} from "./../../store/actions";
 import { Puff } from "react-loader-spinner";
 
 const Units = () => {
+  const imageRef = useRef();
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { id, unitId, heading, unitName } = useParams();
+  const [image, setImage] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const dispatch = useDispatch();
-  const { records, errors, sessionExpireError, loading } = useSelector(
+  const { records, errors, sessionExpireError, message, loading } = useSelector(
     (state) => state.assessmentReducer
   );
   const validation = Yup.object({
-    question: Yup.string()
-      .min(2, "Must be 2 character")
-      .max(500, "Must be 500 characters or less")
-      .required("Required"),
-    option1: Yup.string()
-      .required("Required")
-      .min(4, "Must be 4 character")
-      .max(70, "Must be 50 characters or less"),
-    option2: Yup.string()
-      .required("Required")
-      .min(4, "Must be 4 character")
-      .max(70, "Must be 50 characters or less"),
-    option3: Yup.string()
-      .required("Required")
-      .min(4, "Must be 4 character")
-      .max(70, "Must be 50 characters or less"),
-    option4: Yup.string()
-      .required("Required")
-      .min(4, "Must be 4 character")
-      .max(70, "Must be 50 characters or less"),
+    name: Yup.string().required("Required"),
+    description: Yup.string().optional(),
   });
 
   useEffect(() => {
@@ -50,46 +40,85 @@ const Units = () => {
       dispatch(clearErrors());
       setTimeout(() => navigate("/"), 2000);
     }
-  }, [errors, sessionExpireError]);
+    if (message != "") {
+      toast.success(message);
+      dispatch(clearMessages());
+      setTimeout(
+        () => navigate(`/assessments/detail/levels/${unitId}/${heading}`),
+        2000
+      );
+    }
+  }, [errors, message, sessionExpireError]);
 
   useEffect(() => {
     dispatch(GetLesson(id));
   }, []);
+
+  const onImageChange = (event) => {
+    setImage(event.target.files[0]);
+    setImageUrl(URL.createObjectURL(event.target.files[0]));
+  };
+
   return (
     <>
-      <Navbar backbtn={true} heading="Unit 1" />
+      <Navbar backbtn={true} heading={unitName} />
       <div className="m-5">
         <Container className="extra-small">
           <Formik
             initialValues={{
               name: "",
-              notice_period: "",
-              daysof_availablilty: "",
-              guest_limit: "",
-              service_area: "",
-              about: "",
-              service_area: "",
+              description: "",
             }}
             validateOnMount
             validationSchema={validation}
             onSubmit={(values, { resetForm }) => {
-              console.log(values);
+              const { name, description } = values;
+              let finalResult = new FormData();
+              finalResult.append("unitName", name);
+              finalResult.append("description", description);
+              if (image) {
+                finalResult.append("photoPath", image);
+              }
+              dispatch(UpdateUnit(finalResult, id));
+              imageRef.current.value = "";
               resetForm({ values: "" });
             }}
           >
             {(formik) => (
               <Form>
-                <FormInput label="Unit Name" name="option1" type="number" />
+                <FormInput label="Unit Name" name="name" type="text" />
 
                 <FormText
                   label="Description"
-                  name="question"
+                  name="description"
                   type="text"
                   cols="100"
                   rows="10"
                 />
+                <div style={{ display: "none" }}>
+                  <input
+                    type="file"
+                    name="myImage"
+                    accept="image/*"
+                    ref={imageRef}
+                    onChange={onImageChange}
+                  />
+                </div>
+                <div
+                  className="btn-lighter rounded center m-2"
+                  onClick={() => imageRef.current.click()}
+                  style={{
+                    backgroundColor: "black",
+                    color: "white",
+                    padding: "2rem",
+                    cursor: "pointer",
+                  }}
+                >
+                  Upload Image
+                </div>
+                {imageUrl && <img src={imageUrl} alt="image" />}
                 <Button className="btn-lighter rounded center m-2">
-                  Upload
+                  {loading ? "Please wait..." : "Save"}
                 </Button>
               </Form>
             )}

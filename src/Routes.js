@@ -93,7 +93,7 @@ const Routess = () => {
                 element={<Levels />}
               />
               <Route
-                path="/assessments/detail/units/:id?"
+                path="/assessments/detail/units/:id?/:unitId?/:heading?/:unitName?"
                 element={<Units />}
               />
               <Route
