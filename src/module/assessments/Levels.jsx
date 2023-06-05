@@ -68,9 +68,12 @@ const Levels = () => {
 export default Levels;
 
 const Item = (props) => {
+  const { id, heading } = useParams();
   return (
     <>
-      <Link to={`/assessments/detail/units/${props.unitId}`}>
+      <Link
+        to={`/assessments/detail/units/${props.unitId}/${id}/${heading}/${props.unitname}`}
+      >
         <div className="level-item">
           <div className="level-item-container">
             <div className="level-item-container-content">

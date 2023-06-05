@@ -18,12 +18,14 @@ const assessmentReducer = (state = initialState, action) => {
     case assessmentConstant.GET_QUIZ_REQUEST:
     case assessmentConstant.GET_UNIT_REQUEST:
     case assessmentConstant.GET_LESSON_REQUEST:
+    case assessmentConstant.UPDATE_UNIT_REQUEST:
       return {
         ...state,
         loading: true,
       };
     case assessmentConstant.CREATE_SUBJECT_SUCCESS:
     case assessmentConstant.CREATE_QUIZ_SUCCESS:
+    case assessmentConstant.UPDATE_UNIT_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -57,6 +59,7 @@ const assessmentReducer = (state = initialState, action) => {
     case assessmentConstant.GET_QUIZ_FAILURE:
     case assessmentConstant.GET_UNIT_FAILURE:
     case assessmentConstant.GET_LESSON_FAILURE:
+    case assessmentConstant.UPDATE_UNIT_FAILURE:
       return {
         ...state,
         loading: false,

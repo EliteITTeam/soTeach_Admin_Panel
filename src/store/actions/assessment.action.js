@@ -178,6 +178,42 @@ export const GetUnit = (body) => {
   };
 };
 
+export const UpdateUnit = (body, unitId) => {
+  return async (dispatch) => {
+    dispatch({ type: assessmentConstant.UPDATE_UNIT_REQUEST });
+    try {
+      const token = localStorage.getItem("adminToken");
+      await axios.patch(
+        `${process.env.REACT_APP_ROOT}/api/unit/${unitId}`,
+        body,
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      // dispatch(GetUnit(unitId));
+      dispatch({
+        type: assessmentConstant.UPDATE_UNIT_SUCCESS,
+        payload: `Unit has been updated`,
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: assessmentConstant.UPDATE_UNIT_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};
+
 export const GetLesson = (body) => {
   return async (dispatch) => {
     dispatch({ type: assessmentConstant.GET_LESSON_REQUEST });
