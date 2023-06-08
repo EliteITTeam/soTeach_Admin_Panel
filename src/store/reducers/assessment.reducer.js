@@ -15,10 +15,14 @@ const assessmentReducer = (state = initialState, action) => {
     case assessmentConstant.CREATE_SUBJECT_REQUEST:
     case assessmentConstant.GET_SUBJECT_REQUEST:
     case assessmentConstant.CREATE_QUIZ_REQUEST:
+    case assessmentConstant.CREATE_QUESTION_REQUEST:
     case assessmentConstant.GET_QUIZ_REQUEST:
     case assessmentConstant.GET_UNIT_REQUEST:
     case assessmentConstant.GET_LESSON_REQUEST:
     case assessmentConstant.UPDATE_UNIT_REQUEST:
+    case assessmentConstant.UPDATE_LESSON_REQUEST:
+    case assessmentConstant.GET_EXERCISE_REQUEST:
+    case assessmentConstant.GET_QUESTION_REQUEST:
       return {
         ...state,
         loading: true,
@@ -26,6 +30,8 @@ const assessmentReducer = (state = initialState, action) => {
     case assessmentConstant.CREATE_SUBJECT_SUCCESS:
     case assessmentConstant.CREATE_QUIZ_SUCCESS:
     case assessmentConstant.UPDATE_UNIT_SUCCESS:
+    case assessmentConstant.UPDATE_LESSON_SUCCESS:
+    case assessmentConstant.CREATE_QUESTION_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -34,18 +40,15 @@ const assessmentReducer = (state = initialState, action) => {
     case assessmentConstant.GET_SUBJECT_SUCCESS:
     case assessmentConstant.GET_UNIT_SUCCESS:
     case assessmentConstant.GET_LESSON_SUCCESS:
+    case assessmentConstant.GET_QUIZ_SUCCESS:
+    case assessmentConstant.GET_EXERCISE_SUCCESS:
+    case assessmentConstant.GET_QUESTION_SUCCESS:
       return {
         ...state,
         loading: false,
         records: action.payload.results,
         page: action.payload.page,
         totalPages: action.payload.totalPages,
-      };
-    case assessmentConstant.GET_QUIZ_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        records: action.payload,
       };
     case assessmentConstant.SESSION_EXPIRE:
       return {
@@ -60,6 +63,10 @@ const assessmentReducer = (state = initialState, action) => {
     case assessmentConstant.GET_UNIT_FAILURE:
     case assessmentConstant.GET_LESSON_FAILURE:
     case assessmentConstant.UPDATE_UNIT_FAILURE:
+    case assessmentConstant.UPDATE_LESSON_FAILURE:
+    case assessmentConstant.GET_EXERCISE_FAILURE:
+    case assessmentConstant.GET_QUESTION_FAILURE:
+    case assessmentConstant.CREATE_QUESTION_FAILURE:
       return {
         ...state,
         loading: false,

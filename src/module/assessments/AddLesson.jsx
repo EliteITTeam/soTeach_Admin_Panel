@@ -1,42 +1,69 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Container, FormInput, FormText, Button, Grid } from "../../components";
 import { Navbar } from "../../components/common";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { HiArrowRight } from "react-icons/hi";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  GetExercise,
+  UpdateLesson,
+  clearErrors,
+  clearMessages,
+} from "./../../store/actions";
+
 const AddLesson = () => {
+  const { id, heading } = useParams();
+  const navigate = useNavigate();
+  const imageRef = useRef();
+  const [image, setImage] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const dispatch = useDispatch();
+  const { records, errors, sessionExpireError, message, loading } = useSelector(
+    (state) => state.assessmentReducer
+  );
+
   const validation = Yup.object({
-    question: Yup.string()
-      .min(2, "Must be 2 character")
-      .max(500, "Must be 500 characters or less")
-      .required("Required"),
-    option1: Yup.string()
-      .required("Required")
-      .min(4, "Must be 4 character")
-      .max(70, "Must be 50 characters or less"),
-    option2: Yup.string()
-      .required("Required")
-      .min(4, "Must be 4 character")
-      .max(70, "Must be 50 characters or less"),
-    option3: Yup.string()
-      .required("Required")
-      .min(4, "Must be 4 character")
-      .max(70, "Must be 50 characters or less"),
-    option4: Yup.string()
-      .required("Required")
-      .min(4, "Must be 4 character")
-      .max(70, "Must be 50 characters or less"),
+    name: Yup.string().required("Required"),
+    description: Yup.string().optional(),
   });
+
+  const onImageChange = (event) => {
+    setImage(event.target.files[0]);
+    setImageUrl(URL.createObjectURL(event.target.files[0]));
+  };
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      toast.error(errors);
+      dispatch(clearErrors());
+    }
+    if (sessionExpireError != "") {
+      toast.error(sessionExpireError);
+      dispatch(clearErrors());
+      setTimeout(() => navigate("/"), 2000);
+    }
+    if (message != "") {
+      toast.success(message);
+      dispatch(clearMessages());
+      setTimeout(() => navigate(-1), 2000);
+    }
+  }, [errors, message, sessionExpireError]);
+
+  useEffect(() => {
+    dispatch(GetExercise(id));
+  }, []);
 
   return (
     <>
-      <Navbar backbtn={true} heading="Lesson 1" />
-      <div className="m-4">
+      <Navbar backbtn={true} heading={heading} />
+      {/* <div className="m-4">
         <Container className="md">
           <Button className="btn-primary align-item-right">Upload pdf</Button>
         </Container>
-      </div>
+      </div> */}
 
       <div className="m-5">
         <Container className="extra-small">
@@ -44,57 +71,93 @@ const AddLesson = () => {
             <Formik
               initialValues={{
                 name: "",
-                notice_period: "",
-                daysof_availablilty: "",
-                guest_limit: "",
-                service_area: "",
-                about: "",
-                service_area: "",
+                description: "",
               }}
               validateOnMount
               validationSchema={validation}
               onSubmit={(values, { resetForm }) => {
-                console.log(values);
+                const { name, description } = values;
+                let finalResult = new FormData();
+                finalResult.append("lessonName", name);
+                finalResult.append("description", description);
+                if (image) {
+                  finalResult.append("videoPath", image);
+                }
+                dispatch(UpdateLesson(finalResult, id));
                 resetForm({ values: "" });
               }}
             >
               {(formik) => (
                 <Form>
-                  <FormInput label="Unit Name" name="option1" type="number" />
+                  <FormInput label="Lesson Name" name="name" type="text" />
 
                   <FormText
                     label="Description"
-                    name="question"
+                    name="description"
                     type="text"
                     cols="100"
                     rows="10"
                   />
+                  <div style={{ display: "none" }}>
+                    <input
+                      type="file"
+                      name="myImage"
+                      accept="video/*"
+                      ref={imageRef}
+                      onChange={onImageChange}
+                    />
+                  </div>
+                  <div
+                    className="btn-lighter rounded center m-2"
+                    onClick={() => imageRef.current.click()}
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      padding: "2rem",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Upload Video Content
+                  </div>
+                  {imageUrl && (
+                    <video width="320" height="240" controls>
+                      <source src={imageUrl} type="video/mp4" />{" "}
+                    </video>
+                  )}
                   <Button className="btn-lighter rounded center m-2">
-                    Upload
+                    {loading ? "Please wait..." : "Save"}
                   </Button>
                 </Form>
               )}
             </Formik>
           </Container>
 
-          <div className="uploadvideo">
+          {/* <div className="uploadvideo">
             <Button className="btn-primary center">Upload Video Content</Button>
-          </div>
+          </div> */}
 
           <div className="m-5">
             <Container className="lg">
               <Grid className="grid-2">
-                <ExerciseCard name="Exercise 1" />
-                <ExerciseCard name="Exercise 1" />
-                <ExerciseCard name="Exercise 1" />
-                <ExerciseCard name="Exercise 1" />
-                <ExerciseCard name="Exercise 1" />
+                {records.length > 0 ? (
+                  records.map((item, ind) => {
+                    return (
+                      <ExerciseCard
+                        name={item.name}
+                        exerciseId={item.id}
+                        key={ind}
+                      />
+                    );
+                  })
+                ) : (
+                  <h1>No Exercise found</h1>
+                )}
               </Grid>
             </Container>
           </div>
-          <div>
+          {/* <div>
             <Button className="center btn-secondry">Save & Return</Button>
-          </div>
+          </div> */}
         </Container>
       </div>
     </>
@@ -106,7 +169,7 @@ export default AddLesson;
 const ExerciseCard = (props) => {
   return (
     <>
-      <Link to="/assessments/detail/addlesson">
+      <Link to={`/students/${props.exerciseId}/results/lesson/exercise/quiz`}>
         <div className="unitscard">
           <div className="unitscard-container">
             <h1>{props.name}</h1>

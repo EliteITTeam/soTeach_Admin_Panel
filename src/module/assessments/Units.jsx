@@ -164,7 +164,9 @@ export default Units;
 const LessonCard = (props) => {
   return (
     <>
-      <Link to={`/assessments/detail/addlesson/${props.lessionId}`}>
+      <Link
+        to={`/assessments/detail/addlesson/${props.lessionId}/${props.name}`}
+      >
         <div className="unitscard">
           <div className="unitscard-container">
             <h1>{props.name}</h1>
