@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./BlogPage.scss";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-
 import { Navbar } from "../../components/common";
 import {
   Container,
@@ -11,29 +10,51 @@ import {
   Heading,
   Button,
 } from "../../components";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  CreateAboutUs,
+  CreateBlog,
+  clearErrors,
+  clearMessages,
+} from "./../../store/actions";
+
 const BlogPage = () => {
+  const imageRef = useRef();
+  const [image, setImage] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const navigate = useNavigate();
   const validation = Yup.object({
-    question: Yup.string()
-      .min(2, "Must be 2 character")
-      .max(500, "Must be 500 characters or less")
-      .required("Required"),
-    option1: Yup.string()
-      .required("Required")
-      .min(4, "Must be 4 character")
-      .max(70, "Must be 50 characters or less"),
-    option2: Yup.string()
-      .required("Required")
-      .min(4, "Must be 4 character")
-      .max(70, "Must be 50 characters or less"),
-    option3: Yup.string()
-      .required("Required")
-      .min(4, "Must be 4 character")
-      .max(70, "Must be 50 characters or less"),
-    option4: Yup.string()
-      .required("Required")
-      .min(4, "Must be 4 character")
-      .max(70, "Must be 50 characters or less"),
+    description: Yup.string().required("Required"),
   });
+  const blogValidation = Yup.object({
+    content: Yup.string().required("Required"),
+  });
+  const dispatch = useDispatch();
+  const { message, errors, aboutLoading, blogLoading, sessionExpireError } =
+    useSelector((state) => state.assessmentReducer);
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      toast.error(errors);
+      dispatch(clearErrors());
+    }
+    if (sessionExpireError != "") {
+      toast.error(sessionExpireError);
+      dispatch(clearErrors());
+      setTimeout(() => navigate("/"), 2000);
+    }
+    if (message != "") {
+      toast.success(message);
+      dispatch(clearMessages());
+    }
+  }, [errors, message, sessionExpireError]);
+
+  const onImageChange = (event) => {
+    setImage(event.target.files[0]);
+    setImageUrl(URL.createObjectURL(event.target.files[0]));
+  };
   return (
     <>
       <Navbar heading="Blog & About us" />
@@ -44,12 +65,12 @@ const BlogPage = () => {
             <p className="center">Add the Content for About Us section</p>
             <Formik
               initialValues={{
-                question: "",
+                description: "",
               }}
               validateOnMount
               validationSchema={validation}
               onSubmit={(values, { resetForm }) => {
-                console.log(values);
+                dispatch(CreateAboutUs(values));
                 resetForm({ values: "" });
               }}
             >
@@ -57,13 +78,13 @@ const BlogPage = () => {
                 <Form>
                   <FormText
                     place="Add Description (150 words)"
-                    name="question"
+                    name="description"
                     type="text"
                     cols="100"
                     rows="10"
                   />
                   <Button className="btn-lighter rounded center m-2">
-                    Save
+                    {aboutLoading ? "Please wait..." : "Save"}
                   </Button>
                 </Form>
               )}
@@ -79,29 +100,59 @@ const BlogPage = () => {
 
             <Formik
               initialValues={{
-                question: "",
+                content: "",
               }}
               validateOnMount
-              validationSchema={validation}
+              validationSchema={blogValidation}
               onSubmit={(values, { resetForm }) => {
-                console.log(values);
+                const { content } = values;
+                let finalResult = new FormData();
+                finalResult.append("content", content);
+                if (image) {
+                  finalResult.append("photoPath", image);
+                }
+                dispatch(CreateBlog(finalResult));
+                imageRef.current.value = "";
+                setImageUrl("");
                 resetForm({ values: "" });
               }}
             >
               {(formik) => (
                 <Form>
-                  <FormInput place="Heading" name="option2" type="text" />
-
+                  <FormInput place="Heading" name="content" type="text" />
+                  {/* 
                   <FormText
                     place="Add Description "
                     name="question"
                     type="text"
                     cols="100"
                     rows="10"
-                  />
+                  /> */}
                   <div className=""></div>
+                  <div style={{ display: "none" }}>
+                    <input
+                      type="file"
+                      name="myImage"
+                      accept="image/*"
+                      ref={imageRef}
+                      onChange={onImageChange}
+                    />
+                  </div>
+                  <div
+                    className="btn-lighter rounded center m-2"
+                    onClick={() => imageRef.current.click()}
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      padding: "2rem",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Upload Image
+                  </div>
+                  {imageUrl && <img src={imageUrl} alt="image" />}
                   <Button className="btn-lighter rounded center m-2">
-                    Save
+                    {blogLoading ? "Please wait..." : "Save"}
                   </Button>
                 </Form>
               )}

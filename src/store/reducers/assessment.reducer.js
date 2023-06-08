@@ -5,6 +5,8 @@ const initialState = {
   errors: [],
   sessionExpireError: "",
   loading: false,
+  aboutLoading: false,
+  blogLoading: false,
   message: "",
   page: 1,
   totalPages: 1,
@@ -27,13 +29,27 @@ const assessmentReducer = (state = initialState, action) => {
         ...state,
         loading: true,
       };
+    case assessmentConstant.CREATE_ABOUT_US_REQUEST:
+      return {
+        ...state,
+        aboutLoading: true,
+      };
+    case assessmentConstant.CREATE_BLOG_REQUEST:
+      return {
+        ...state,
+        blogLoading: true,
+      };
     case assessmentConstant.CREATE_SUBJECT_SUCCESS:
     case assessmentConstant.CREATE_QUIZ_SUCCESS:
     case assessmentConstant.UPDATE_UNIT_SUCCESS:
     case assessmentConstant.UPDATE_LESSON_SUCCESS:
     case assessmentConstant.CREATE_QUESTION_SUCCESS:
+    case assessmentConstant.CREATE_ABOUT_US_SUCCESS:
+    case assessmentConstant.CREATE_BLOG_SUCCESS:
       return {
         ...state,
+        blogLoading: false,
+        aboutLoading: false,
         loading: false,
         message: action.payload,
       };
@@ -67,20 +83,28 @@ const assessmentReducer = (state = initialState, action) => {
     case assessmentConstant.GET_EXERCISE_FAILURE:
     case assessmentConstant.GET_QUESTION_FAILURE:
     case assessmentConstant.CREATE_QUESTION_FAILURE:
+    case assessmentConstant.CREATE_ABOUT_US_FAILURE:
+    case assessmentConstant.CREATE_BLOG_FAILURE:
       return {
         ...state,
+        blogLoading: false,
+        aboutLoading: false,
         loading: false,
         errors: action.payload.err,
       };
     case authConstant.CLEAR_MESSAGES:
       return {
         ...state,
+        blogLoading: false,
+        aboutLoading: false,
         loading: false,
         message: "",
       };
     case authConstant.CLEAR_ERRORS:
       return {
         ...state,
+        blogLoading: false,
+        aboutLoading: false,
         loading: false,
         errors: [],
         sessionExpireError: "",
