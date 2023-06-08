@@ -173,6 +173,68 @@ export const CreateQuestion = (body) => {
     }
   };
 };
+
+export const CreateAboutUs = (body) => {
+  return async (dispatch) => {
+    dispatch({ type: assessmentConstant.CREATE_ABOUT_US_REQUEST });
+    try {
+      const token = localStorage.getItem("adminToken");
+      await axios.post(`${process.env.REACT_APP_ROOT}/api/about/`, body, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      });
+      dispatch({
+        type: assessmentConstant.CREATE_ABOUT_US_SUCCESS,
+        payload: `About us has been created`,
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: assessmentConstant.CREATE_ABOUT_US_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};
+
+export const CreateBlog = (body) => {
+  return async (dispatch) => {
+    dispatch({ type: assessmentConstant.CREATE_BLOG_REQUEST });
+    try {
+      const token = localStorage.getItem("adminToken");
+      await axios.post(`${process.env.REACT_APP_ROOT}/api/blog/`, body, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      });
+      dispatch({
+        type: assessmentConstant.CREATE_BLOG_SUCCESS,
+        payload: `Blog has been created`,
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: assessmentConstant.CREATE_BLOG_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};
 export const GetUnit = (body) => {
   return async (dispatch) => {
     dispatch({ type: assessmentConstant.GET_UNIT_REQUEST });
