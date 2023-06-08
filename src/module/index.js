@@ -20,3 +20,4 @@ export { default as Units } from "./assessments/Units";
 export { default as ViewQuiz } from "./assessments/ViewQuiz";
 export { default as AddLesson } from "./assessments/AddLesson";
 export { default as PasswordReset } from "./passwordReset/PasswordReset";
+export { default as AddQuestion } from "./assessments/AddQuestion";

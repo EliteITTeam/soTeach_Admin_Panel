@@ -34,6 +34,7 @@ import {
   Levels,
   Units,
   AddLesson,
+  AddQuestion,
 } from "./module";
 
 const Routess = () => {
@@ -89,6 +90,10 @@ const Routess = () => {
                 element={<AddQuiz />}
               />
               <Route
+                path="/assessments/detail/addquestion/:id?"
+                element={<AddQuestion />}
+              />
+              <Route
                 path="/assessments/detail/levels/:id?/:heading?"
                 element={<Levels />}
               />
@@ -97,7 +102,7 @@ const Routess = () => {
                 element={<Units />}
               />
               <Route
-                path="/assessments/detail/addlesson/:id?"
+                path="/assessments/detail/addlesson/:id?/:heading?"
                 element={<AddLesson />}
               />
 
