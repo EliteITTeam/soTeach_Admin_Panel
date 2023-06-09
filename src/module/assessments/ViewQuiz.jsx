@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, LinkBtn } from "../../components";
 import { Navbar } from "../../components/common";
 import { useParams } from "react-router-dom";
@@ -7,14 +7,33 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { GetAllQuiz, clearErrors, clearMessages } from "./../../store/actions";
 import { Puff } from "react-loader-spinner";
+import Pagination from "@mui/material/Pagination";
+import { makeStyles } from "@mui/styles";
 
+const useStyles = makeStyles({
+  root: {
+    "& .MuiPaginationItem-root": {
+      color: "#fff",
+      backgroundColor: "#1d1d1d",
+      "&:hover": {
+        backgroundColor: "white",
+        color: "#1d1d1d",
+      },
+      "& .Mui-selected": {
+        backgroundColor: "black",
+        color: "white",
+      },
+    },
+  },
+});
 const ViewQuiz = () => {
+  const classes = useStyles();
   const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { records, message, errors, loading, sessionExpireError } = useSelector(
-    (state) => state.assessmentReducer
-  );
+  const [page, setPage] = useState(1);
+  const { records, message, errors, loading, sessionExpireError, totalPages } =
+    useSelector((state) => state.assessmentReducer);
 
   useEffect(() => {
     if (errors.length > 0) {
@@ -33,8 +52,8 @@ const ViewQuiz = () => {
   }, [errors, message, sessionExpireError]);
 
   useEffect(() => {
-    dispatch(GetAllQuiz(id));
-  }, []);
+    dispatch(GetAllQuiz(id, page));
+  }, [page]);
 
   return (
     <>
@@ -80,6 +99,26 @@ const ViewQuiz = () => {
             )}
           </div>
         </Container>
+        {records.length > 0 ? (
+          <Pagination
+            classes={{ root: classes.root }}
+            variant="outlined"
+            count={totalPages}
+            page={page}
+            size="large"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "2rem",
+            }}
+            showFirstButton
+            showLastButton
+            onChange={(e, value) => setPage(value)}
+          />
+        ) : (
+          ""
+        )}
       </div>
     </>
   );
@@ -90,7 +129,7 @@ export default ViewQuiz;
 const QuizCard = (props) => {
   return (
     <>
-      <div className="quizcard">
+      <div className="quizcard" style={{ marginBottom: "2rem" }}>
         <div className="quizcard-container">
           <h1>
             <span>Q {props.questionNo}: </span> {props.question}

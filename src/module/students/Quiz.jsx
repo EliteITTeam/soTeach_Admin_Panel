@@ -6,14 +6,33 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { GetQuestion, clearErrors, clearMessages } from "./../../store/actions";
 import { Puff } from "react-loader-spinner";
+import Pagination from "@mui/material/Pagination";
+import { makeStyles } from "@mui/styles";
 
+const useStyles = makeStyles({
+  root: {
+    "& .MuiPaginationItem-root": {
+      color: "#fff",
+      backgroundColor: "#1d1d1d",
+      "&:hover": {
+        backgroundColor: "white",
+        color: "#1d1d1d",
+      },
+      "& .Mui-selected": {
+        backgroundColor: "black",
+        color: "white",
+      },
+    },
+  },
+});
 const Quiz = () => {
+  const classes = useStyles();
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { records, message, errors, loading, sessionExpireError } = useSelector(
-    (state) => state.assessmentReducer
-  );
+  const [page, setPage] = useState(1);
+  const { records, message, errors, loading, sessionExpireError, totalPages } =
+    useSelector((state) => state.assessmentReducer);
   const [alert, setAlert] = useState(false);
   useEffect(() => {
     if (errors.length > 0) {
@@ -32,8 +51,8 @@ const Quiz = () => {
   }, [errors, message, sessionExpireError]);
 
   useEffect(() => {
-    dispatch(GetQuestion(id));
-  }, []);
+    dispatch(GetQuestion(id, page));
+  }, [page]);
   return (
     <>
       {/* {alert ? (
@@ -98,6 +117,26 @@ const Quiz = () => {
               <h1>No question found</h1>
             )}
           </Container>
+          {records.length > 0 ? (
+            <Pagination
+              classes={{ root: classes.root }}
+              variant="outlined"
+              count={totalPages}
+              page={page}
+              size="large"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: "4rem",
+              }}
+              showFirstButton
+              showLastButton
+              onChange={(e, value) => setPage(value)}
+            />
+          ) : (
+            ""
+          )}
         </div>
       </Container>
     </>

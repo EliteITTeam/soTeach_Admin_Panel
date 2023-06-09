@@ -15,13 +15,33 @@ import {
   clearMessages,
 } from "./../../store/actions";
 import { Puff } from "react-loader-spinner";
+import Pagination from "@mui/material/Pagination";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles({
+  root: {
+    "& .MuiPaginationItem-root": {
+      color: "#fff",
+      backgroundColor: "#1d1d1d",
+      "&:hover": {
+        backgroundColor: "white",
+        color: "#1d1d1d",
+      },
+      "& .Mui-selected": {
+        backgroundColor: "black",
+        color: "white",
+      },
+    },
+  },
+});
 
 const Assessments = () => {
+  const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { records, message, errors, sessionExpireError, loading } = useSelector(
-    (state) => state.assessmentReducer
-  );
+  const [page, setPage] = useState(1);
+  const { records, message, errors, sessionExpireError, loading, totalPages } =
+    useSelector((state) => state.assessmentReducer);
 
   const [alert, setAlert] = useState(false);
   const passwordvalidation = Yup.object({
@@ -45,8 +65,8 @@ const Assessments = () => {
   }, [errors, message, sessionExpireError]);
 
   useEffect(() => {
-    dispatch(GetAllSubject());
-  }, []);
+    dispatch(GetAllSubject(page));
+  }, [page]);
 
   return (
     <>
@@ -109,6 +129,25 @@ const Assessments = () => {
                 />
               );
             })
+          ) : (
+            ""
+          )}
+          {records.length > 0 ? (
+            <Pagination
+              classes={{ root: classes.root }}
+              variant="outlined"
+              count={totalPages}
+              page={page}
+              size="large"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              showFirstButton
+              showLastButton
+              onChange={(e, value) => setPage(value)}
+            />
           ) : (
             ""
           )}
