@@ -1,13 +1,13 @@
 import { assessmentConstant } from "./../constants";
 import axios from "axios";
 
-export const GetAllSubject = () => {
+export const GetAllSubject = (body) => {
   return async (dispatch) => {
     dispatch({ type: assessmentConstant.GET_SUBJECT_REQUEST });
     try {
       const token = localStorage.getItem("adminToken");
       const result = await axios.get(
-        `${process.env.REACT_APP_ROOT}/api/subject/`,
+        `${process.env.REACT_APP_ROOT}/api/subject/?page=${body}&limit=5`,
         {
           headers: {
             Authorization: token ? `Bearer ${token}` : "",
@@ -50,7 +50,7 @@ export const CreateSubject = (body) => {
           Authorization: token ? `Bearer ${token}` : "",
         },
       });
-      dispatch(GetAllSubject());
+      dispatch(GetAllSubject(1));
       dispatch({
         type: assessmentConstant.CREATE_SUBJECT_SUCCESS,
         payload: `Subject has been created`,
@@ -72,13 +72,13 @@ export const CreateSubject = (body) => {
   };
 };
 
-export const GetAllQuiz = (subjectId) => {
+export const GetAllQuiz = (subjectId, page) => {
   return async (dispatch) => {
     dispatch({ type: assessmentConstant.GET_QUIZ_REQUEST });
     try {
       const token = localStorage.getItem("adminToken");
       const result = await axios.get(
-        `${process.env.REACT_APP_ROOT}/api/quiz/?subject=${subjectId}`,
+        `${process.env.REACT_APP_ROOT}/api/quiz/?subject=${subjectId}&page=${page}&limit=5`,
         {
           headers: {
             Authorization: token ? `Bearer ${token}` : "",
@@ -121,7 +121,7 @@ export const CreateQuiz = (body) => {
           Authorization: token ? `Bearer ${token}` : "",
         },
       });
-      dispatch(GetAllQuiz(body.subject));
+      dispatch(GetAllQuiz(body.subject, 1));
       dispatch({
         type: assessmentConstant.CREATE_QUIZ_SUCCESS,
         payload: `Quiz has been created`,
@@ -422,13 +422,13 @@ export const GetExercise = (body) => {
   };
 };
 
-export const GetQuestion = (body) => {
+export const GetQuestion = (body, page) => {
   return async (dispatch) => {
     dispatch({ type: assessmentConstant.GET_QUESTION_REQUEST });
     try {
       const token = localStorage.getItem("adminToken");
       const result = await axios.get(
-        `${process.env.REACT_APP_ROOT}/api/question/?exercise=${body}`,
+        `${process.env.REACT_APP_ROOT}/api/question/?exercise=${body}&page=${page}&limit=5`,
         {
           headers: {
             Authorization: token ? `Bearer ${token}` : "",
