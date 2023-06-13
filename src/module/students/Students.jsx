@@ -1,11 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Students.scss";
 import { profile } from "../../assests";
 import { Container } from "../../components";
 import { Navbar } from "../../components/common";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { GetAllUser, clearErrors, clearMessages } from "./../../store/actions";
+import { Puff } from "react-loader-spinner";
 
 const Students = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [page, setPage] = useState(1);
+  const { records, message, errors, sessionExpireError, loading, totalPages } =
+    useSelector((state) => state.userReducer);
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      toast.error(errors);
+      dispatch(clearErrors());
+    }
+    if (sessionExpireError != "") {
+      toast.error(sessionExpireError);
+      dispatch(clearErrors());
+      setTimeout(() => navigate("/"), 2000);
+    }
+    if (message != "") {
+      toast.success(message);
+      dispatch(clearMessages());
+    }
+  }, [errors, message, sessionExpireError]);
+  useEffect(() => {
+    dispatch(GetAllUser());
+  }, []);
   return (
     <>
       <Navbar heading="Student List" />
@@ -38,60 +67,34 @@ const Students = () => {
                   </div>
                 </div>
               </div>
-              <VerificationBar
-                name="Alex"
-                username="alex4324"
-                gender="female"
-                age="17"
-                dateofbirth="10-03-2005"
-                subjects="Eng , Math , Phy"
-                dateofjoin="30-02-2022"
-              />
-              <VerificationBar
-                name="Alex"
-                username="alex4324"
-                gender="female"
-                age="17"
-                dateofbirth="10-03-2005"
-                subjects="Eng , Math , Phy"
-                dateofjoin="30-02-2022"
-              />
-              <VerificationBar
-                name="Alex"
-                username="alex4324"
-                gender="female"
-                age="17"
-                dateofbirth="10-03-2005"
-                subjects="Eng , Math , Phy"
-                dateofjoin="30-02-2022"
-              />
-              <VerificationBar
-                name="Alex"
-                username="alex4324"
-                gender="female"
-                age="17"
-                dateofbirth="10-03-2005"
-                subjects="Eng , Math , Phy"
-                dateofjoin="30-02-2022"
-              />
-              <VerificationBar
-                name="Alex"
-                username="alex4324"
-                gender="female"
-                age="17"
-                dateofbirth="10-03-2005"
-                subjects="Eng , Math , Phy"
-                dateofjoin="30-02-2022"
-              />
-              <VerificationBar
-                name="Alex"
-                username="alex4324"
-                gender="female"
-                age="17"
-                dateofbirth="10-03-2005"
-                subjects="Eng , Math , Phy"
-                dateofjoin="30-02-2022"
-              />
+              {loading ? (
+                <Puff
+                  height="60"
+                  width="60"
+                  radius="6"
+                  color="black"
+                  ariaLabel="loading"
+                  wrapperStyle
+                  wrapperClass
+                />
+              ) : records.length > 0 ? (
+                records.map((data, ind) => {
+                  return (
+                    <VerificationBar
+                      key={ind}
+                      name={data.firstName && data.firstName}
+                      username={data.userName && data.userName}
+                      gender={data.gender && data.gender}
+                      age="17"
+                      dateofbirth={data.dateOfBirth && data.dateOfBirth}
+                      subjects="Eng , Math , Phy"
+                      dateofjoin={data.createdAt && data.createdAt}
+                    />
+                  );
+                })
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>

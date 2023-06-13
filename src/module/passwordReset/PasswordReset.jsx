@@ -1,11 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./PasswordReset.scss";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { profile } from "../../assests";
 import { Container, Modal, FormInput, Button } from "../../components";
+import { useNavigate } from "react-router-dom";
 import { Navbar } from "../../components/common";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  GetAllUser,
+  ResetPassword,
+  clearErrors,
+  clearMessages,
+} from "./../../store/actions";
+import { Puff } from "react-loader-spinner";
 const PasswordReset = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [page, setPage] = useState(1);
+  const { records, message, errors, sessionExpireError, loading, totalPages } =
+    useSelector((state) => state.userReducer);
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      toast.error(errors);
+      dispatch(clearErrors());
+    }
+    if (sessionExpireError != "") {
+      toast.error(sessionExpireError);
+      dispatch(clearErrors());
+      setTimeout(() => navigate("/"), 2000);
+    }
+    if (message != "") {
+      toast.success(message);
+      dispatch(clearMessages());
+    }
+  }, [errors, message, sessionExpireError]);
+
+  useEffect(() => {
+    dispatch(GetAllUser());
+  }, []);
   return (
     <>
       <Navbar heading="Password Reset" />
@@ -34,55 +69,36 @@ const PasswordReset = () => {
                   <div>{/* <h6>Status</h6> */}</div>
                 </div>
               </div>
-
-              <Item
-                image={profile}
-                studentname="Alex"
-                username="alex123"
-                gender="female"
-                age="18"
-                subjects="Eng, Math , Phy"
-              />
-              <Item
-                image={profile}
-                studentname="Alex"
-                username="alex123"
-                gender="female"
-                age="18"
-                subjects="Eng, Math , Phy"
-              />
-              <Item
-                image={profile}
-                studentname="Alex"
-                username="alex123"
-                gender="female"
-                age="18"
-                subjects="Eng, Math , Phy"
-              />
-              <Item
-                image={profile}
-                studentname="Alex"
-                username="alex123"
-                gender="female"
-                age="18"
-                subjects="Eng, Math , Phy"
-              />
-              <Item
-                image={profile}
-                studentname="Alex"
-                username="alex123"
-                gender="female"
-                age="18"
-                subjects="Eng, Math , Phy"
-              />
-              <Item
-                image={profile}
-                studentname="Alex"
-                username="alex123"
-                gender="female"
-                age="18"
-                subjects="Eng, Math , Phy"
-              />
+              {loading ? (
+                <Puff
+                  height="60"
+                  width="60"
+                  radius="6"
+                  color="black"
+                  ariaLabel="loading"
+                  wrapperStyle
+                  wrapperClass
+                />
+              ) : records.length > 0 ? (
+                records.map((data, ind) => {
+                  return (
+                    <Item
+                      key={ind}
+                      image={data.photoPath ? data.photoPath : profile}
+                      studentname={`${data.firstName && data.firstName} ${
+                        data.lastName && data.lastName
+                      }`}
+                      username={data.userName && data.userName}
+                      gender={data.gender && data.gender}
+                      age="18"
+                      subjects="Eng, Math , Phy"
+                      userId={data.id}
+                    />
+                  );
+                })
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>
@@ -94,8 +110,9 @@ const PasswordReset = () => {
 export default PasswordReset;
 
 const Item = (props) => {
+  const dispatch = useDispatch();
   const [alert, setAlert] = useState(false);
-
+  const [userId, setUserId] = useState("");
   const passwordvalidation = Yup.object({
     new_password: Yup.string()
       .required("Please enter new password.")
@@ -104,6 +121,7 @@ const Item = (props) => {
       .required("Please retype your new password.")
       .oneOf([Yup.ref("new_password")], "Your passwords do not match."),
   });
+
   return (
     <>
       {alert ? (
@@ -118,7 +136,9 @@ const Item = (props) => {
               validateOnMount
               validationSchema={passwordvalidation}
               onSubmit={(values, { resetForm }) => {
-                console.log(values);
+                const { new_password } = values;
+                let newPassword = { newPassword: new_password };
+                dispatch(ResetPassword(newPassword, userId));
                 resetForm({ values: "" });
               }}
             >
@@ -176,6 +196,7 @@ const Item = (props) => {
             <button
               onClick={() => {
                 setAlert(!alert);
+                setUserId(props.userId);
               }}
             >
               Reset
