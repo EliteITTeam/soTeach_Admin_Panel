@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
     "chart.js": "^4.3.0",
+    "firebase": "^9.22.2",
     "formik": "^2.2.9",
     "framer-motion": "^10.12.4",
     "node-sass": "^7.0.3",
