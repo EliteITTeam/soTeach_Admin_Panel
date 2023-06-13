@@ -92,7 +92,7 @@ const PasswordReset = () => {
                       gender={data.gender && data.gender}
                       age="18"
                       subjects="Eng, Math , Phy"
-                      userId={data.id}
+                      userId={data._id}
                     />
                   );
                 })
