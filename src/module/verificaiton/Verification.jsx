@@ -1,11 +1,64 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Verification.scss";
 import { profile } from "../../assests";
 import { Container } from "../../components";
 import { Link } from "react-router-dom";
 import { Navbar } from "../../components/common";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  GetRequestedUser,
+  clearErrors,
+  clearMessages,
+} from "./../../store/actions";
+import { Puff } from "react-loader-spinner";
+import Pagination from "@mui/material/Pagination";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles({
+  root: {
+    "& .MuiPaginationItem-root": {
+      color: "#fff",
+      backgroundColor: "#1d1d1d",
+      "&:hover": {
+        backgroundColor: "white",
+        color: "#1d1d1d",
+      },
+      "& .Mui-selected": {
+        backgroundColor: "black",
+        color: "white",
+      },
+    },
+  },
+});
 
 const Verification = () => {
+  const classes = useStyles();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [page, setPage] = useState(1);
+  const { records, message, errors, sessionExpireError, loading, totalPages } =
+    useSelector((state) => state.userReducer);
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      toast.error(errors);
+      dispatch(clearErrors());
+    }
+    if (sessionExpireError != "") {
+      toast.error(sessionExpireError);
+      dispatch(clearErrors());
+      setTimeout(() => navigate("/"), 2000);
+    }
+    if (message != "") {
+      toast.success(message);
+      dispatch(clearMessages());
+    }
+  }, [errors, message, sessionExpireError]);
+  useEffect(() => {
+    dispatch(GetRequestedUser(false, page));
+  }, [page]);
   return (
     <>
       <Navbar heading="Verification" />
@@ -38,54 +91,58 @@ const Verification = () => {
                   </div>
                 </div>
               </div>
-              <VerificationBar
-                name="Alex"
-                username="alex4324"
-                gender="female"
-                age="17"
-                dateofbirth="10-03-2005"
-                subjects="Eng , Math , Phy"
-                status="Requested"
-              />
-              <VerificationBar
-                name="Alex"
-                username="alex4324"
-                gender="female"
-                age="17"
-                dateofbirth="10-03-2005"
-                subjects="Eng , Math , Phy"
-                status="Requested"
-              />
-              <VerificationBar
-                name="Alex"
-                username="alex4324"
-                gender="female"
-                age="17"
-                dateofbirth="10-03-2005"
-                subjects="Eng , Math , Phy"
-                status="Requested"
-              />
-              <VerificationBar
-                name="Alex"
-                username="alex4324"
-                gender="female"
-                age="17"
-                dateofbirth="10-03-2005"
-                subjects="Eng , Math , Phy"
-                status="Requested"
-              />{" "}
-              <VerificationBar
-                name="Alex"
-                username="alex4324"
-                gender="female"
-                age="17"
-                dateofbirth="10-03-2005"
-                subjects="Eng , Math , Phy"
-                status="Requested"
-              />
+              {loading ? (
+                <Puff
+                  height="60"
+                  width="60"
+                  radius="6"
+                  color="black"
+                  ariaLabel="loading"
+                  wrapperStyle
+                  wrapperClass
+                />
+              ) : records.length > 0 ? (
+                records.map((data, ind) => {
+                  return (
+                    <VerificationBar
+                      key={ind}
+                      name={data.firstName && data.firstName}
+                      username={data.userName && data.userName}
+                      gender={data.gender && data.gender}
+                      age="17"
+                      dateofbirth={data.dateOfBirth && data.dateOfBirth}
+                      userId={data._id}
+                      subjects="Eng , Math , Phy"
+                      status={data.status && data.status}
+                    />
+                  );
+                })
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>
+        {records.length > 0 ? (
+          <Pagination
+            classes={{ root: classes.root }}
+            variant="outlined"
+            count={totalPages}
+            page={page}
+            size="large"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "2rem",
+            }}
+            showFirstButton
+            showLastButton
+            onChange={(e, value) => setPage(value)}
+          />
+        ) : (
+          ""
+        )}
       </Container>
     </>
   );
@@ -97,7 +154,7 @@ export default Verification;
 const VerificationBar = (props) => {
   return (
     <>
-      <Link to="/verification/1">
+      <Link to={`/verification/${props.userId}`}>
         <div className="verification-bar m-4">
           <div className="verification-bar-container">
             <img src={profile} alt="profile" />

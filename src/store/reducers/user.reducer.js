@@ -17,11 +17,14 @@ const assessmentReducer = (state = initialState, action) => {
     case userConstant.GET_ALL_USER_REQUEST:
     case userConstant.RESET_PASSWORD_REQUEST:
     case userConstant.CREATE_CHAT_CONNECTION_REQUEST:
+    case userConstant.GET_REQUESTED_USER_REQUEST:
+    case userConstant.UPDATE_USER_STATUS_REQUEST:
       return {
         ...state,
         loading: true,
       };
     case userConstant.GET_ALL_USER_SUCCESS:
+    case userConstant.GET_REQUESTED_USER_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -30,6 +33,7 @@ const assessmentReducer = (state = initialState, action) => {
         totalPages: action.payload.totalPages,
       };
     case userConstant.RESET_PASSWORD_SUCCESS:
+    case userConstant.UPDATE_USER_STATUS_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -57,6 +61,8 @@ const assessmentReducer = (state = initialState, action) => {
     case userConstant.RESET_PASSWORD_FAILURE:
     case userConstant.CREATE_CHAT_CONNECTION_FAILURE:
     case userConstant.ADD_MESSAGE_FAILURE:
+    case userConstant.GET_REQUESTED_USER_FAILURE:
+    case userConstant.UPDATE_USER_STATUS_FAILURE:
       return {
         ...state,
         loading: false,
