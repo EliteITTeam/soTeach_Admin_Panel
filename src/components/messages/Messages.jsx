@@ -97,7 +97,7 @@ const Messages = () => {
     }
   }, [errors, message, sessionExpireError]);
   useEffect(() => {
-    dispatch(GetAllUser());
+    dispatch(GetAllUser(true));
   }, []);
   const user = JSON.parse(localStorage.getItem("admin"));
   let loginUser = user._id;
