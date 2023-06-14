@@ -7,14 +7,26 @@ export const GetAllUser = (body, page) => {
     dispatch({ type: userConstant.GET_ALL_USER_REQUEST });
     try {
       const token = localStorage.getItem("adminToken");
-      const result = await axios.get(
-        `${process.env.REACT_APP_ROOT}/api/auth?isVerified=${body}&page=${page}&limit=10`,
-        {
-          headers: {
-            Authorization: token ? `Bearer ${token}` : "",
-          },
-        }
-      );
+      let result;
+      if (page) {
+        result = await axios.get(
+          `${process.env.REACT_APP_ROOT}/api/auth?isVerified=${body}&page=${page}&limit=10`,
+          {
+            headers: {
+              Authorization: token ? `Bearer ${token}` : "",
+            },
+          }
+        );
+      } else {
+        result = await axios.get(
+          `${process.env.REACT_APP_ROOT}/api/auth?isVerified=${body}`,
+          {
+            headers: {
+              Authorization: token ? `Bearer ${token}` : "",
+            },
+          }
+        );
+      }
       const { data } = result;
       dispatch({
         type: userConstant.GET_ALL_USER_SUCCESS,
