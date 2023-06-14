@@ -2,13 +2,13 @@ import { userConstant, assessmentConstant } from "./../constants";
 import axios from "axios";
 import { sendMessage } from "./../../firebase";
 
-export const GetAllUser = () => {
+export const GetAllUser = (body, page) => {
   return async (dispatch) => {
     dispatch({ type: userConstant.GET_ALL_USER_REQUEST });
     try {
       const token = localStorage.getItem("adminToken");
       const result = await axios.get(
-        `${process.env.REACT_APP_ROOT}/api/auth?isVerified=true`,
+        `${process.env.REACT_APP_ROOT}/api/auth?isVerified=${body}&page=${page}&limit=10`,
         {
           headers: {
             Authorization: token ? `Bearer ${token}` : "",
@@ -34,6 +34,45 @@ export const GetAllUser = () => {
       } else {
         dispatch({
           type: userConstant.GET_ALL_USER_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};
+
+export const GetRequestedUser = (body, page) => {
+  return async (dispatch) => {
+    dispatch({ type: userConstant.GET_REQUESTED_USER_REQUEST });
+    try {
+      const token = localStorage.getItem("adminToken");
+      const result = await axios.get(
+        `${process.env.REACT_APP_ROOT}/api/auth?isVerified=${body}&page=${page}&limit=10`,
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      const { data } = result;
+      dispatch({
+        type: userConstant.GET_REQUESTED_USER_SUCCESS,
+        payload: {
+          results: data.results,
+          page: data.page,
+          totalPages: data.totalPages,
+        },
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: userConstant.GET_REQUESTED_USER_FAILURE,
           payload: { err: error.response.data.message },
         });
       }
@@ -118,6 +157,43 @@ export const CreateChatConnection = (body) => {
   };
 };
 
+export const UpdateUserStatus = (body, userId) => {
+  return async (dispatch) => {
+    dispatch({
+      type: userConstant.UPDATE_USER_STATUS_REQUEST,
+    });
+    try {
+      const token = localStorage.getItem("adminToken");
+
+      await axios.post(
+        `${process.env.REACT_APP_ROOT}/api/auth/updatestatus/${userId}`,
+        body,
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      dispatch({
+        type: userConstant.UPDATE_USER_STATUS_SUCCESS,
+        payload: "Status has been updated",
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: userConstant.UPDATE_USER_STATUS_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};
 export const getUserInfo = (body) => {
   return async (dispatch) => {
     try {

@@ -15,7 +15,28 @@ import {
   clearMessages,
 } from "./../../store/actions";
 import { Puff } from "react-loader-spinner";
+import Pagination from "@mui/material/Pagination";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles({
+  root: {
+    "& .MuiPaginationItem-root": {
+      color: "#fff",
+      backgroundColor: "#1d1d1d",
+      "&:hover": {
+        backgroundColor: "white",
+        color: "#1d1d1d",
+      },
+      "& .Mui-selected": {
+        backgroundColor: "black",
+        color: "white",
+      },
+    },
+  },
+});
+
 const PasswordReset = () => {
+  const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
@@ -39,8 +60,8 @@ const PasswordReset = () => {
   }, [errors, message, sessionExpireError]);
 
   useEffect(() => {
-    dispatch(GetAllUser());
-  }, []);
+    dispatch(GetAllUser(true, page));
+  }, [page]);
   return (
     <>
       <Navbar heading="Password Reset" />
@@ -102,6 +123,26 @@ const PasswordReset = () => {
             </div>
           </div>
         </div>
+        {records.length > 0 ? (
+          <Pagination
+            classes={{ root: classes.root }}
+            variant="outlined"
+            count={totalPages}
+            page={page}
+            size="large"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "2rem",
+            }}
+            showFirstButton
+            showLastButton
+            onChange={(e, value) => setPage(value)}
+          />
+        ) : (
+          ""
+        )}
       </Container>
     </>
   );

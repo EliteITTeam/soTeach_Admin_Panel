@@ -9,8 +9,28 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { GetAllUser, clearErrors, clearMessages } from "./../../store/actions";
 import { Puff } from "react-loader-spinner";
+import Pagination from "@mui/material/Pagination";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles({
+  root: {
+    "& .MuiPaginationItem-root": {
+      color: "#fff",
+      backgroundColor: "#1d1d1d",
+      "&:hover": {
+        backgroundColor: "white",
+        color: "#1d1d1d",
+      },
+      "& .Mui-selected": {
+        backgroundColor: "black",
+        color: "white",
+      },
+    },
+  },
+});
 
 const Students = () => {
+  const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
@@ -33,8 +53,8 @@ const Students = () => {
     }
   }, [errors, message, sessionExpireError]);
   useEffect(() => {
-    dispatch(GetAllUser());
-  }, []);
+    dispatch(GetAllUser(true, page));
+  }, [page]);
   return (
     <>
       <Navbar heading="Student List" />
@@ -89,6 +109,7 @@ const Students = () => {
                       dateofbirth={data.dateOfBirth && data.dateOfBirth}
                       subjects="Eng , Math , Phy"
                       dateofjoin={data.createdAt && data.createdAt}
+                      userId={data._id}
                     />
                   );
                 })
@@ -98,6 +119,26 @@ const Students = () => {
             </div>
           </div>
         </div>
+        {records.length > 0 ? (
+          <Pagination
+            classes={{ root: classes.root }}
+            variant="outlined"
+            count={totalPages}
+            page={page}
+            size="large"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "2rem",
+            }}
+            showFirstButton
+            showLastButton
+            onChange={(e, value) => setPage(value)}
+          />
+        ) : (
+          ""
+        )}
       </Container>
     </>
   );
@@ -108,7 +149,7 @@ export default Students;
 const VerificationBar = (props) => {
   return (
     <>
-      <Link to="/students/1">
+      <Link to={`/students/${props.userId}`}>
         <div className="verification-bar m-3">
           <div className="verification-bar-container">
             <img src={profile} alt="profile" />

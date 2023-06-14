@@ -10,10 +10,11 @@ import {
 } from "../../assests";
 import { Container, Modal } from "../../components";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Navbar } from "../../components/common";
 
 const StudentDetail = () => {
+  const navigate = useNavigate();
   const [modalremove, setModalRemove] = useState(false);
   const [modallogout, setModallogout] = useState(false);
   const [modalupgrade, setModalupgrade] = useState(false);
@@ -104,7 +105,7 @@ const StudentDetail = () => {
         <div className="student-detail">
           <div className="student-detail-btn">
             <Link to="/students/1/results">Results</Link>
-            <button>Message</button>
+            <button onClick={() => navigate("/inbox")}>Message</button>
             <button
               onClick={() => {
                 setModalRemove(!modalremove);
