@@ -30,6 +30,7 @@ const SideMenuBar = (props) => {
       setTimeout(() => navigate("/"), 2000);
     }
   }, [logOutErrors, logOutMessage]);
+  const admin = JSON.parse(localStorage.getItem("admin"));
   return (
     <>
       <div className="sidebar">
@@ -52,7 +53,7 @@ const SideMenuBar = (props) => {
                 {isOpen ? (
                   <div className="profile-for-sidebar">
                     <img src={profile} alt="" />
-                    <h6>Alex</h6>
+                    <h6>{admin.userName && admin.userName}</h6>
                   </div>
                 ) : (
                   ""

@@ -156,9 +156,23 @@ const Item = (props) => {
   const [userId, setUserId] = useState("");
   const passwordvalidation = Yup.object({
     new_password: Yup.string()
+      .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+      .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .matches(/[0-9]/, "Password must contain at least one digit")
+      .matches(
+        /[!@#$%^&*(),.?":{}|<>]/,
+        "Password must contain at least one special character"
+      )
       .required("Please enter new password.")
       .min(8, "Your password is too short."),
     retypePassword: Yup.string()
+      .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+      .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .matches(/[0-9]/, "Password must contain at least one digit")
+      .matches(
+        /[!@#$%^&*(),.?":{}|<>]/,
+        "Password must contain at least one special character"
+      )
       .required("Please retype your new password.")
       .oneOf([Yup.ref("new_password")], "Your passwords do not match."),
   });
