@@ -35,6 +35,10 @@ import {
   Units,
   AddLesson,
   AddQuestion,
+  FinalQuestion,
+  CreateFinalQuestion,
+  UnitQuestion,
+  CreateUnitQuestion,
 } from "./module";
 
 const Routess = () => {
@@ -75,7 +79,22 @@ const Routess = () => {
                 path="/students/:id?/results/lesson/exercise/quiz"
                 element={<Quiz />}
               />
-
+              <Route
+                path="/students/:id?/final/question"
+                element={<FinalQuestion />}
+              />
+              <Route
+                path="/students/:id?/unit/question"
+                element={<UnitQuestion />}
+              />
+              <Route
+                path="/students/:id?/CreateUnit/question"
+                element={<CreateUnitQuestion />}
+              />
+              <Route
+                path="/students/:id?/createFinal/question"
+                element={<CreateFinalQuestion />}
+              />
               <Route path="/assessments" element={<Assessments />} />
               <Route
                 path="/assessments/detail/:id?"
