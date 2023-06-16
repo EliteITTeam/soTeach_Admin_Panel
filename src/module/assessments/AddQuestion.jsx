@@ -72,7 +72,7 @@ const AddQuiz = () => {
       <div className="enter-quiz">
         <Container className="extra-small">
           <div className="enter-quiz-heading">
-            <h1>Q1.</h1>
+            <h1>Question</h1>
           </div>
           <Formik
             initialValues={{

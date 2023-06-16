@@ -25,6 +25,10 @@ const assessmentReducer = (state = initialState, action) => {
     case assessmentConstant.UPDATE_LESSON_REQUEST:
     case assessmentConstant.GET_EXERCISE_REQUEST:
     case assessmentConstant.GET_QUESTION_REQUEST:
+    case assessmentConstant.GET_FINAL_QUESTION_REQUEST:
+    case assessmentConstant.CREATE_FINAL_QUESTION_REQUEST:
+    case assessmentConstant.GET_UNIT_QUESTION_REQUEST:
+    case assessmentConstant.CREATE_UNIT_QUESTION_REQUEST:
       return {
         ...state,
         loading: true,
@@ -46,6 +50,8 @@ const assessmentReducer = (state = initialState, action) => {
     case assessmentConstant.CREATE_QUESTION_SUCCESS:
     case assessmentConstant.CREATE_ABOUT_US_SUCCESS:
     case assessmentConstant.CREATE_BLOG_SUCCESS:
+    case assessmentConstant.CREATE_FINAL_QUESTION_SUCCESS:
+    case assessmentConstant.CREATE_UNIT_QUESTION_SUCCESS:
       return {
         ...state,
         blogLoading: false,
@@ -59,6 +65,8 @@ const assessmentReducer = (state = initialState, action) => {
     case assessmentConstant.GET_QUIZ_SUCCESS:
     case assessmentConstant.GET_EXERCISE_SUCCESS:
     case assessmentConstant.GET_QUESTION_SUCCESS:
+    case assessmentConstant.GET_FINAL_QUESTION_SUCCESS:
+    case assessmentConstant.GET_UNIT_QUESTION_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -85,6 +93,10 @@ const assessmentReducer = (state = initialState, action) => {
     case assessmentConstant.CREATE_QUESTION_FAILURE:
     case assessmentConstant.CREATE_ABOUT_US_FAILURE:
     case assessmentConstant.CREATE_BLOG_FAILURE:
+    case assessmentConstant.GET_FINAL_QUESTION_FAILURE:
+    case assessmentConstant.CREATE_FINAL_QUESTION_FAILURE:
+    case assessmentConstant.GET_UNIT_QUESTION_FAILURE:
+    case assessmentConstant.CREATE_UNIT_QUESTION_FAILURE:
       return {
         ...state,
         blogLoading: false,

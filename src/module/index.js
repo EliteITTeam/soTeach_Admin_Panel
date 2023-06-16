@@ -21,3 +21,7 @@ export { default as ViewQuiz } from "./assessments/ViewQuiz";
 export { default as AddLesson } from "./assessments/AddLesson";
 export { default as PasswordReset } from "./passwordReset/PasswordReset";
 export { default as AddQuestion } from "./assessments/AddQuestion";
+export { default as FinalQuestion } from "./students/FinalQuestion";
+export { default as CreateFinalQuestion } from "./students/CreateFinalQuestion";
+export { default as UnitQuestion } from "./students/UnitQuestion";
+export { default as CreateUnitQuestion } from "./students/CreateUnitQuestion";

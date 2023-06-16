@@ -460,3 +460,151 @@ export const GetQuestion = (body, page) => {
     }
   };
 };
+
+export const GetFinalQuestion = (subjectId, page) => {
+  return async (dispatch) => {
+    dispatch({ type: assessmentConstant.GET_FINAL_QUESTION_REQUEST });
+    try {
+      const token = localStorage.getItem("adminToken");
+      const result = await axios.get(
+        `${process.env.REACT_APP_ROOT}/api/examQuestion/?subject=${subjectId}&page=${page}&limit=10`,
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      const { data } = result;
+      dispatch({
+        type: assessmentConstant.GET_FINAL_QUESTION_SUCCESS,
+        payload: {
+          results: data.results,
+          page: data.page,
+          totalPages: data.totalPages,
+        },
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: assessmentConstant.GET_FINAL_QUESTION_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};
+
+export const CreateFinalQuestions = (body) => {
+  return async (dispatch) => {
+    dispatch({ type: assessmentConstant.CREATE_FINAL_QUESTION_REQUEST });
+    try {
+      const token = localStorage.getItem("adminToken");
+      await axios.post(
+        `${process.env.REACT_APP_ROOT}/api/examQuestion/`,
+        body,
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      dispatch({
+        type: assessmentConstant.CREATE_FINAL_QUESTION_SUCCESS,
+        payload: `Question has been created`,
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: assessmentConstant.CREATE_FINAL_QUESTION_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};
+
+export const GetUnitQuestion = (unitId, page) => {
+  return async (dispatch) => {
+    dispatch({ type: assessmentConstant.GET_UNIT_QUESTION_REQUEST });
+    try {
+      const token = localStorage.getItem("adminToken");
+      const result = await axios.get(
+        `${process.env.REACT_APP_ROOT}/api/unitQuestion/?unit=${unitId}&page=${page}&limit=10`,
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      const { data } = result;
+      dispatch({
+        type: assessmentConstant.GET_UNIT_QUESTION_SUCCESS,
+        payload: {
+          results: data.results,
+          page: data.page,
+          totalPages: data.totalPages,
+        },
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: assessmentConstant.GET_UNIT_QUESTION_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};
+
+export const CreateUnitQuestions = (body) => {
+  return async (dispatch) => {
+    dispatch({ type: assessmentConstant.CREATE_UNIT_QUESTION_REQUEST });
+    try {
+      const token = localStorage.getItem("adminToken");
+      await axios.post(
+        `${process.env.REACT_APP_ROOT}/api/unitQuestion/`,
+        body,
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      dispatch({
+        type: assessmentConstant.CREATE_UNIT_QUESTION_SUCCESS,
+        payload: `Question has been created`,
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: assessmentConstant.CREATE_UNIT_QUESTION_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};

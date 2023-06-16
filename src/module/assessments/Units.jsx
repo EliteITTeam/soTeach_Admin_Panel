@@ -120,6 +120,44 @@ const Units = () => {
                 <Button className="btn-lighter rounded center m-2">
                   {loading ? "Please wait..." : "Save"}
                 </Button>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    alignItems: "center",
+                  }}
+                >
+                  <button
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      padding: "8px",
+                      outline: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      borderRadius: "4px",
+                    }}
+                    onClick={() =>
+                      navigate(`/students/${unitId}/final/question`)
+                    }
+                  >
+                    Final Questions
+                  </button>
+                  <button
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      padding: "8px",
+                      outline: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      borderRadius: "4px",
+                    }}
+                    onClick={() => navigate(`/students/${id}/unit/question`)}
+                  >
+                    Unit Questions
+                  </button>
+                </div>
               </Form>
             )}
           </Formik>
