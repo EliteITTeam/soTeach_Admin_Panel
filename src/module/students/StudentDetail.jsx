@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import {
   bignner,
   expert,
@@ -9,16 +8,44 @@ import {
   profile,
 } from "../../assests";
 import { Container, Modal } from "../../components";
-
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Navbar } from "../../components/common";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getUserInfo,
+  DeleteSingleUser,
+  clearErrors,
+  clearMessages,
+} from "./../../store/actions";
 
 const StudentDetail = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { userInfo, message, errors, loading } = useSelector(
+    (state) => state.userReducer
+  );
+
+  console.log("userInfo is", userInfo);
   const [modalremove, setModalRemove] = useState(false);
   const [modallogout, setModallogout] = useState(false);
   const [modalupgrade, setModalupgrade] = useState(false);
 
+  useEffect(() => {
+    if (errors.length > 0) {
+      toast.error(errors);
+      dispatch(clearErrors());
+    }
+    if (message != "") {
+      toast.success(message);
+      dispatch(clearMessages());
+      setTimeout(() => navigate(-1), 2000);
+    }
+  }, [errors, message]);
+  useEffect(() => {
+    dispatch(getUserInfo(id));
+  }, []);
   return (
     <>
       {modalremove ? (
@@ -30,7 +57,9 @@ const StudentDetail = () => {
               to undo this.
             </p>
             <div className="modal-accept-button">
-              <button>Remove</button>
+              <button onClick={() => dispatch(DeleteSingleUser(id))}>
+                {loading ? "..." : "Remove"}
+              </button>
               <button
                 onClick={() => {
                   setModalRemove(!modalremove);
@@ -104,7 +133,7 @@ const StudentDetail = () => {
       <Container className="lg">
         <div className="student-detail">
           <div className="student-detail-btn">
-            <Link to="/students/1/results">Results</Link>
+            <Link to={`/students/${id}/results`}>Results</Link>
             <button onClick={() => navigate("/inbox")}>Message</button>
             <button
               onClick={() => {
@@ -123,31 +152,38 @@ const StudentDetail = () => {
           </div>
           <div className="student-detail-container">
             <div className="student-detail-container-profile">
-              <img src={profile} alt="profile" />
-              <h3>Alex</h3>
+              <img
+                src={userInfo.photoPath ? userInfo.photoPath : profile}
+                alt="profile"
+              />
+              <h3>
+                {`${userInfo.firstName && userInfo.firstName} ${
+                  userInfo.lastName && userInfo.lastName
+                }`}
+              </h3>
             </div>
             <Container className="lg">
               <div className="student-detail-container-content m-5">
                 <div className="student-detail-container-content-left">
                   <div className="student-detail-container-content-left-item">
                     <h5>Username</h5>
-                    <p>user name</p>
+                    <p>{userInfo.userName && userInfo.userName}</p>
                   </div>
                   <div className="student-detail-container-content-left-item">
                     <h5>Gender</h5>
-                    <p>Male</p>
+                    <p>{userInfo.gender && userInfo.gender}</p>
                   </div>
-                  <div className="student-detail-container-content-left-item">
+                  {/* <div className="student-detail-container-content-left-item">
                     <h5>Age</h5>
-                    <p>13</p>
-                  </div>
+                    <p></p>
+                  </div> */}
                   <div className="student-detail-container-content-left-item">
                     <h5>DOB</h5>
-                    <p>13-12-2002</p>
+                    <p>{userInfo.dateOfBirth && userInfo.dateOfBirth}</p>
                   </div>
                   <div className="student-detail-container-content-left-item">
                     <h5>Dream Job</h5>
-                    <p>Pilot</p>
+                    <p>{userInfo.dreamJob && userInfo.dreamJob}</p>
                   </div>
                   <div className="student-detail-container-content-left-item">
                     <h5>Joined on</h5>
@@ -158,9 +194,15 @@ const StudentDetail = () => {
                   <div className="student-detail-container-content-right-top">
                     <h4>Subjects</h4>
                     <div className="student-detail-container-content-right-top-subjects">
-                      <p>English</p>
-                      <p>Math</p>
-                      <p>History</p>
+                      {userInfo.subjects
+                        ? userInfo.subjects.map((item, ind) => {
+                            return (
+                              <p key={ind}>
+                                {item.subject.name && item.subject.name}
+                              </p>
+                            );
+                          })
+                        : ""}
                     </div>
                   </div>
                   <div className="student-detail-container-content-right-bottom">
@@ -169,7 +211,7 @@ const StudentDetail = () => {
                       <div className="student-level-box">
                         <img src={intermediate} alt="levels" />
                         <div className="student-level-box-container">
-                          <h5>Lower Intermediate</h5>
+                          <h5>{userInfo.level && userInfo.level}</h5>
                           <p>
                             I can already understand and put together written
                             and spoken sentences

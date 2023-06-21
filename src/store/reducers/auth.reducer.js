@@ -3,10 +3,10 @@ import { authConstant } from "../constants";
 const initialState = {
   errors: [],
   loading: false,
+  message: "",
   logOutLoading: false,
   logOutMessage: "",
   logOutErrors: [],
-  message: "",
 };
 
 const authReducer = (state = initialState, action) => {

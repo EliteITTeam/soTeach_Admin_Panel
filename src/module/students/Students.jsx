@@ -73,9 +73,9 @@ const Students = () => {
                   <div>
                     <h6>Gender</h6>
                   </div>
-                  <div>
+                  {/* <div>
                     <h6>Age</h6>
-                  </div>
+                  </div> */}
                   <div>
                     <h6>Date of Birth</h6>
                   </div>
@@ -110,6 +110,7 @@ const Students = () => {
                       subjects="Eng , Math , Phy"
                       dateofjoin={data.createdAt && data.createdAt}
                       userId={data._id}
+                      userImage={data.photoPath ? data.photoPath : profile}
                     />
                   );
                 })
@@ -152,7 +153,7 @@ const VerificationBar = (props) => {
       <Link to={`/students/${props.userId}`}>
         <div className="verification-bar m-3">
           <div className="verification-bar-container">
-            <img src={profile} alt="profile" />
+            <img src={props.userImage} alt="profile" />
             <div className="verification-bar-container-item">
               {/* <p>Student Name</p> */}
               <h5>{props.name}</h5>
@@ -165,10 +166,9 @@ const VerificationBar = (props) => {
               {/* <p>Gender</p> */}
               <h5>{props.gender}</h5>
             </div>
-            <div className="verification-bar-container-item">
-              {/* <p>Age</p> */}
+            {/* <div className="verification-bar-container-item">
               <h5>{props.age}</h5>
-            </div>
+            </div> */}
             <div className="verification-bar-container-item">
               {/* <p>Date of Birth </p> */}
               <h5>{props.dateofbirth}</h5>
