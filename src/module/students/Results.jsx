@@ -1,11 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { lock } from "../../assests";
 import { Container, Button, Grid } from "../../components";
 import { HiArrowRight } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Navbar } from "../../components/common";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserInfo, clearErrors, clearMessages } from "./../../store/actions";
 
 const Results = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { userInfo, message, errors, loading } = useSelector(
+    (state) => state.userReducer
+  );
+
+  console.log("userInfo is", userInfo);
+  useEffect(() => {
+    if (errors.length > 0) {
+      toast.error(errors);
+      dispatch(clearErrors());
+    }
+    if (message != "") {
+      toast.success(message);
+      dispatch(clearMessages());
+      setTimeout(() => navigate(-1), 2000);
+    }
+  }, [errors, message]);
+  useEffect(() => {
+    dispatch(getUserInfo(id));
+  }, []);
   return (
     <>
       <Navbar heading="Results" backbtn="true" />
@@ -13,10 +38,15 @@ const Results = () => {
         <Button className="m-2 align-item-right">Upload Certificate</Button>
 
         <div className="result-tab-btn   d-flex">
-          <Button className="btn-secondry">English</Button>
-          <Button className="btn-secondry">Science</Button>
-          <Button className="btn-secondry">Math</Button>
-          <Button className="btn-secondry">Geography</Button>
+          {userInfo.subjects
+            ? userInfo.subjects.map((item, ind) => {
+                return (
+                  <Button className="btn-secondry" key={ind}>
+                    {item.subject.name && item.subject.name}
+                  </Button>
+                );
+              })
+            : ""}
         </div>
 
         <div className="m-6">

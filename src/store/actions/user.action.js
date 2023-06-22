@@ -266,3 +266,40 @@ export const addMessage = (body) => {
     }
   };
 };
+
+export const DeleteSingleUser = (userId) => {
+  return async (dispatch) => {
+    dispatch({
+      type: userConstant.DELETE_SINGLE_USER_REQUEST,
+    });
+    try {
+      const token = localStorage.getItem("adminToken");
+
+      await axios.delete(
+        `${process.env.REACT_APP_ROOT}/api/auth/users/${userId}`,
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      dispatch({
+        type: userConstant.DELETE_SINGLE_USER_SUCCESS,
+        payload: "User has been deleted",
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: userConstant.DELETE_SINGLE_USER_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};
