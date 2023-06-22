@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar } from "../../components/common";
 import Grid from "@mui/material/Grid";
 import styles from "./Dashboard.module.scss";
@@ -13,6 +13,9 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { CreateEvent, clearErrors, clearMessages } from "./../../store/actions";
 import {
   green1,
   green2,
@@ -35,7 +38,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
 export const options = {
   responsive: true,
   plugins: {
@@ -103,6 +105,24 @@ export const pieChartData = {
 };
 
 const Dashboard = () => {
+  const [date, setDate] = useState("");
+  const [description, setDescription] = useState("");
+  const dispatch = useDispatch();
+  const { message, errors, loading } = useSelector(
+    (state) => state.dashboardReducer
+  );
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      toast.error(errors);
+      dispatch(clearErrors());
+    }
+    if (message != "") {
+      toast.success(message);
+      dispatch(clearMessages());
+    }
+  }, [errors, message]);
+  const result = { date, description };
   return (
     <>
       <Navbar heading="Dashboard" />
@@ -244,28 +264,6 @@ const Dashboard = () => {
       </div>
       <div className={styles.secondMainGridContainer}>
         <Grid container>
-          {/* <Grid item xs={12} sm={12} md={4} lg={4}>
-            <div className={styles.secondMainGridContainer_firstBox}>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Sun</th>
-                    <th>Mon</th>
-                    <th>Tue</th>
-                    <th>Wed</th>
-                    <th>Thu</th>
-                    <th>Fri</th>
-                    <th>Sat</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {monthDays.map((day, index) => (
-                    <td key={index}>{day}</td>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </Grid> */}
           <Grid item xs={12} sm={12} md={4} lg={4}>
             <div className={styles.secondMainGridContainer_secondBox}>
               <Bar options={options} data={ageGroupData} />
@@ -300,11 +298,17 @@ const Dashboard = () => {
             >
               <h1>Schedule Events</h1>
               <br />
-              <input type="datetime-local" />
+              <input
+                type="datetime-local"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+              />
               <br />
               <input
                 type="text"
                 placeholder="Add description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 style={{
                   marginTop: "2rem",
                   padding: "1rem 3.3rem",
@@ -319,9 +323,17 @@ const Dashboard = () => {
                   backgroundColor: "#A5DCA8",
                   outline: "none",
                   border: "none",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  dispatch(
+                    CreateEvent(result),
+                    setDate(""),
+                    setDescription("")
+                  );
                 }}
               >
-                Submit
+                {loading ? "..." : "Submit"}
               </button>
             </div>
           </Grid>
