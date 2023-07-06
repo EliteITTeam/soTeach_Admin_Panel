@@ -15,7 +15,14 @@ import {
 } from "chart.js";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { CreateEvent, clearErrors, clearMessages } from "./../../store/actions";
+import {
+  CreateEvent,
+  SubjectReport,
+  CountByLevel,
+  CountByGender,
+  clearErrors,
+  clearMessages,
+} from "./../../store/actions";
 import {
   green1,
   green2,
@@ -67,24 +74,6 @@ export const options1 = {
     },
   },
 };
-export const data = {
-  labels: ["Geography", "Science", "Urdu", "English"],
-  datasets: [
-    {
-      data: [10, 5, 7, 9],
-      backgroundColor: ["#A5DCA8", "#2D582F", "#747474", "#0F2010"],
-    },
-  ],
-};
-export const circleData = {
-  labels: ["Geography", "Science", "Urdu", "English"],
-  datasets: [
-    {
-      data: [10, 5, 7, 9],
-      backgroundColor: ["#E7FFE8", "#A5DCA8", "#747474", "#0F2010"],
-    },
-  ],
-};
 export const ageGroupData = {
   labels: ["13", "12", "11", "10"],
   datasets: [
@@ -94,24 +83,83 @@ export const ageGroupData = {
     },
   ],
 };
-export const pieChartData = {
-  labels: ["Female", "Male"],
-  datasets: [
-    {
-      data: [10, 5],
-      backgroundColor: ["#323232", "#747474"],
-    },
-  ],
-};
 
 const Dashboard = () => {
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
   const dispatch = useDispatch();
-  const { message, errors, loading } = useSelector(
-    (state) => state.dashboardReducer
-  );
+  const { message, errors, loading, subjectReport, levelReport, genderReport } =
+    useSelector((state) => state.dashboardReducer);
 
+  let subjectLabelsArray = [];
+  let subjectDataArray = [];
+  if (subjectReport.length > 0) {
+    subjectReport.forEach((data) => {
+      subjectLabelsArray.push(data.subject ? data.subject : "");
+      subjectDataArray.push(data.count ? data.count : "");
+    });
+  }
+  const data = {
+    labels: subjectLabelsArray,
+    datasets: [
+      {
+        data: subjectDataArray,
+        backgroundColor: ["#A5DCA8", "#2D582F", "#747474", "#0F2010"],
+      },
+    ],
+  };
+
+  const circleData = {
+    labels: subjectLabelsArray,
+    datasets: [
+      {
+        data: subjectDataArray,
+        backgroundColor: ["#E7FFE8", "#A5DCA8", "#747474", "#0F2010"],
+      },
+    ],
+  };
+  let levelBeginnerCount = 0;
+  let levelLowerIntermediateCount = 0;
+  let levelIntermediateCount = 0;
+  let levelUperIntermediateCount = 0;
+  let levelAdvancedCount = 0;
+  if (levelReport.length > 0) {
+    levelReport.forEach((data) => {
+      if (data.level === "BEGINNER") {
+        levelBeginnerCount = data.count;
+      }
+      if (data.level === "LOWER_INTERMEDIATE") {
+        levelLowerIntermediateCount = data.count;
+      }
+      if (data.level === "INTERMEDIATE") {
+        levelIntermediateCount = data.count;
+      }
+      if (data.level === "UPPER_INTERMEDIATE") {
+        levelUperIntermediateCount = data.count;
+      }
+      if (data.level === "ADVANCED") {
+        levelAdvancedCount = data.count;
+      }
+    });
+  }
+  let genderReportHeading = [];
+  let genderReportCount = [];
+  if (genderReport.length > 0) {
+    genderReport.forEach((data) => {
+      genderReportHeading.push(data?.gender ? data.gender : "");
+      genderReportCount.push(data?.count ? data.count : "");
+    });
+  }
+
+  const pieChartData = {
+    labels: genderReportHeading,
+    datasets: [
+      {
+        data: genderReportCount,
+        backgroundColor: ["#323232", "#747474"],
+      },
+    ],
+  };
   useEffect(() => {
     if (errors.length > 0) {
       toast.error(errors);
@@ -122,6 +170,13 @@ const Dashboard = () => {
       dispatch(clearMessages());
     }
   }, [errors, message]);
+
+  useEffect(() => {
+    dispatch(SubjectReport());
+    dispatch(CountByLevel());
+    dispatch(CountByGender());
+  }, []);
+
   const result = { date, description };
   return (
     <>
@@ -145,7 +200,7 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className={styles.rightStatic_box}>
-                <p>25 Students</p>
+                <p>{levelBeginnerCount} Students</p>
               </div>
             </div>
             <div className={styles.leftStatic1}>
@@ -167,7 +222,7 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className={styles.rightStatic_box}>
-                <p>15 Students</p>
+                <p>{levelLowerIntermediateCount} Students</p>
               </div>
             </div>
             <div className={styles.leftStatic1}>
@@ -186,7 +241,7 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className={styles.rightStatic_box}>
-                <p>15 Students</p>
+                <p>{levelIntermediateCount} Students</p>
               </div>
             </div>
             <div className={styles.leftStatic1}>
@@ -208,7 +263,7 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className={styles.rightStatic_box}>
-                <p>15 Students</p>
+                <p>{levelUperIntermediateCount} Students</p>
               </div>
             </div>
             <div className={styles.leftStatic1}>
@@ -228,11 +283,10 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className={styles.rightStatic_box}>
-                <p>15 Students</p>
+                <p>{levelAdvancedCount} Students</p>
               </div>
             </div>
           </Grid>
-          {/* for with and height width={400} height={400} */}
           <Grid item xs={12} sm={12} md={4} lg={4}>
             <div className={styles.barGraph}>
               <Bar options={options} data={data} />

@@ -29,6 +29,7 @@ const assessmentReducer = (state = initialState, action) => {
     case assessmentConstant.CREATE_FINAL_QUESTION_REQUEST:
     case assessmentConstant.GET_UNIT_QUESTION_REQUEST:
     case assessmentConstant.CREATE_UNIT_QUESTION_REQUEST:
+    case assessmentConstant.DELETE_SUBJECT_REQUEST:
       return {
         ...state,
         loading: true,
@@ -52,6 +53,7 @@ const assessmentReducer = (state = initialState, action) => {
     case assessmentConstant.CREATE_BLOG_SUCCESS:
     case assessmentConstant.CREATE_FINAL_QUESTION_SUCCESS:
     case assessmentConstant.CREATE_UNIT_QUESTION_SUCCESS:
+    case assessmentConstant.DELETE_SUBJECT_SUCCESS:
       return {
         ...state,
         blogLoading: false,
@@ -97,6 +99,7 @@ const assessmentReducer = (state = initialState, action) => {
     case assessmentConstant.CREATE_FINAL_QUESTION_FAILURE:
     case assessmentConstant.GET_UNIT_QUESTION_FAILURE:
     case assessmentConstant.CREATE_UNIT_QUESTION_FAILURE:
+    case assessmentConstant.DELETE_SUBJECT_FAILURE:
       return {
         ...state,
         blogLoading: false,

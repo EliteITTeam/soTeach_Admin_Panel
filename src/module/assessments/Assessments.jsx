@@ -4,13 +4,15 @@ import { Container, FormInput, Modal, Button } from "../../components";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom";
+import { FiDelete } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 import { Navbar } from "../../components/common";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import {
   CreateSubject,
   GetAllSubject,
+  DeleteSubject,
   clearErrors,
   clearMessages,
 } from "./../../store/actions";
@@ -170,19 +172,37 @@ const Assessments = () => {
 export default Assessments;
 
 const Item = (props) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleDelete = (id) => {
+    let value = window.confirm("Are u Sure You Want To Delete This?");
+    if (value) {
+      dispatch(DeleteSubject(id));
+    }
+  };
   return (
     <>
-      <Link to={`/assessments/detail/${props.subjectId}`}>
-        <div className="assessmentcard ">
-          <div className="assessmentcard-container">
-            <div>
-              <h1>{props.icon}</h1>
-              <h3>{props.subject}</h3>
-            </div>
-            <AiOutlineArrowRight />
+      <div className="assessmentcard ">
+        <div className="assessmentcard-container">
+          <div
+            onClick={() => navigate(`/assessments/detail/${props.subjectId}`)}
+            style={{ cursor: "pointer" }}
+          >
+            <h1>{props.icon}</h1>
+            <h3>{props.subject}</h3>
+          </div>
+          <div>
+            <FiDelete
+              style={{ marginRight: "1rem", color: "red", cursor: "pointer" }}
+              onClick={() => handleDelete(props.subjectId)}
+            />
+            <AiOutlineArrowRight
+              onClick={() => navigate(`/assessments/detail/${props.subjectId}`)}
+              style={{ cursor: "pointer" }}
+            />
           </div>
         </div>
-      </Link>
+      </div>
     </>
   );
 };
