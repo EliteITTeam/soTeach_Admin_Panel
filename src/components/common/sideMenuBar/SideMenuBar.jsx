@@ -53,7 +53,7 @@ const SideMenuBar = (props) => {
                 {isOpen ? (
                   <div className="profile-for-sidebar">
                     <img src={profile} alt="" />
-                    <h6>{admin.userName && admin.userName}</h6>
+                    <h6>{admin?.userName && admin.userName}</h6>
                   </div>
                 ) : (
                   ""

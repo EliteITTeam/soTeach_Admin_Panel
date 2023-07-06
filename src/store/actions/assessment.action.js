@@ -608,3 +608,38 @@ export const CreateUnitQuestions = (body) => {
     }
   };
 };
+
+export const DeleteSubject = (subjectId) => {
+  return async (dispatch) => {
+    dispatch({ type: assessmentConstant.DELETE_SUBJECT_REQUEST });
+    try {
+      const token = localStorage.getItem("adminToken");
+      await axios.delete(
+        `${process.env.REACT_APP_ROOT}/api/subject/${subjectId}`,
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      dispatch(GetAllSubject(1));
+      dispatch({
+        type: assessmentConstant.DELETE_SUBJECT_SUCCESS,
+        payload: `Subject has been deleted`,
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: assessmentConstant.DELETE_SUBJECT_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};
