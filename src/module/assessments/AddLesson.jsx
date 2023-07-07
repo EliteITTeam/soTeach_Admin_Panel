@@ -18,13 +18,14 @@ const AddLesson = () => {
   const { id, heading } = useParams();
   const navigate = useNavigate();
   const imageRef = useRef();
+  const pdfRef = useRef();
   const [image, setImage] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [pdf, setPdf] = useState("");
   const dispatch = useDispatch();
   const { records, errors, sessionExpireError, message, loading } = useSelector(
     (state) => state.assessmentReducer
   );
-
   const validation = Yup.object({
     name: Yup.string().required("Required"),
     description: Yup.string().optional(),
@@ -34,7 +35,9 @@ const AddLesson = () => {
     setImage(event.target.files[0]);
     setImageUrl(URL.createObjectURL(event.target.files[0]));
   };
-
+  const FileChange = (event) => {
+    setPdf(event.target.files[0]);
+  };
   useEffect(() => {
     if (errors.length > 0) {
       toast.error(errors);
@@ -59,11 +62,25 @@ const AddLesson = () => {
   return (
     <>
       <Navbar backbtn={true} heading={heading} />
-      {/* <div className="m-4">
+      <div style={{ display: "none" }}>
+        <input
+          type="file"
+          name="myImage"
+          accept="pdf/*"
+          ref={pdfRef}
+          onChange={(e) => FileChange(e)}
+        />
+      </div>
+      <div className="m-4">
         <Container className="md">
-          <Button className="btn-primary align-item-right">Upload pdf</Button>
+          <Button
+            className="btn-primary align-item-right"
+            onClick={() => pdfRef.current.click()}
+          >
+            Upload pdf
+          </Button>
         </Container>
-      </div> */}
+      </div>
 
       <div className="m-5">
         <Container className="extra-small">
@@ -82,6 +99,9 @@ const AddLesson = () => {
                 finalResult.append("description", description);
                 if (image) {
                   finalResult.append("videoPath", image);
+                }
+                if (pdf) {
+                  finalResult.append("lessonPDFpath", pdf);
                 }
                 dispatch(UpdateLesson(finalResult, id));
                 resetForm({ values: "" });
