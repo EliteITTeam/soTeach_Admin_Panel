@@ -10,6 +10,10 @@ const initialState = {
   subjectReport: [],
   levelReport: [],
   genderReport: [],
+  ageReport: [],
+  eventList: [],
+  page: 1,
+  totalPages: 1,
   message: "",
   errors: [],
 };
@@ -17,6 +21,7 @@ const initialState = {
 const assessmentReducer = (state = initialState, action) => {
   switch (action.type) {
     case dashboardConstant.CREATE_EVENT_REQUEST:
+    case dashboardConstant.GET_EVENT_LIST_REQUEST:
       return {
         ...state,
         loading: true,
@@ -24,6 +29,7 @@ const assessmentReducer = (state = initialState, action) => {
     case dashboardConstant.GET_SUBJECT_REPORT_REQUEST:
     case dashboardConstant.GET_COUNT_BY_LEVEL_REQUEST:
     case dashboardConstant.GET_COUNT_BY_GENDER_REQUEST:
+    case dashboardConstant.GET_COUNT_BY_AGE_REQUEST:
       return {
         ...state,
         reportLoading: true,
@@ -33,6 +39,15 @@ const assessmentReducer = (state = initialState, action) => {
         ...state,
         reportLoading: false,
         subjectReport: action.payload,
+      };
+
+    case dashboardConstant.GET_EVENT_LIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        eventList: action.payload.results,
+        page: action.payload.page,
+        totalPages: action.payload.totalPages,
       };
     case dashboardConstant.GET_COUNT_BY_LEVEL_SUCCESS:
       return {
@@ -45,6 +60,12 @@ const assessmentReducer = (state = initialState, action) => {
         ...state,
         reportLoading: false,
         genderReport: action.payload,
+      };
+    case dashboardConstant.GET_COUNT_BY_AGE_SUCCESS:
+      return {
+        ...state,
+        reportLoading: false,
+        ageReport: action.payload,
       };
     case dashboardConstant.CREATE_EVENT_SUCCESS:
       return {
@@ -61,6 +82,8 @@ const assessmentReducer = (state = initialState, action) => {
     case dashboardConstant.CREATE_EVENT_FAILURE:
     case dashboardConstant.GET_COUNT_BY_LEVEL_FAILURE:
     case dashboardConstant.GET_COUNT_BY_GENDER_FAILURE:
+    case dashboardConstant.GET_COUNT_BY_AGE_FAILURE:
+    case dashboardConstant.GET_EVENT_LIST_FAILURE:
       return {
         ...state,
         reportLoading: false,

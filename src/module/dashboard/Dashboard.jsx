@@ -20,6 +20,7 @@ import {
   SubjectReport,
   CountByLevel,
   CountByGender,
+  CountByAge,
   clearErrors,
   clearMessages,
 } from "./../../store/actions";
@@ -74,22 +75,20 @@ export const options1 = {
     },
   },
 };
-export const ageGroupData = {
-  labels: ["13", "12", "11", "10"],
-  datasets: [
-    {
-      data: [10, 5, 7, 9],
-      backgroundColor: ["#A5DCA8", "#2D582F", "#747474", "#0F2010"],
-    },
-  ],
-};
 
 const Dashboard = () => {
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
   const dispatch = useDispatch();
-  const { message, errors, loading, subjectReport, levelReport, genderReport } =
-    useSelector((state) => state.dashboardReducer);
+  const {
+    message,
+    errors,
+    loading,
+    subjectReport,
+    levelReport,
+    genderReport,
+    ageReport,
+  } = useSelector((state) => state.dashboardReducer);
 
   let subjectLabelsArray = [];
   let subjectDataArray = [];
@@ -160,6 +159,23 @@ const Dashboard = () => {
       },
     ],
   };
+  let ageReportCount = [];
+  let ageReportHeading = [];
+  if (ageReport.length > 0) {
+    ageReport.forEach((data) => {
+      ageReportCount.push(data?.count ? data.count : "");
+      ageReportHeading.push(data?.age ? data.age : "");
+    });
+  }
+  const ageGroupData = {
+    labels: ageReportHeading,
+    datasets: [
+      {
+        data: ageReportCount,
+        backgroundColor: ["#A5DCA8", "#2D582F", "#747474", "#0F2010"],
+      },
+    ],
+  };
   useEffect(() => {
     if (errors.length > 0) {
       toast.error(errors);
@@ -175,6 +191,7 @@ const Dashboard = () => {
     dispatch(SubjectReport());
     dispatch(CountByLevel());
     dispatch(CountByGender());
+    dispatch(CountByAge());
   }, []);
 
   const result = { date, description };

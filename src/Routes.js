@@ -39,6 +39,7 @@ import {
   CreateFinalQuestion,
   UnitQuestion,
   CreateUnitQuestion,
+  Events,
 } from "./module";
 
 const Routess = () => {
@@ -60,6 +61,7 @@ const Routess = () => {
             <Route path="" element={<PanelLayout />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/verification" element={<Verification />} />
+              <Route path="/events" element={<Events />} />
               <Route
                 path="/verification/:id?"
                 element={<VerificationDetail />}
@@ -124,7 +126,6 @@ const Routess = () => {
                 path="/assessments/detail/addlesson/:id?/:heading?"
                 element={<AddLesson />}
               />
-
               <Route path="/inbox" element={<InboxPage />} />
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/password-reset" element={<PasswordReset />} />
