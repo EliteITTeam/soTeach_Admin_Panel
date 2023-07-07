@@ -13,6 +13,7 @@ import {
   clearErrors,
   clearMessages,
 } from "./../../store/actions";
+import { PDFIMAGE } from "./../../assests";
 
 const AddLesson = () => {
   const { id, heading } = useParams();
@@ -66,7 +67,7 @@ const AddLesson = () => {
         <input
           type="file"
           name="myImage"
-          accept="pdf/*"
+          accept=".pdf"
           ref={pdfRef}
           onChange={(e) => FileChange(e)}
         />
@@ -79,9 +80,15 @@ const AddLesson = () => {
           >
             Upload pdf
           </Button>
+          {pdf ? (
+            <div className="align-item-right m-1">
+              <img src={PDFIMAGE} alt="pdf image" width="60" height="60" />
+            </div>
+          ) : (
+            ""
+          )}
         </Container>
       </div>
-
       <div className="m-5">
         <Container className="extra-small">
           <Container className="md">
