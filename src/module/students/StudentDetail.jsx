@@ -27,7 +27,6 @@ const StudentDetail = () => {
     (state) => state.userReducer
   );
 
-  console.log("userInfo is", userInfo);
   const [modalremove, setModalRemove] = useState(false);
   const [modallogout, setModallogout] = useState(false);
   const [modalupgrade, setModalupgrade] = useState(false);
@@ -153,12 +152,12 @@ const StudentDetail = () => {
           <div className="student-detail-container">
             <div className="student-detail-container-profile">
               <img
-                src={userInfo.photoPath ? userInfo.photoPath : profile}
+                src={userInfo?.photoPath ? userInfo.photoPath : profile}
                 alt="profile"
               />
               <h3>
-                {`${userInfo.firstName && userInfo.firstName} ${
-                  userInfo.lastName && userInfo.lastName
+                {`${userInfo?.firstName && userInfo.firstName} ${
+                  userInfo?.lastName && userInfo.lastName
                 }`}
               </h3>
             </div>
@@ -167,11 +166,11 @@ const StudentDetail = () => {
                 <div className="student-detail-container-content-left">
                   <div className="student-detail-container-content-left-item">
                     <h5>Username</h5>
-                    <p>{userInfo.userName && userInfo.userName}</p>
+                    <p>{userInfo?.userName && userInfo.userName}</p>
                   </div>
                   <div className="student-detail-container-content-left-item">
                     <h5>Gender</h5>
-                    <p>{userInfo.gender && userInfo.gender}</p>
+                    <p>{userInfo?.gender && userInfo.gender}</p>
                   </div>
                   {/* <div className="student-detail-container-content-left-item">
                     <h5>Age</h5>
@@ -179,11 +178,11 @@ const StudentDetail = () => {
                   </div> */}
                   <div className="student-detail-container-content-left-item">
                     <h5>DOB</h5>
-                    <p>{userInfo.dateOfBirth && userInfo.dateOfBirth}</p>
+                    <p>{userInfo?.dateOfBirth && userInfo.dateOfBirth}</p>
                   </div>
                   <div className="student-detail-container-content-left-item">
                     <h5>Dream Job</h5>
-                    <p>{userInfo.dreamJob && userInfo.dreamJob}</p>
+                    <p>{userInfo?.dreamJob && userInfo.dreamJob}</p>
                   </div>
                   <div className="student-detail-container-content-left-item">
                     <h5>Joined on</h5>
@@ -194,11 +193,11 @@ const StudentDetail = () => {
                   <div className="student-detail-container-content-right-top">
                     <h4>Subjects</h4>
                     <div className="student-detail-container-content-right-top-subjects">
-                      {userInfo.subjects
+                      {userInfo?.subjects
                         ? userInfo.subjects.map((item, ind) => {
                             return (
                               <p key={ind}>
-                                {item.subject.name && item.subject.name}
+                                {item.subject?.name && item.subject.name}
                               </p>
                             );
                           })
@@ -211,7 +210,7 @@ const StudentDetail = () => {
                       <div className="student-level-box">
                         <img src={intermediate} alt="levels" />
                         <div className="student-level-box-container">
-                          <h5>{userInfo.level && userInfo.level}</h5>
+                          <h5>{userInfo?.level && userInfo?.level}</h5>
                           <p>
                             I can already understand and put together written
                             and spoken sentences
