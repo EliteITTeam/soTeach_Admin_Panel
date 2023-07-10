@@ -22,8 +22,11 @@ import {
 
 const BlogPage = () => {
   const imageRef = useRef();
+  const blogImageRef = useRef();
   const [image, setImage] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [blogImage, setBlogImage] = useState("");
+  const [blogImageUrl, setBlogImageUrl] = useState("");
   const navigate = useNavigate();
   const validation = Yup.object({
     description: Yup.string().required("Required"),
@@ -55,6 +58,10 @@ const BlogPage = () => {
     setImage(event.target.files[0]);
     setImageUrl(URL.createObjectURL(event.target.files[0]));
   };
+  const blogImageChange = (event) => {
+    setBlogImage(event.target.files[0]);
+    setBlogImageUrl(URL.createObjectURL(event.target.files[0]));
+  };
   return (
     <>
       <Navbar heading="Blog & About us" />
@@ -70,7 +77,13 @@ const BlogPage = () => {
               validateOnMount
               validationSchema={validation}
               onSubmit={(values, { resetForm }) => {
-                dispatch(CreateAboutUs(values));
+                const { description } = values;
+                let finalResult = new FormData();
+                finalResult.append("description", description);
+                if (blogImage) {
+                  finalResult.append("photoPath", blogImage);
+                }
+                dispatch(CreateAboutUs(finalResult));
                 resetForm({ values: "" });
               }}
             >
@@ -83,6 +96,35 @@ const BlogPage = () => {
                     cols="100"
                     rows="10"
                   />
+                  <div style={{ display: "none" }}>
+                    <input
+                      type="file"
+                      name="myImage"
+                      accept="image/*"
+                      ref={blogImageRef}
+                      onChange={blogImageChange}
+                    />
+                  </div>
+                  <div
+                    className="btn-lighter rounded center m-2"
+                    onClick={() => blogImageRef.current.click()}
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      padding: "2rem",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Upload Image
+                  </div>
+                  {blogImageUrl && (
+                    <img
+                      src={blogImageUrl}
+                      alt="image"
+                      width="100"
+                      height="100"
+                    />
+                  )}
                   <Button className="btn-lighter rounded center m-2">
                     {aboutLoading ? "Please wait..." : "Save"}
                   </Button>
@@ -150,7 +192,9 @@ const BlogPage = () => {
                   >
                     Upload Image
                   </div>
-                  {imageUrl && <img src={imageUrl} alt="image" />}
+                  {imageUrl && (
+                    <img src={imageUrl} alt="image" width="100" height="100" />
+                  )}
                   <Button className="btn-lighter rounded center m-2">
                     {blogLoading ? "Please wait..." : "Save"}
                   </Button>

@@ -107,7 +107,10 @@ const Students = () => {
                       gender={data.gender && data.gender}
                       age="17"
                       dateofbirth={data.dateOfBirth && data.dateOfBirth}
-                      subjects="Eng , Math , Phy"
+                      subjects={
+                        data.subjects &&
+                        data.subjects.map((obj) => obj.subject?.name).join(", ")
+                      }
                       dateofjoin={data.createdAt && data.createdAt}
                       userId={data._id}
                       userImage={data.photoPath ? data.photoPath : profile}

@@ -82,7 +82,7 @@ const VerificationDetail = () => {
                   </div>
                   <div className="verification-detail-container-content-left-item">
                     <h5>Age</h5>
-                    <p>13</p>
+                    <p>{userInfo.age && userInfo.age}</p>
                   </div>
                   <div className="verification-detail-container-content-left-item">
                     <h5>DOB</h5>
@@ -96,9 +96,15 @@ const VerificationDetail = () => {
                 <div className="verification-detail-container-content-right">
                   <h4>Subjects</h4>
                   <div className="verification-detail-container-content-right-subjects">
-                    <p>English</p>
-                    <p>Math</p>
-                    <p>History</p>
+                    {userInfo?.subjects
+                      ? userInfo.subjects.map((item, ind) => {
+                          return (
+                            <p key={ind}>
+                              {item.subject?.name && item.subject.name}
+                            </p>
+                          );
+                        })
+                      : ""}
                   </div>
                 </div>
               </div>
