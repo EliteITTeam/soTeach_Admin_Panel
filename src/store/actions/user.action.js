@@ -267,6 +267,39 @@ export const addMessage = (body) => {
   };
 };
 
+export const LogoutUser = (body) => {
+  return async (dispatch) => {
+    dispatch({
+      type: userConstant.LOGOUT_USER_REQUEST,
+    });
+    try {
+      const token = localStorage.getItem("adminToken");
+      await axios.post(`${process.env.REACT_APP_ROOT}/api/auth/logout`, body, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      });
+      dispatch({
+        type: userConstant.LOGOUT_USER_SUCCESS,
+        payload: "User has been logout",
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: userConstant.LOGOUT_USER_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};
+
 export const DeleteSingleUser = (userId) => {
   return async (dispatch) => {
     dispatch({

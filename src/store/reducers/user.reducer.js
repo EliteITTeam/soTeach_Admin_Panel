@@ -4,6 +4,7 @@ const initialState = {
   records: [],
   errors: [],
   loading: false,
+  logoutLoading: false,
   sessionExpireError: "",
   chatConnection: {},
   userInfo: {},
@@ -24,6 +25,11 @@ const assessmentReducer = (state = initialState, action) => {
         ...state,
         loading: true,
       };
+    case userConstant.LOGOUT_USER_REQUEST:
+      return {
+        ...state,
+        logoutLoading: true,
+      };
     case userConstant.GET_ALL_USER_SUCCESS:
     case userConstant.GET_REQUESTED_USER_SUCCESS:
       return {
@@ -36,8 +42,10 @@ const assessmentReducer = (state = initialState, action) => {
     case userConstant.RESET_PASSWORD_SUCCESS:
     case userConstant.UPDATE_USER_STATUS_SUCCESS:
     case userConstant.DELETE_SINGLE_USER_SUCCESS:
+    case userConstant.LOGOUT_USER_SUCCESS:
       return {
         ...state,
+        logoutLoading: false,
         loading: false,
         message: action.payload,
       };
@@ -66,20 +74,24 @@ const assessmentReducer = (state = initialState, action) => {
     case userConstant.GET_REQUESTED_USER_FAILURE:
     case userConstant.UPDATE_USER_STATUS_FAILURE:
     case userConstant.DELETE_SINGLE_USER_FAILURE:
+    case userConstant.LOGOUT_USER_FAILURE:
       return {
         ...state,
+        logoutLoading: false,
         loading: false,
         errors: action.payload.err,
       };
     case authConstant.CLEAR_MESSAGES:
       return {
         ...state,
+        logoutLoading: false,
         loading: false,
         message: "",
       };
     case authConstant.CLEAR_ERRORS:
       return {
         ...state,
+        logoutLoading: false,
         loading: false,
         errors: [],
         sessionExpireError: "",
