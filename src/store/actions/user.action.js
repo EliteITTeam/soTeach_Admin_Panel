@@ -300,6 +300,42 @@ export const LogoutUser = (body) => {
   };
 };
 
+export const UpdateLevelOfUser = (body, userId) => {
+  return async (dispatch) => {
+    dispatch({
+      type: userConstant.UPDATE_USER_REQUEST,
+    });
+    try {
+      const token = localStorage.getItem("adminToken");
+      await axios.patch(
+        `${process.env.REACT_APP_ROOT}/api/auth/users/${userId}`,
+        body,
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      dispatch({
+        type: userConstant.UPDATE_USER_SUCCESS,
+        payload: "User has been updated",
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: userConstant.UPDATE_USER_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};
 export const DeleteSingleUser = (userId) => {
   return async (dispatch) => {
     dispatch({

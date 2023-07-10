@@ -16,6 +16,7 @@ import {
   getUserInfo,
   DeleteSingleUser,
   LogoutUser,
+  UpdateLevelOfUser,
   clearErrors,
   clearMessages,
 } from "./../../store/actions";
@@ -31,6 +32,7 @@ const StudentDetail = () => {
   const [modalremove, setModalRemove] = useState(false);
   const [modallogout, setModallogout] = useState(false);
   const [modalupgrade, setModalupgrade] = useState(false);
+  const [upgradeValue, setUpgradeValue] = useState("");
 
   useEffect(() => {
     if (errors.length > 0) {
@@ -43,10 +45,24 @@ const StudentDetail = () => {
       setTimeout(() => navigate(-1), 2000);
     }
   }, [errors, message]);
+
   useEffect(() => {
     dispatch(getUserInfo(id));
   }, []);
   let result = { id };
+
+  const handleUpgradeValue = (e) => {
+    setUpgradeValue(e.target.value);
+  };
+  const handleUpgradeSubmit = () => {
+    if (upgradeValue) {
+      let result = new FormData();
+      result.append("level", upgradeValue);
+      dispatch(UpdateLevelOfUser(result, id));
+    } else {
+      toast.error("Upgrade field is required");
+    }
+  };
   return (
     <>
       {modalremove ? (
@@ -102,7 +118,7 @@ const StudentDetail = () => {
         <Modal action={modalupgrade}>
           <div className="modal-upgradelevel">
             <h3 className="center">Upgrade Level</h3>
-            <UpgradeLevelItem
+            {/* <UpgradeLevelItem
               image={bignner}
               title="Beginner"
               content="I want to learn the basics of English language"
@@ -126,7 +142,42 @@ const StudentDetail = () => {
               image={expert}
               title="Advanced"
               content="I am extremely affluent in the spoken and written language and just want to test myself."
-            />
+            /> */}
+            <center>
+              <select
+                style={{
+                  marginTop: "2rem",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onChange={(e) => handleUpgradeValue(e)}
+              >
+                <option>Select option for upgrade level</option>
+                <option value="BEGINNER">BEGINNER</option>
+                <option value="LOWER_INTERMEDIATE">LOWER_INTERMEDIATE</option>
+                <option value="INTERMEDIATE">INTERMEDIATE</option>
+                <option value="UPPER_INTERMEDIATE">UPPER_INTERMEDIATE</option>
+                <option value="ADVANCED">ADVANCED</option>
+              </select>
+            </center>
+            <center>
+              <button
+                style={{
+                  marginTop: "2rem",
+                  backgroundColor: "black",
+                  color: "white",
+                  padding: "1rem",
+                  outline: "none",
+                  border: "none",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                }}
+                onClick={() => handleUpgradeSubmit()}
+              >
+                {loading ? "Please wait..." : "UPGRADE LEVEL"}
+              </button>
+            </center>
           </div>
         </Modal>
       ) : (
@@ -247,7 +298,10 @@ export default StudentDetail;
 const UpgradeLevelItem = (props) => {
   return (
     <>
-      <div className="upgradelevel-item m-3">
+      <div
+        className="upgradelevel-item m-3"
+        onClick={() => prompt("type something...")}
+      >
         <div className="upgradelevel-item-container">
           <div className="upgradelevel-item-container-image">
             <img src={props.image} alt="level" />

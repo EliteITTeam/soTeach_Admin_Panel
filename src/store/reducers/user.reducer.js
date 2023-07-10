@@ -21,6 +21,7 @@ const assessmentReducer = (state = initialState, action) => {
     case userConstant.GET_REQUESTED_USER_REQUEST:
     case userConstant.UPDATE_USER_STATUS_REQUEST:
     case userConstant.DELETE_SINGLE_USER_REQUEST:
+    case userConstant.UPDATE_USER_REQUEST:
       return {
         ...state,
         loading: true,
@@ -43,6 +44,7 @@ const assessmentReducer = (state = initialState, action) => {
     case userConstant.UPDATE_USER_STATUS_SUCCESS:
     case userConstant.DELETE_SINGLE_USER_SUCCESS:
     case userConstant.LOGOUT_USER_SUCCESS:
+    case userConstant.UPDATE_USER_SUCCESS:
       return {
         ...state,
         logoutLoading: false,
@@ -75,6 +77,7 @@ const assessmentReducer = (state = initialState, action) => {
     case userConstant.UPDATE_USER_STATUS_FAILURE:
     case userConstant.DELETE_SINGLE_USER_FAILURE:
     case userConstant.LOGOUT_USER_FAILURE:
+    case userConstant.UPDATE_USER_FAILURE:
       return {
         ...state,
         logoutLoading: false,
