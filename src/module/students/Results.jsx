@@ -16,7 +16,6 @@ const Results = () => {
     (state) => state.userReducer
   );
 
-  console.log("userInfo is", userInfo);
   useEffect(() => {
     if (errors.length > 0) {
       toast.error(errors);
@@ -42,7 +41,7 @@ const Results = () => {
             ? userInfo.subjects.map((item, ind) => {
                 return (
                   <Button className="btn-secondry" key={ind}>
-                    {item.subject.name && item.subject.name}
+                    {item.subject?.name && item.subject.name}
                   </Button>
                 );
               })

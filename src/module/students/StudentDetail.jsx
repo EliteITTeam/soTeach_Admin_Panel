@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getUserInfo,
   DeleteSingleUser,
+  LogoutUser,
   clearErrors,
   clearMessages,
 } from "./../../store/actions";
@@ -23,7 +24,7 @@ const StudentDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { userInfo, message, errors, loading } = useSelector(
+  const { userInfo, logoutLoading, message, errors, loading } = useSelector(
     (state) => state.userReducer
   );
 
@@ -45,6 +46,7 @@ const StudentDetail = () => {
   useEffect(() => {
     dispatch(getUserInfo(id));
   }, []);
+  let result = { id };
   return (
     <>
       {modalremove ? (
@@ -79,7 +81,9 @@ const StudentDetail = () => {
             <h3>Logout Student</h3>
             <p>Are you sure you want to Logout this student? </p>
             <div className="modal-accept-button">
-              <button>Logout</button>
+              <button onClick={() => dispatch(LogoutUser(result))}>
+                {logoutLoading ? "Please wait..." : "Logout"}
+              </button>
               <button
                 onClick={() => {
                   setModallogout(!modallogout);
