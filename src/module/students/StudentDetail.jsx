@@ -172,10 +172,10 @@ const StudentDetail = () => {
                     <h5>Gender</h5>
                     <p>{userInfo?.gender && userInfo.gender}</p>
                   </div>
-                  {/* <div className="student-detail-container-content-left-item">
+                  <div className="student-detail-container-content-left-item">
                     <h5>Age</h5>
-                    <p></p>
-                  </div> */}
+                    <p>{userInfo?.age && userInfo.age}</p>
+                  </div>
                   <div className="student-detail-container-content-left-item">
                     <h5>DOB</h5>
                     <p>{userInfo?.dateOfBirth && userInfo.dateOfBirth}</p>
@@ -186,7 +186,7 @@ const StudentDetail = () => {
                   </div>
                   <div className="student-detail-container-content-left-item">
                     <h5>Joined on</h5>
-                    <p>15-04-23</p>
+                    <p>{userInfo.createdAt && userInfo.createdAt}</p>
                   </div>
                 </div>
                 <div className="student-detail-container-content-right">

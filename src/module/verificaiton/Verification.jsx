@@ -109,10 +109,13 @@ const Verification = () => {
                       name={data.firstName && data.firstName}
                       username={data.userName && data.userName}
                       gender={data.gender && data.gender}
-                      age="17"
+                      age={data.age && data.age}
                       dateofbirth={data.dateOfBirth && data.dateOfBirth}
                       userId={data._id}
-                      subjects="Eng , Math , Phy"
+                      subjects={
+                        data.subjects &&
+                        data.subjects.map((obj) => obj.subject?.name).join(", ")
+                      }
                       status={data.status && data.status}
                     />
                   );
