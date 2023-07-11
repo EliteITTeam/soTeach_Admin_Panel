@@ -22,6 +22,7 @@ const assessmentReducer = (state = initialState, action) => {
   switch (action.type) {
     case dashboardConstant.CREATE_EVENT_REQUEST:
     case dashboardConstant.GET_EVENT_LIST_REQUEST:
+    case dashboardConstant.DELETE_EVENT_LIST_REQUEST:
       return {
         ...state,
         loading: true,
@@ -40,7 +41,12 @@ const assessmentReducer = (state = initialState, action) => {
         reportLoading: false,
         subjectReport: action.payload,
       };
-
+    case dashboardConstant.DELETE_EVENT_LIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        message: action.payload,
+      };
     case dashboardConstant.GET_EVENT_LIST_SUCCESS:
       return {
         ...state,
@@ -84,6 +90,7 @@ const assessmentReducer = (state = initialState, action) => {
     case dashboardConstant.GET_COUNT_BY_GENDER_FAILURE:
     case dashboardConstant.GET_COUNT_BY_AGE_FAILURE:
     case dashboardConstant.GET_EVENT_LIST_FAILURE:
+    case dashboardConstant.DELETE_EVENT_LIST_FAILURE:
       return {
         ...state,
         reportLoading: false,

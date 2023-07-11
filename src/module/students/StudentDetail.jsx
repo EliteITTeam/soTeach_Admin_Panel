@@ -233,7 +233,10 @@ const StudentDetail = () => {
                   </div>
                   <div className="student-detail-container-content-left-item">
                     <h5>DOB</h5>
-                    <p>{userInfo?.dateOfBirth && userInfo.dateOfBirth}</p>
+                    <p>
+                      {userInfo?.dateOfBirth &&
+                        new Date(userInfo.dateOfBirth).toLocaleDateString()}
+                    </p>
                   </div>
                   <div className="student-detail-container-content-left-item">
                     <h5>Dream Job</h5>
@@ -241,7 +244,10 @@ const StudentDetail = () => {
                   </div>
                   <div className="student-detail-container-content-left-item">
                     <h5>Joined on</h5>
-                    <p>{userInfo.createdAt && userInfo.createdAt}</p>
+                    <p>
+                      {userInfo.createdAt &&
+                        new Date(userInfo.createdAt).toLocaleDateString()}
+                    </p>
                   </div>
                 </div>
                 <div className="student-detail-container-content-right">

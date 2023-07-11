@@ -222,3 +222,40 @@ export const EventList = (page) => {
     }
   };
 };
+
+export const DeleteEventList = (eventId) => {
+  return async (dispatch) => {
+    dispatch({
+      type: dashboardConstant.DELETE_EVENT_LIST_REQUEST,
+    });
+    try {
+      const token = localStorage.getItem("adminToken");
+      await axios.delete(
+        `${process.env.REACT_APP_ROOT}/api/events/${eventId}`,
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      dispatch(EventList(1));
+      dispatch({
+        type: dashboardConstant.DELETE_EVENT_LIST_SUCCESS,
+        payload: "Event has been deleted",
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: dashboardConstant.DELETE_EVENT_LIST_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};

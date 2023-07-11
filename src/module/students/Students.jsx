@@ -106,12 +106,18 @@ const Students = () => {
                       username={data.userName && data.userName}
                       gender={data.gender && data.gender}
                       age="17"
-                      dateofbirth={data.dateOfBirth && data.dateOfBirth}
+                      dateofbirth={
+                        data.dateOfBirth &&
+                        new Date(data.dateOfBirth).toLocaleDateString()
+                      }
                       subjects={
                         data.subjects &&
                         data.subjects.map((obj) => obj.subject?.name).join(", ")
                       }
-                      dateofjoin={data.createdAt && data.createdAt}
+                      dateofjoin={
+                        data.createdAt &&
+                        new Date(data.createdAt).toLocaleDateString()
+                      }
                       userId={data._id}
                       userImage={data.photoPath ? data.photoPath : profile}
                     />

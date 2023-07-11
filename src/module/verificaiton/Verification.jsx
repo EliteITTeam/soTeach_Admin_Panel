@@ -110,7 +110,10 @@ const Verification = () => {
                       username={data.userName && data.userName}
                       gender={data.gender && data.gender}
                       age={data.age && data.age}
-                      dateofbirth={data.dateOfBirth && data.dateOfBirth}
+                      dateofbirth={
+                        data.dateOfBirth &&
+                        new Date(data.dateOfBirth).toLocaleDateString()
+                      }
                       userId={data._id}
                       subjects={
                         data.subjects &&
