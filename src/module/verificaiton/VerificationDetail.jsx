@@ -86,7 +86,10 @@ const VerificationDetail = () => {
                   </div>
                   <div className="verification-detail-container-content-left-item">
                     <h5>DOB</h5>
-                    <p>{userInfo.dateOfBirth && userInfo.dateOfBirth}</p>
+                    <p>
+                      {userInfo.dateOfBirth &&
+                        new Date(userInfo.dateOfBirth).toLocaleDateString()}
+                    </p>
                   </div>
                   <div className="verification-detail-container-content-left-item">
                     <h5>Dream Job</h5>

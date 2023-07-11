@@ -4,10 +4,16 @@ import { Container } from "../../components";
 import { Navbar } from "../../components/common";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { EventList, clearErrors, clearMessages } from "./../../store/actions";
+import {
+  EventList,
+  DeleteEventList,
+  clearErrors,
+  clearMessages,
+} from "./../../store/actions";
 import { Puff } from "react-loader-spinner";
 import Pagination from "@mui/material/Pagination";
 import { makeStyles } from "@mui/styles";
+import { FiDelete } from "react-icons/fi";
 
 const useStyles = makeStyles({
   root: {
@@ -63,6 +69,9 @@ const Verification = () => {
                   <div>
                     <h6>Description</h6>
                   </div>
+                  <div>
+                    <h6>DELETE</h6>
+                  </div>
                 </div>
               </div>
               {loading ? (
@@ -84,6 +93,7 @@ const Verification = () => {
                         data.date && new Date(data.date).toLocaleDateString()
                       }
                       description={data.description && data.description}
+                      eventId={data.id}
                     />
                   );
                 })
@@ -122,6 +132,7 @@ export default Verification;
 
 // Sub components
 const VerificationBar = (props) => {
+  const dispatch = useDispatch();
   return (
     <>
       <div className="verification-bar m-4">
@@ -131,6 +142,13 @@ const VerificationBar = (props) => {
           </div>
           <div className="verification-bar-container-item">
             <h5>{props.description}</h5>
+          </div>
+          <div className="verification-bar-container-item">
+            <FiDelete
+              size={40}
+              style={{ color: "red", cursor: "pointer" }}
+              onClick={() => dispatch(DeleteEventList(props.eventId))}
+            />
           </div>
         </div>
       </div>
