@@ -5,6 +5,23 @@
   // background-color: $sidebar-background;
   background-color: $primary;
   position: relative;
+  height: 100vh;
+  overflow-y: hidden;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    cursor: pointer;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #fec34c;
+    cursor: grab;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: $primary;
+    padding: 0rem 3px;
+  }
   @include respond(tab-port) {
     position: absolute;
     height: 100vh;
@@ -51,6 +68,7 @@
   }
 }
 .logout-btn-sidebar {
+  
   margin-left: 1.5rem;
   background-color: $primary;
   color: #fa5757;
@@ -62,7 +80,6 @@
   font-size: 1.2rem;
   cursor: pointer;
   position: absolute;
-  bottom: 3rem;
   transition: 0.3s ease-in-out;
 }
 
