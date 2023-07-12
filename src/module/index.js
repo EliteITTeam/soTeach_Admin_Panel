@@ -26,3 +26,4 @@ export { default as CreateFinalQuestion } from "./students/CreateFinalQuestion";
 export { default as UnitQuestion } from "./students/UnitQuestion";
 export { default as CreateUnitQuestion } from "./students/CreateUnitQuestion";
 export { default as Events } from "./events/Event";
+export { default as BlogList } from "./blogList/BlogList";

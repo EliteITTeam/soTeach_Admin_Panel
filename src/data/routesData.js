@@ -63,6 +63,12 @@ export const adminRoutes = [
   },
   {
     id: 8,
+    path: "/blog/list",
+    name: "Blog List",
+    icon: <HiUserGroup />,
+  },
+  {
+    id: 9,
     path: "/password-reset",
     name: "Password Reset",
     icon: <FaPeopleArrows />,

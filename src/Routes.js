@@ -40,6 +40,7 @@ import {
   UnitQuestion,
   CreateUnitQuestion,
   Events,
+  BlogList,
 } from "./module";
 
 const Routess = () => {
@@ -77,6 +78,7 @@ const Routess = () => {
                 path="/students/:id?/results/lesson/exercise"
                 element={<Exercise />}
               />
+              <Route path="/blog/list" element={<BlogList />} />
               <Route
                 path="/students/:id?/results/lesson/exercise/quiz"
                 element={<Quiz />}
