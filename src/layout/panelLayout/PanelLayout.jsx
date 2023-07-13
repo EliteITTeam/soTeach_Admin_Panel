@@ -9,7 +9,9 @@ const PanelLayout = () => {
     <>
       <div className="customerdashboardlayout">
         <div className="customerdashboardlayout-container">
-          <SideMenuBar routes={adminRoutes} />
+          <div className="customerdashboardlayout-container-sidebar">
+            <SideMenuBar routes={adminRoutes} />
+          </div>
           <div className="customerdashboardlayout-container-content">
             {/* <div className="customerdashboardlayout-container-content-nav">
               <Navbar />
