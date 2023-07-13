@@ -5,6 +5,25 @@
   // background-color: $sidebar-background;
   background-color: $primary;
   position: relative;
+  height: 100vh;
+  overflow-y: hidden;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 6px;
+    cursor: pointer;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #fec34c;
+    cursor: grab;
+    border-radius: 2rem;
+
+  }
+  &::-webkit-scrollbar-track {
+    background-color: $primary;
+    padding: 0rem 3px;
+  }
   @include respond(tab-port) {
     position: absolute;
     height: 100vh;
@@ -62,7 +81,6 @@
   font-size: 1.2rem;
   cursor: pointer;
   position: absolute;
-  bottom: 3rem;
   transition: 0.3s ease-in-out;
 }
 
