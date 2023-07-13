@@ -372,3 +372,40 @@ export const DeleteSingleUser = (userId) => {
     }
   };
 };
+
+export const UploadCertificationOfUser = (body, userId) => {
+  return async (dispatch) => {
+    dispatch({
+      type: userConstant.UPLOAD_CERTIFICATE_REQUEST,
+    });
+    try {
+      const token = localStorage.getItem("adminToken");
+      await axios.patch(
+        `${process.env.REACT_APP_ROOT}/api/auth/certificate/${userId}`,
+        body,
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      dispatch({
+        type: userConstant.UPLOAD_CERTIFICATE_SUCCESS,
+        payload: "Certification has been created",
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: userConstant.UPLOAD_CERTIFICATE_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};
