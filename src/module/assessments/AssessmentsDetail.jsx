@@ -17,14 +17,14 @@ const AssessmentsDetail = () => {
   const { id } = useParams();
   return (
     <>
-      <Navbar heading="Assessments" backbtn={true} />
+      <Navbar heading="Subjects" backbtn={true} />
       <div className="">
         <Container className="md">
           <div className="m-5">
             <Grid className="grid-3">
               <AssessmentDetailCard
                 icon={notePaid}
-                heading="Enter Quiz"
+                heading="Add a question"
                 text="Basic Level"
                 to={`/assessments/detail/viewquiz/${id}`}
               />

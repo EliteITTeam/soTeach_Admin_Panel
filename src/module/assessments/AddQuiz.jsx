@@ -18,25 +18,21 @@ const AddQuiz = () => {
   const { id } = useParams();
   const validation = Yup.object({
     question: Yup.string()
-      .min(2, "Must be 2 character")
-      .max(500, "Must be 500 characters or less")
+      // .min(2, "Must be 2 character")
+      // .max(500, "Must be 500 characters or less")
       .required("Required"),
-    option1: Yup.string()
-      .required("Required")
-      .min(4, "Must be 4 character")
-      .max(70, "Must be 50 characters or less"),
-    option2: Yup.string()
-      .required("Required")
-      .min(4, "Must be 4 character")
-      .max(70, "Must be 50 characters or less"),
-    option3: Yup.string()
-      .required("Required")
-      .min(4, "Must be 4 character")
-      .max(70, "Must be 50 characters or less"),
-    option4: Yup.string()
-      .required("Required")
-      .min(4, "Must be 4 character")
-      .max(70, "Must be 50 characters or less"),
+    option1: Yup.string().required("Required"),
+    // .min(4, "Must be 4 character")
+    // .max(70, "Must be 50 characters or less"),
+    option2: Yup.string().required("Required"),
+    // .min(4, "Must be 4 character")
+    // .max(70, "Must be 50 characters or less"),
+    option3: Yup.string().required("Required"),
+    // .min(4, "Must be 4 character")
+    // .max(70, "Must be 50 characters or less"),
+    option4: Yup.string().required("Required"),
+    // .min(4, "Must be 4 character")
+    // .max(70, "Must be 50 characters or less"),
   });
 
   const [selectedOption, setSelectedOption] = useState("");
@@ -64,7 +60,7 @@ const AddQuiz = () => {
 
   return (
     <>
-      <Navbar heading="Enter Quiz" backbtn={true} />
+      <Navbar heading="Add question" backbtn={true} />
       <div className="enter-quiz">
         <Container className="extra-small">
           <div className="enter-quiz-heading">
@@ -88,8 +84,12 @@ const AddQuiz = () => {
                 correctOption: Number(selectedOption),
                 subject: id,
               };
-              dispatch(CreateQuiz(result));
-              resetForm({ values: "" });
+              if (!selectedOption) {
+                toast.error("Correct option is required");
+              } else {
+                dispatch(CreateQuiz(result));
+                resetForm({ values: "" });
+              }
             }}
           >
             {(formik) => (

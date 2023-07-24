@@ -107,7 +107,7 @@ const Assessments = () => {
         ""
       )}
 
-      <Navbar heading="Assessments" />
+      <Navbar heading="Subjects" />
       <Container className="md">
         <div className="assessment-item">
           {loading ? (
