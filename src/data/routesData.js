@@ -41,7 +41,7 @@ export const adminRoutes = [
   {
     id: 5,
     path: "/assessments",
-    name: "Assessments",
+    name: "Subjects",
     icon: <HiOutlineBars3BottomLeft />,
   },
   {

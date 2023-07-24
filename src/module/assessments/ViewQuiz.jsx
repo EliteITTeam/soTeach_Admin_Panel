@@ -57,14 +57,14 @@ const ViewQuiz = () => {
 
   return (
     <>
-      <Navbar heading="Quiz Question" backbtn={true} />
+      <Navbar heading="Question" backbtn={true} />
       <div className="m-3"></div>
       <Container className="md">
         <LinkBtn
           className="align-item-right mt-3"
           to={`/assessments/detail/addquiz/${id}`}
         >
-          Enter Quiz
+          Add Question
         </LinkBtn>
       </Container>
       <div className="m2">

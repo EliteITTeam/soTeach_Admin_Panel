@@ -21,26 +21,11 @@ const CreateFinalQuestion = () => {
   );
   const { id } = useParams();
   const validation = Yup.object({
-    question: Yup.string()
-      .min(2, "Must be 2 character")
-      .max(500, "Must be 500 characters or less")
-      .required("Required"),
-    option1: Yup.string()
-      .required("Required")
-      .min(4, "Must be 4 character")
-      .max(70, "Must be 50 characters or less"),
-    option2: Yup.string()
-      .required("Required")
-      .min(4, "Must be 4 character")
-      .max(70, "Must be 50 characters or less"),
-    option3: Yup.string()
-      .required("Required")
-      .min(4, "Must be 4 character")
-      .max(70, "Must be 50 characters or less"),
-    option4: Yup.string()
-      .required("Required")
-      .min(4, "Must be 4 character")
-      .max(70, "Must be 50 characters or less"),
+    question: Yup.string().required("Required"),
+    option1: Yup.string().required("Required"),
+    option2: Yup.string().required("Required"),
+    option3: Yup.string().required("Required"),
+    option4: Yup.string().required("Required"),
   });
 
   const [selectedOption, setSelectedOption] = useState("");

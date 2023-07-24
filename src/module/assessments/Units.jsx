@@ -116,7 +116,9 @@ const Units = () => {
                 >
                   Upload Image
                 </div>
-                {imageUrl && <img src={imageUrl} alt="image" />}
+                {imageUrl && (
+                  <img src={imageUrl} alt="image" height="50%" width="50%" />
+                )}
                 <Button className="btn-lighter rounded center m-2">
                   {loading ? "Please wait..." : "Save"}
                 </Button>
