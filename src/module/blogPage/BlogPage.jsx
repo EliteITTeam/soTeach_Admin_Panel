@@ -3,13 +3,7 @@ import "./BlogPage.scss";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Navbar } from "../../components/common";
-import {
-  Container,
-  FormText,
-  FormInput,
-  Heading,
-  Button,
-} from "../../components";
+import { Container, FormText, Heading, Button } from "../../components";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -19,14 +13,22 @@ import {
   clearErrors,
   clearMessages,
 } from "./../../store/actions";
+import JoditEditor from "jodit-react";
 
 const BlogPage = () => {
   const imageRef = useRef();
+  const editRef = useRef();
+  const editdescRef = useRef();
   const blogImageRef = useRef();
   const [image, setImage] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [blogImage, setBlogImage] = useState("");
   const [blogImageUrl, setBlogImageUrl] = useState("");
+  const [content, setContent] = useState("");
+  const [contentPlainText, setContentPlainText] = useState("");
+  const [desContent, setDescContent] = useState("");
+  const [descContentPlainText, setDescContentPlainText] = useState("");
+
   const navigate = useNavigate();
   const validation = Yup.object({
     description: Yup.string().required("Required"),
@@ -61,6 +63,32 @@ const BlogPage = () => {
   const blogImageChange = (event) => {
     setBlogImage(event.target.files[0]);
     setBlogImageUrl(URL.createObjectURL(event.target.files[0]));
+  };
+
+  const handleContent = (newContent) => {
+    setContent(newContent);
+  };
+
+  const handleDescriptionContent = (newContent) => {
+    setDescContent(newContent);
+  };
+
+  const handleSaveBlog = () => {
+    if (!content || !desContent) {
+      toast.error("Heading and desc is required");
+    } else {
+      let finalResult = new FormData();
+      finalResult.append("heading", content);
+      finalResult.append("content", desContent);
+      if (image) {
+        finalResult.append("photoPath", image);
+      }
+      dispatch(CreateBlog(finalResult));
+      imageRef.current.value = "";
+      setImageUrl("");
+      setContent("");
+      setDescContent("");
+    }
   };
   return (
     <>
@@ -121,8 +149,8 @@ const BlogPage = () => {
                     <img
                       src={blogImageUrl}
                       alt="image"
-                      width="100"
-                      height="100"
+                      width="50%"
+                      height="50%"
                     />
                   )}
                   <Button className="btn-lighter rounded center m-2">
@@ -146,30 +174,30 @@ const BlogPage = () => {
               }}
               validateOnMount
               validationSchema={blogValidation}
-              onSubmit={(values, { resetForm }) => {
-                const { content } = values;
-                let finalResult = new FormData();
-                finalResult.append("content", content);
-                if (image) {
-                  finalResult.append("photoPath", image);
-                }
-                dispatch(CreateBlog(finalResult));
-                imageRef.current.value = "";
-                setImageUrl("");
-                resetForm({ values: "" });
-              }}
+              onSubmit={(values) => {}}
             >
               {(formik) => (
                 <Form>
-                  <FormInput place="Heading" name="content" type="text" />
-                  {/* 
-                  <FormText
-                    place="Add Description "
-                    name="question"
-                    type="text"
-                    cols="100"
-                    rows="10"
-                  /> */}
+                  <label style={{ fontWeight: "bold" }}>Heading</label>
+                  <div style={{ margin: "2rem 0rem" }}>
+                    <JoditEditor
+                      className="heading-editor"
+                      ref={editRef}
+                      value={content}
+                      onChange={(newContent) => handleContent(newContent)}
+                    />
+                  </div>
+                  <label style={{ fontWeight: "bold" }}>Description</label>
+                  <div style={{ marginTop: "2rem" }}>
+                    <JoditEditor
+                      className="desc-editor"
+                      ref={editdescRef}
+                      value={desContent}
+                      onChange={(newContent) =>
+                        handleDescriptionContent(newContent)
+                      }
+                    />
+                  </div>
                   <div className=""></div>
                   <div style={{ display: "none" }}>
                     <input
@@ -193,9 +221,12 @@ const BlogPage = () => {
                     Upload Image
                   </div>
                   {imageUrl && (
-                    <img src={imageUrl} alt="image" width="100" height="100" />
+                    <img src={imageUrl} alt="image" width="50%" height="50%" />
                   )}
-                  <Button className="btn-lighter rounded center m-2">
+                  <Button
+                    className="btn-lighter rounded center m-2"
+                    onClick={() => handleSaveBlog()}
+                  >
                     {blogLoading ? "Please wait..." : "Save"}
                   </Button>
                 </Form>

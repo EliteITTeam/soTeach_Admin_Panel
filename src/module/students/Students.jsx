@@ -102,7 +102,9 @@ const Students = () => {
                   return (
                     <VerificationBar
                       key={ind}
-                      name={data.firstName && data.firstName}
+                      name={`${data.firstName && data.firstName} ${
+                        data.lastName && data.lastName
+                      }`}
                       username={data.userName && data.userName}
                       gender={data.gender && data.gender}
                       age="17"
