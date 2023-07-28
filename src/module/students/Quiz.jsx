@@ -4,10 +4,16 @@ import { Navbar } from "../../components/common";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { GetQuestion, clearErrors, clearMessages } from "./../../store/actions";
+import {
+  GetQuestion,
+  DeleteExercise,
+  clearErrors,
+  clearMessages,
+} from "./../../store/actions";
 import { Puff } from "react-loader-spinner";
 import Pagination from "@mui/material/Pagination";
 import { makeStyles } from "@mui/styles";
+import { FiDelete } from "react-icons/fi";
 
 const useStyles = makeStyles({
   root: {
@@ -55,34 +61,11 @@ const Quiz = () => {
   }, [page]);
   return (
     <>
-      {/* {alert ? (
-        <Modal action={alert}>
-          <div className="modal-accept">
-            <h3>Reset Quiz</h3>
-            <p>Are you sure you want to Reset this quiz? </p>
-            <div className="modal-accept-button">
-              <button>Yes</button>
-              <button
-                onClick={() => {
-                  setAlert(!alert);
-                }}
-              >
-                No
-              </button>
-            </div>
-          </div>
-        </Modal>
-      ) : (
-        ""
-      )} */}
       <Navbar heading="Exercise 1" backbtn={true} />
       <Container className="md">
         <div className="m-6">
           <Button
             className="align-item-right"
-            // onClick={() => {
-            //   setAlert(!alert);
-            // }}
             onClick={() => navigate(`/assessments/detail/addquestion/${id}`)}
           >
             Add New Exercise
@@ -110,6 +93,7 @@ const Quiz = () => {
                     option2={data.options && data.options[1]}
                     option3={data.options && data.options[2]}
                     option4={data.options && data.options[3]}
+                    questionId={data.id}
                   />
                 );
               })
@@ -146,13 +130,24 @@ const Quiz = () => {
 export default Quiz;
 
 const QuizQuestion = (props) => {
+  const dispatch = useDispatch();
+  const { id } = useParams();
   return (
     <>
       <div className="question">
         <div className="question-q">
-          <h1>Q{props.questionNo}. </h1>
+          <h1>Q{props.questionNo}.</h1>
         </div>
-        <h1>{props.question}</h1>
+        <h1>
+          {props.question}{" "}
+          <span
+            style={{ color: "red", cursor: "pointer" }}
+            onClick={() => dispatch(DeleteExercise(id, props.questionId))}
+          >
+            {" "}
+            <FiDelete />{" "}
+          </span>
+        </h1>
       </div>
       <div className="option-list">
         <div className="option">

@@ -5,10 +5,16 @@ import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { GetAllQuiz, clearErrors, clearMessages } from "./../../store/actions";
+import {
+  GetAllQuiz,
+  DeleteQuiz,
+  clearErrors,
+  clearMessages,
+} from "./../../store/actions";
 import { Puff } from "react-loader-spinner";
 import Pagination from "@mui/material/Pagination";
 import { makeStyles } from "@mui/styles";
+import { FiDelete } from "react-icons/fi";
 
 const useStyles = makeStyles({
   root: {
@@ -91,6 +97,7 @@ const ViewQuiz = () => {
                     option2={data.options && data.options[1]}
                     option3={data.options && data.options[2]}
                     option4={data.options && data.options[3]}
+                    quizId={data.id}
                   />
                 );
               })
@@ -127,12 +134,21 @@ const ViewQuiz = () => {
 export default ViewQuiz;
 
 const QuizCard = (props) => {
+  const dispatch = useDispatch();
+  const { id } = useParams();
   return (
     <>
       <div className="quizcard" style={{ marginBottom: "2rem" }}>
         <div className="quizcard-container">
           <h1>
             <span>Q {props.questionNo}: </span> {props.question}
+            <span
+              style={{ color: "red", cursor: "pointer" }}
+              onClick={() => dispatch(DeleteQuiz(props.quizId, id))}
+            >
+              {" "}
+              <FiDelete />{" "}
+            </span>
           </h1>
           <p>
             <span>1)</span>

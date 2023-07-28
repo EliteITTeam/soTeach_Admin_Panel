@@ -643,3 +643,73 @@ export const DeleteSubject = (subjectId) => {
     }
   };
 };
+
+export const DeleteQuiz = (quizId, subjectId) => {
+  return async (dispatch) => {
+    dispatch({ type: assessmentConstant.DELETE_QUIZ_REQUEST });
+    try {
+      const token = localStorage.getItem("adminToken");
+      await axios.delete(
+        `${process.env.REACT_APP_ROOT}/api/quiz/delete/${quizId}`,
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      dispatch(GetAllQuiz(subjectId, 1));
+      dispatch({
+        type: assessmentConstant.DELETE_QUIZ_SUCCESS,
+        payload: `Quiz has been deleted`,
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: assessmentConstant.DELETE_QUIZ_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};
+
+export const DeleteExercise = (lessonId, questionId) => {
+  return async (dispatch) => {
+    dispatch({ type: assessmentConstant.DELETE_QUESTION_REQUEST });
+    try {
+      const token = localStorage.getItem("adminToken");
+      await axios.delete(
+        `${process.env.REACT_APP_ROOT}/api/question/${questionId}`,
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      dispatch(GetQuestion(lessonId, 1));
+      dispatch({
+        type: assessmentConstant.DELETE_QUESTION_SUCCESS,
+        payload: `Question has been deleted`,
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: assessmentConstant.DELETE_QUESTION_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};
