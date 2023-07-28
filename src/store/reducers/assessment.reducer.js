@@ -30,6 +30,8 @@ const assessmentReducer = (state = initialState, action) => {
     case assessmentConstant.GET_UNIT_QUESTION_REQUEST:
     case assessmentConstant.CREATE_UNIT_QUESTION_REQUEST:
     case assessmentConstant.DELETE_SUBJECT_REQUEST:
+    case assessmentConstant.DELETE_QUIZ_REQUEST:
+    case assessmentConstant.DELETE_QUESTION_REQUEST:
       return {
         ...state,
         loading: true,
@@ -54,6 +56,8 @@ const assessmentReducer = (state = initialState, action) => {
     case assessmentConstant.CREATE_FINAL_QUESTION_SUCCESS:
     case assessmentConstant.CREATE_UNIT_QUESTION_SUCCESS:
     case assessmentConstant.DELETE_SUBJECT_SUCCESS:
+    case assessmentConstant.DELETE_QUIZ_SUCCESS:
+    case assessmentConstant.DELETE_QUESTION_SUCCESS:
       return {
         ...state,
         blogLoading: false,
@@ -100,6 +104,8 @@ const assessmentReducer = (state = initialState, action) => {
     case assessmentConstant.GET_UNIT_QUESTION_FAILURE:
     case assessmentConstant.CREATE_UNIT_QUESTION_FAILURE:
     case assessmentConstant.DELETE_SUBJECT_FAILURE:
+    case assessmentConstant.DELETE_QUIZ_FAILURE:
+    case assessmentConstant.DELETE_QUESTION_FAILURE:
       return {
         ...state,
         blogLoading: false,
