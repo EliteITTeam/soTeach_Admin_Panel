@@ -1,23 +1,11 @@
-import {
-  BsFillChatTextFill,
-  BsGraphUpArrow,
-  BsFillBriefcaseFill,
-  BsFillQuestionCircleFill,
-} from "react-icons/bs";
-import { FiSettings } from "react-icons/fi";
+import { BsGraphUpArrow } from "react-icons/bs";
 import { RiDashboardFill } from "react-icons/ri";
-import {
-  MdRoomService,
-  MdRateReview,
-  MdVerified,
-  MdOutlineAccountBalanceWallet,
-} from "react-icons/md";
+import { MdRoomService, MdRateReview } from "react-icons/md";
 import { HiUserGroup } from "react-icons/hi";
 import { HiOutlineBars3BottomLeft } from "react-icons/hi2";
-import { FaPeopleArrows } from "react-icons/fa";
 import { SiEventstore } from "react-icons/si";
-import { dividerClasses } from "@mui/material";
-import { toBeRequired } from "@testing-library/jest-dom/dist/matchers";
+import { BiEdit } from "react-icons/bi";
+import { VscLock } from "react-icons/vsc";
 
 export const adminRoutes = [
   {
@@ -61,7 +49,7 @@ export const adminRoutes = [
     id: 7,
     path: "/blog",
     name: "Blog & About us",
-    icon: <HiUserGroup />,
+    icon: <BiEdit />,
   },
   {
     id: 8,
@@ -73,6 +61,6 @@ export const adminRoutes = [
     id: 9,
     path: "/password-reset",
     name: "Password Reset",
-    icon: <FaPeopleArrows />,
+    icon: <VscLock />,
   },
 ];

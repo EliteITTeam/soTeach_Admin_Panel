@@ -143,7 +143,7 @@ const Units = () => {
                       navigate(`/students/${unitId}/final/question`)
                     }
                   >
-                    Final Questions For Subject
+                    Final Exam For Subject
                   </button>
                   <button
                     style={{
@@ -157,7 +157,7 @@ const Units = () => {
                     }}
                     onClick={() => navigate(`/students/${id}/unit/question`)}
                   >
-                    Final Questions For Unit
+                    Final Exam For Unit
                   </button>
                 </div>
               </Form>

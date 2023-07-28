@@ -19,6 +19,7 @@ import progress3 from "../assests/progress3.svg";
 import progress4 from "../assests/progress4.svg";
 import progress5 from "../assests/progress5.svg";
 import PDFIMAGE from "../assests/pdf.png";
+// import AboutUs from "./aboutUs.svg";
 
 // Assessments Detail
 import notePaid from "./notePaid.svg";

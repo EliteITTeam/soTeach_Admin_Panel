@@ -40,7 +40,6 @@ const BlogLists = () => {
     (state) => state.dashboardReducer
   );
 
-  console.log("eventList is", eventList);
   useEffect(() => {
     if (errors.length > 0) {
       toast.error(errors);
@@ -68,6 +67,9 @@ const BlogLists = () => {
                     <h6>Photo</h6>
                   </div>
                   <div>
+                    <h6>Heading</h6>
+                  </div>
+                  <div>
                     <h6>Description</h6>
                   </div>
                   <div>
@@ -91,6 +93,7 @@ const BlogLists = () => {
                     <VerificationBar
                       key={ind}
                       image={data?.photoPath && data.photoPath}
+                      heading={data?.heading && data.heading}
                       description={data?.content && data.content}
                       blogId={data.id}
                     />
@@ -145,8 +148,12 @@ const VerificationBar = (props) => {
               alt="image"
             />
           </div>
+          {/* <div dangerouslySetInnerHTML={{ __html: props.heading }} /> */}
           <div className="verification-bar-container-item">
-            <h5>{props.description}</h5>
+            <h5 dangerouslySetInnerHTML={{ __html: props.heading }} />
+          </div>
+          <div className="verification-bar-container-item">
+            <h5 dangerouslySetInnerHTML={{ __html: props.description }} />
           </div>
           <div className="verification-bar-container-item">
             <FiDelete

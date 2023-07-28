@@ -43,25 +43,25 @@ const AssessmentsDetail = () => {
                   to={`/assessments/detail/levels/${id}/LOWER_INTERMEDIATE`}
                   icon={lower}
                   heading="Lower Intermediate"
-                  text="Basic Level"
+                  text="Lower Intermediate Level"
                 />
                 <AssessmentDetailCard
                   to={`/assessments/detail/levels/${id}/INTERMEDIATE`}
                   icon={intermediate}
                   heading="Intermediate"
-                  text="Basic Level"
+                  text="Intermediate Level"
                 />
                 <AssessmentDetailCard
                   to={`/assessments/detail/levels/${id}/UPPER_INTERMEDIATE`}
                   icon={upper}
                   heading="Upper Intermediate"
-                  text="Basic Level"
+                  text="Upper Intermediate Level"
                 />
                 <AssessmentDetailCard
                   to={`/assessments/detail/levels/${id}/ADVANCED`}
                   icon={expert}
                   heading="Advanced"
-                  text="Basic Level"
+                  text="Advanced Level"
                 />
               </Grid>
             </div>
