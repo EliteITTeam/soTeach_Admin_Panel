@@ -70,7 +70,7 @@ const ViewQuiz = () => {
           className="align-item-right mt-3"
           to={`/assessments/detail/addquiz/${id}`}
         >
-          Add Question
+          Add a Question
         </LinkBtn>
       </Container>
       <div className="m2">

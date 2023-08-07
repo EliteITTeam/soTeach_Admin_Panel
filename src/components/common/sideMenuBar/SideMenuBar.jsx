@@ -74,7 +74,7 @@ const SideMenuBar = (props) => {
                         id={active == item.path ? "active" : ""}
                       >
                         <div className="sidebar-container-menu-list-link-icon align-item-center">
-                          {item.icon}
+                          <img src={item.icon} alt="icon" />
                         </div>
                         <div className="sidebar-container-menu-list-link-name align-item-center">
                           {isOpen ? <p>{item.name}</p> : ""}
