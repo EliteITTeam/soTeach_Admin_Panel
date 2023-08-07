@@ -24,7 +24,7 @@ const AssessmentsDetail = () => {
             <Grid className="grid-3">
               <AssessmentDetailCard
                 icon={notePaid}
-                heading="Add a question"
+                heading="Entry Quiz"
                 text="Basic Level"
                 to={`/assessments/detail/viewquiz/${id}`}
               />

@@ -11,6 +11,7 @@ import { GetAllUser, clearErrors, clearMessages } from "./../../store/actions";
 import { Puff } from "react-loader-spinner";
 import Pagination from "@mui/material/Pagination";
 import { makeStyles } from "@mui/styles";
+import { IoIosSearch } from "react-icons/io";
 
 const useStyles = makeStyles({
   root: {
@@ -58,6 +59,17 @@ const Students = () => {
   return (
     <>
       <Navbar heading="Student List" />
+
+      {/* style in password reset scss file  */}
+
+      <Container className="lg">
+        <div className="searchbar-component">
+          <div className="searchbar-component-input">
+            <IoIosSearch />
+            <input type="text" placeholder="Search" />
+          </div>
+        </div>
+      </Container>
       <Container className="lg">
         <div className="">
           <div className="studentslist">

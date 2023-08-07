@@ -24,6 +24,17 @@ import PDFIMAGE from "../assests/pdf.png";
 // Assessments Detail
 import notePaid from "./notePaid.svg";
 
+// side menu
+import blogs from "./menuIcons/blogs.svg";
+import blogList from "./menuIcons/blogsList.svg";
+import dashboard from "./menuIcons/dashboard.svg";
+import events from "./menuIcons/events.svg";
+import inbox from "./menuIcons/inbox.svg";
+import password from "./menuIcons/password.svg";
+import students from "./menuIcons/students.svg";
+import subjects from "./menuIcons/subjects.svg";
+import verification from "./menuIcons/verification.svg";
+
 export {
   logo,
   profile,
@@ -45,4 +56,15 @@ export {
   progress4,
   progress5,
   PDFIMAGE,
+
+  // side menus
+  blogs,
+  blogList,
+  dashboard,
+  events,
+  inbox,
+  password,
+  students,
+  subjects,
+  verification,
 };
