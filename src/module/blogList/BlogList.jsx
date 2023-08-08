@@ -69,9 +69,9 @@ const BlogLists = () => {
                   <div>
                     <h6>Heading</h6>
                   </div>
-                  <div>
+                  {/* <div>
                     <h6>Description</h6>
-                  </div>
+                  </div> */}
                   <div>
                     <h6>DELETE</h6>
                   </div>
@@ -94,7 +94,7 @@ const BlogLists = () => {
                       key={ind}
                       image={data?.photoPath && data.photoPath}
                       heading={data?.heading && data.heading}
-                      description={data?.content && data.content}
+                      // description={data?.content && data.content}
                       blogId={data.id}
                     />
                   );
@@ -146,15 +146,19 @@ const VerificationBar = (props) => {
               width={70}
               src={props.image}
               alt="image"
+
+
+
+              className="bloglist-item-image-profile"
             />
           </div>
           {/* <div dangerouslySetInnerHTML={{ __html: props.heading }} /> */}
           <div className="verification-bar-container-item">
             <h5 dangerouslySetInnerHTML={{ __html: props.heading }} />
           </div>
-          <div className="verification-bar-container-item">
+          {/* <div className="verification-bar-container-item">
             <h5 dangerouslySetInnerHTML={{ __html: props.description }} />
-          </div>
+          </div> */}
           <div className="verification-bar-container-item">
             <FiDelete
               size={40}
