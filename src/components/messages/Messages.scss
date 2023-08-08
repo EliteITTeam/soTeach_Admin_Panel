@@ -103,10 +103,12 @@
           }
         }
         &-flex {
+
           & > img {
             margin-left: 2rem;
-            height: 4.5rem;
-            width: 4.5rem;
+            height: 50px;
+            width: 50px;
+            object-fit: cover;
             border-radius: 50%;
           }
           & > h3 {
