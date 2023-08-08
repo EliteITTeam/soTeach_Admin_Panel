@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Messages.scss";
 import { BiSend, BiSearch } from "react-icons/bi";
 import { profile } from "../../assests";
@@ -268,10 +268,16 @@ const UserMessage = (props) => {
 };
 
 const Message = (props) => {
+  const messagesEndRef = useRef();
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [props.children]);
+
   return (
     <>
       <div className={`message ${props.class}`}>
-        <div className="message-container">
+        <div className="message-container" ref={messagesEndRef}>
           <p>{props.text}</p>
         </div>
       </div>
