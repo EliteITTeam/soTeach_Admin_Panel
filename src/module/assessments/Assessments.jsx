@@ -45,6 +45,7 @@ const Assessments = () => {
   const { records, message, errors, sessionExpireError, loading, totalPages } =
     useSelector((state) => state.assessmentReducer);
 
+  console.log("records is", records);
   const [alert, setAlert] = useState(false);
   const passwordvalidation = Yup.object({
     name: Yup.string().required("Subject is required"),

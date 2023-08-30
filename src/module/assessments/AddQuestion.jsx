@@ -77,8 +77,12 @@ const AddQuiz = () => {
                 correctOption: Number(selectedOption),
                 exercise: id,
               };
-              dispatch(CreateQuestion(result));
-              resetForm({ values: "" });
+              if (!selectedOption) {
+                toast.error("Correct option is required");
+              } else {
+                dispatch(CreateQuestion(result));
+                resetForm({ values: "" });
+              }
             }}
           >
             {(formik) => (
