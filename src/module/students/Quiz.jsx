@@ -87,7 +87,7 @@ const Quiz = () => {
                 return (
                   <QuizQuestion
                     key={ind}
-                    questionNo={ind + 1}
+                    questionNo={ind + 1 + (page - 1) * 5}
                     question={data.question && data.question}
                     option1={data.options && data.options[0]}
                     option2={data.options && data.options[1]}

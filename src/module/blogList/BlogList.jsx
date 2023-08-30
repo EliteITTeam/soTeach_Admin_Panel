@@ -146,9 +146,6 @@ const VerificationBar = (props) => {
               width={70}
               src={props.image}
               alt="image"
-
-
-
               className="bloglist-item-image-profile"
             />
           </div>

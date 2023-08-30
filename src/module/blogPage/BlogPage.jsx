@@ -19,6 +19,7 @@ const BlogPage = () => {
   const imageRef = useRef();
   const editRef = useRef();
   const editdescRef = useRef();
+  const editBlogRef = useRef();
   const blogImageRef = useRef();
   const [image, setImage] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -28,6 +29,7 @@ const BlogPage = () => {
   const [contentPlainText, setContentPlainText] = useState("");
   const [desContent, setDescContent] = useState("");
   const [descContentPlainText, setDescContentPlainText] = useState("");
+  const [heading, setHeading] = useState("");
 
   const navigate = useNavigate();
   const validation = Yup.object({
@@ -111,12 +113,26 @@ const BlogPage = () => {
                 if (blogImage) {
                   finalResult.append("photoPath", blogImage);
                 }
-                dispatch(CreateAboutUs(finalResult));
-                resetForm({ values: "" });
+                finalResult.append("heading", heading);
+                if (!heading) {
+                  toast.error("heading is required");
+                } else {
+                  dispatch(CreateAboutUs(finalResult));
+                  resetForm({ values: "" });
+                  setHeading("");
+                  setBlogImageUrl("");
+                }
               }}
             >
               {(formik) => (
                 <Form>
+                  <label style={{ fontWeight: "bold" }}>Heading</label>
+                  <JoditEditor
+                    className="heading-editor"
+                    ref={editBlogRef}
+                    value={heading}
+                    onChange={(newContent) => setHeading(newContent)}
+                  />
                   <FormText
                     place="Add Description (150 words)"
                     name="description"
