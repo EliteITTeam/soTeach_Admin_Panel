@@ -138,6 +138,7 @@ const Units = () => {
                       border: "none",
                       cursor: "pointer",
                       borderRadius: "4px",
+                      display: "none",
                     }}
                     onClick={() =>
                       navigate(`/students/${unitId}/final/question`)

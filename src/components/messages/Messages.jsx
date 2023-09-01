@@ -217,7 +217,7 @@ const Messages = () => {
                 <form onSubmit={submitHandler}>
                   <input
                     type="text"
-                    placeholder="Type a message"
+                    placeholder="Type your message"
                     value={msg}
                     onChange={messageHandler}
                   />

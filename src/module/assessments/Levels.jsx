@@ -59,6 +59,33 @@ const Levels = () => {
               <h1>No unit found</h1>
             )}
           </Grid>
+          {loading
+            ? ""
+            : records.length > 0 && (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                  }}
+                >
+                  <button
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      marginTop: "3rem",
+                      padding: "2rem",
+                      outline: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      borderRadius: "4px",
+                    }}
+                    onClick={() => navigate(`/students/${id}/final/question`)}
+                  >
+                    Final Exam For Subject
+                  </button>
+                </div>
+              )}
         </Container>
       </div>
     </>
