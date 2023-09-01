@@ -77,8 +77,12 @@ const CreateFinalQuestion = () => {
                 correctOption: Number(selectedOption),
                 subject: id,
               };
-              dispatch(CreateFinalQuestions(result));
-              resetForm({ values: "" });
+              if (!selectedOption) {
+                toast.error("Correct option is required");
+              } else {
+                dispatch(CreateFinalQuestions(result));
+                resetForm({ values: "" });
+              }
             }}
           >
             {(formik) => (
@@ -90,38 +94,46 @@ const CreateFinalQuestion = () => {
                   cols="100"
                   rows="10"
                 />
-                <input
-                  type="radio"
-                  value="0"
-                  checked={selectedOption === "0"}
-                  onChange={handleOptionChange}
-                  style={{ marginTop: "1rem" }}
-                />
-                <FormInput place="Option 1" name="option1" type="text" />
-                <input
-                  type="radio"
-                  value="1"
-                  checked={selectedOption === "1"}
-                  onChange={handleOptionChange}
-                  style={{ marginTop: "1rem" }}
-                />
-                <FormInput place="Option 2" name="option2" type="text" />
-                <input
-                  type="radio"
-                  value="2"
-                  checked={selectedOption === "2"}
-                  onChange={handleOptionChange}
-                  style={{ marginTop: "1rem" }}
-                />
-                <FormInput place="Option 3" name="option3" type="text" />
-                <input
-                  type="radio"
-                  value="3"
-                  checked={selectedOption === "3"}
-                  onChange={handleOptionChange}
-                  style={{ marginTop: "1rem" }}
-                />
-                <FormInput place="Option 4" name="option4" type="text" />
+                <div className="quiz-input-flex">
+                  <input
+                    type="radio"
+                    value="0"
+                    checked={selectedOption === "0"}
+                    onChange={handleOptionChange}
+                    style={{ marginTop: "1rem" }}
+                  />
+                  <FormInput place="Option 1" name="option1" type="text" />
+                </div>
+                <div className="quiz-input-flex">
+                  <input
+                    type="radio"
+                    value="1"
+                    checked={selectedOption === "1"}
+                    onChange={handleOptionChange}
+                    style={{ marginTop: "1rem" }}
+                  />
+                  <FormInput place="Option 2" name="option2" type="text" />
+                </div>
+                <div className="quiz-input-flex">
+                  <input
+                    type="radio"
+                    value="2"
+                    checked={selectedOption === "2"}
+                    onChange={handleOptionChange}
+                    style={{ marginTop: "1rem" }}
+                  />
+                  <FormInput place="Option 3" name="option3" type="text" />
+                </div>
+                <div className="quiz-input-flex">
+                  <input
+                    type="radio"
+                    value="3"
+                    checked={selectedOption === "3"}
+                    onChange={handleOptionChange}
+                    style={{ marginTop: "1rem" }}
+                  />
+                  <FormInput place="Option 4" name="option4" type="text" />
+                </div>
                 <Button className="btn-lighter rounded center m-2">
                   {loading ? "Please wait..." : "Add a Question"}
                 </Button>
