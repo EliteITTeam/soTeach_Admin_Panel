@@ -35,7 +35,22 @@ const Levels = () => {
   }, []);
   return (
     <>
-      <Navbar heading={heading} backbtn={true} />
+      <Navbar
+        heading={
+          heading === "LOWER_INTERMEDIATE"
+            ? "Lower Intermediate"
+            : heading === "UPPER_INTERMEDIATE"
+            ? "Upper Intermediate"
+            : heading === "ADVANCED"
+            ? "Advanced"
+            : heading === "INTERMEDIATE"
+            ? "Intermedidate"
+            : heading === "BEGINNER"
+            ? "Beginner"
+            : ""
+        }
+        backbtn={true}
+      />
       <div className="levels m-5">
         <Container className="md">
           <Grid className="grid-3">
