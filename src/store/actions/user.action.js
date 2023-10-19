@@ -240,6 +240,143 @@ export const getUserInfo = (body) => {
   };
 };
 
+export const getUserResult = (userID, subjectID) => {
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem("adminToken");
+      let result = await axios.get(
+        `${process.env.REACT_APP_ROOT}/api/result/?user=${userID}`,
+       
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      const { data } = result;
+      dispatch({
+        type: userConstant.GET_USER_RESULT_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: userConstant.GET_USER_RESULT_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};
+export const getUnitResult = (userID, subjectID) => {
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem("adminToken");
+      let result = await axios.get(
+        `${process.env.REACT_APP_ROOT}/api/result/unit/?user=${userID}&subject=${subjectID}&level=BEGINNER&type=unit`,
+       
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      const { data } = result;
+      dispatch({
+        type: userConstant.GET_UNIT_RESULT_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: userConstant.GET_UNIT_RESULT_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};
+export const getLessonResult = (userID, unit) => {
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem("adminToken");
+      let result = await axios.get(
+        `${process.env.REACT_APP_ROOT}/api/result/lesson/?user${userID}&unit=${unit}&type=lesson`,
+       
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      const { data } = result;
+      dispatch({
+        type: userConstant.GET_LESSON_RESULT_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: userConstant.GET_LESSON_RESULT_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};
+export const getExerciseResult = (userID, lesson) => {
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem("adminToken");
+      let result = await axios.get(
+        `${process.env.REACT_APP_ROOT}/api/result/exercise/?user=${userID}&lesson=${lesson}&type=exercise`,
+       
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      const { data } = result;
+      dispatch({
+        type: userConstant.GET_EXERCISE_RESULT_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      if (error.response.data.code === 401) {
+        localStorage.clear();
+        dispatch({
+          type: assessmentConstant.SESSION_EXPIRE,
+          payload: { err: "Session has been expired" },
+        });
+      } else {
+        dispatch({
+          type: userConstant.GET_EXERCISE_RESULT_FAILURE,
+          payload: { err: error.response.data.message },
+        });
+      }
+    }
+  };
+};
+
 export const addMessage = (body) => {
   return async (dispatch) => {
     dispatch({

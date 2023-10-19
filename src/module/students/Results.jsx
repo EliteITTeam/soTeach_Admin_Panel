@@ -11,6 +11,8 @@ import {
   UploadCertificationOfUser,
   clearErrors,
   clearMessages,
+  getUserResult,
+  GetUnit
 } from "./../../store/actions";
 import { PDFIMAGE } from "./../../assests";
 
@@ -20,9 +22,11 @@ const Results = () => {
   const pdfRef = useRef();
   const [pdf, setPdf] = useState("");
   const dispatch = useDispatch();
-  const { userInfo, message, errors, loading, uploadLoading } = useSelector(
+  const { userInfo, message, errors, loading, uploadLoading, userResult } = useSelector(
     (state) => state.userReducer
   );
+
+  const {records}=useSelector((state)=>state.assessmentReducer)
 
   const FileChange = (event) => {
     setPdf(event.target.files[0]);
@@ -40,8 +44,21 @@ const Results = () => {
     }
   }, [errors, message]);
   useEffect(() => {
+    
     dispatch(getUserInfo(id));
+    // dispatch(getUserResult(id))
+    console.log(userInfo.subjects);
+
+    console.log(records);
   }, []);
+
+  useEffect(()=>{
+   { userInfo.subjects &&
+    dispatch(GetUnit({
+      subject:userInfo.subjects[0].subject.id,
+      levelName:userInfo.level
+    }))}
+  },[userInfo])
 
   const handleUploadCertificate = () => {
     let result = new FormData();
@@ -91,22 +108,15 @@ const Results = () => {
         </div>
 
         <div className="m-6">
-          {/* <Units /> */}
+          
           <Grid className="grid-4">
-            {/* <Units /> */}
-            <UnitsCard name="Unit 1">
-              <p>34 %</p>
+            {records.map(item=>(
+              <UnitsCard name={item.unitName} id={item._id} userid={id}>
+              
             </UnitsCard>
-            <UnitsCard name="Unit 1">
-              <p>34 %</p>
-            </UnitsCard>
-            <UnitsCard name="Unit 1">
-              <p>34 %</p>
-            </UnitsCard>
-            <UnitsCard name="Unit 1">
-              {/* <p>34 %</p> */}
-              <img src={lock} alt="lock" />
-            </UnitsCard>
+            ))}
+            
+           
           </Grid>
         </div>
       </Container>
@@ -117,9 +127,10 @@ const Results = () => {
 export default Results;
 
 const UnitsCard = (props) => {
+  const lesson_route= "/students/"+props.userid+"/results/lesson/"+props.id
   return (
     <>
-      <Link to="/students/1/results/lesson">
+      <Link to={lesson_route}>
         <div className="unitscard">
           <div className="unitscard-container">
             <h1>{props.name}</h1>

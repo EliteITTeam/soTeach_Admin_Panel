@@ -9,6 +9,10 @@ const initialState = {
   sessionExpireError: "",
   chatConnection: {},
   userInfo: {},
+  userResult:{},
+  unitResult:{},
+  lessonResult:{},
+  exerciseResult:{},
   message: "",
   page: 1,
   totalPages: 1,
@@ -71,6 +75,30 @@ const assessmentReducer = (state = initialState, action) => {
         loading: false,
         userInfo: action.payload,
       };
+    case userConstant.GET_USER_RESULT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        userResult: action.payload,
+      };
+    case userConstant.GET_UNIT_RESULT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        unitResult: action.payload,
+      };
+    case userConstant.GET_LESSON_RESULT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        lessonResult: action.payload,
+      };
+    case userConstant.GET_EXERCISE_RESULT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        exerciseResult: action.payload,
+      };
     case assessmentConstant.SESSION_EXPIRE:
       return {
         ...state,
@@ -87,6 +115,10 @@ const assessmentReducer = (state = initialState, action) => {
     case userConstant.LOGOUT_USER_FAILURE:
     case userConstant.UPDATE_USER_FAILURE:
     case userConstant.UPLOAD_CERTIFICATE_FAILURE:
+    case userConstant.GET_USER_INFO_FAILURE:
+    case userConstant.GET_USER_RESULT_FAILURE:
+    case userConstant.GET_UNIT_RESULT_FAILURE:
+    case userConstant.GET_LESSON_RESULT_FAILURE:
       return {
         ...state,
         uploadLoading: false,

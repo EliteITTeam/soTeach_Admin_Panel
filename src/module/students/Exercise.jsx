@@ -1,29 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Grid } from "../../components";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Navbar } from "../../components/common";
+import { getExerciseResult } from "../../store/actions";
+import { useDispatch, useSelector } from "react-redux";
 const Exercise = () => {
+  const { id, lessonid } = useParams();
+  const { userInfo, exerciseResult, userResult } = useSelector(
+    (state) => state.userReducer
+  );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getExerciseResult(id, lessonid))
+
+  }, [])
+
+  useEffect(() => {
+    console.log(exerciseResult);
+  }, [exerciseResult])
+
+
   return (
     <>
       <Navbar backbtn={true} heading="Lesson 1" />
       <Container className="half">
         <div className="m-6">
           <Grid className="grid-2">
-            <LessonCard name="Exercise 1">
-              <p>34 %</p>
-            </LessonCard>
-            <LessonCard name="Exercise 2">
-              <p>34 %</p>
-            </LessonCard>
-            <LessonCard name="Exercise 3">
-              <p>34 %</p>
-            </LessonCard>
-            <LessonCard name="Exercise 4">
-              <p>34 %</p>
-            </LessonCard>
-            <LessonCard name="Exercise 5">
-              <p>34 %</p>
-            </LessonCard>
+            {exerciseResult.results?.map((item) => (
+              <LessonCard name="Exercise 1">
+                <p>{item.percentage}%</p>
+              </LessonCard>
+            ))}
+
+
           </Grid>
         </div>
       </Container>

@@ -71,11 +71,11 @@ const Routess = () => {
               <Route path="/students/:id?" element={<StudentDetail />} />
               <Route path="/students/:id?/results" element={<Results />} />
               <Route
-                path="/students/:id?/results/lesson"
+                path="/students/:id?/results/lesson/:unitid?"
                 element={<Lesson />}
               />
               <Route
-                path="/students/:id?/results/lesson/exercise"
+                path="/students/:id?/results/lesson/exercise/:lessonid?"
                 element={<Exercise />}
               />
               <Route path="/blog/list" element={<BlogList />} />
